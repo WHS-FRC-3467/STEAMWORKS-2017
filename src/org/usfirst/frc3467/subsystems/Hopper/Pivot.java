@@ -1,4 +1,4 @@
-package org.usfirst.frc3467.subsystems.Hopper.commands;
+package org.usfirst.frc3467.subsystems.Hopper;
 
 import edu.wpi.first.wpilibj.command.Command;
 

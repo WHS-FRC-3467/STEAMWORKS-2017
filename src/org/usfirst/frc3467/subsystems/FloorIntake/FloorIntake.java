@@ -17,14 +17,14 @@ public class FloorIntake extends Subsystem {
 	public static final double kIntake = 1;
 	public static final double kStop = 0;
 
-	public CANTalon Intake_MotorOne, Intake_MotorTwo;
+	public CANTalon Intake_MotorOne;
 	public DoubleSolenoid rollerSolenoid;
 	
 	public FloorIntake() {
 
 	Intake_MotorOne = new CANTalon(RobotMap.IntakeMotorOne);
-	Intake_MotorTwo = new CANTalon(RobotMap.IntakeMotorTwo);
-		rollerSolenoid = new DoubleSolenoid(RobotMap.intake_solenoid_extend, 
+
+	rollerSolenoid = new DoubleSolenoid(RobotMap.intake_solenoid_extend, 
 											RobotMap.intake_solenoid_retract);
 		
 	}
@@ -38,7 +38,6 @@ public class FloorIntake extends Subsystem {
 	    	SmartDashboard.putNumber("Intake Speed", Speed);
 		}
 			Intake_MotorOne.set(Speed);
-			Intake_MotorTwo.set(Math.abs(Speed));
 	}
 	
 	// Extend or Retract Intake

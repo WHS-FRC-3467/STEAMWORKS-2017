@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Import subsystem classes from subsystem packages
 import org.usfirst.frc3467.robot.CommandBase;
-import org.usfirst.frc3467.subsystems.Example.ExampleCommand;
 	
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,7 +34,7 @@ public class Robot extends IterativeRobot {
     	
     	// Add autonomous selector
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Default Auto", new ExampleCommand());
+		//autoChooser.addDefault("Default Auto", new ExampleCommand());
 		//autoChooser.addObject("Drive Straight", new AutoDriveStraight());
 		
 		SmartDashboard.putData("Auto", autoChooser);

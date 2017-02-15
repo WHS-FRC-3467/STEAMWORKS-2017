@@ -1,4 +1,4 @@
-package org.usfirst.frc3467.subsystems.Hopper.commands;
+package org.usfirst.frc3467.subsystems.Hopper;
 
 import org.usfirst.frc3467.robot.CommandBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -24,8 +24,8 @@ public class HopperActuate extends CommandBase{
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-	if (INandOut) 
-		hopper.kExtend;
+//	if (INandOut) 
+//		hopper.kExtend;
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class HopperActuate extends CommandBase{
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
-		hopper.setHopper(Value.kOff);
+//		hopper.setHopper(Value.kOff);
 	}
 
 	@Override

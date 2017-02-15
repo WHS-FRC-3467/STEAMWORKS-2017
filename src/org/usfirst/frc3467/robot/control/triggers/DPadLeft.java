@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3467.robot.triggers;
+package org.usfirst.frc3467.robot.control.triggers;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.*;
@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj.buttons.*;
 /**
  * Gamepad DPadUp support
  */
-public class DPadRight extends Trigger {
+public class DPadLeft extends Trigger {
 	private Joystick joy;
 	
-	public DPadRight(Joystick joy) {
+	public DPadLeft(Joystick joy) {
 		this.joy = joy;
 	}	
 
 	public boolean get() {
-        return (joy.getPOV(0) == 90);
+        return (joy.getPOV(0) == 270);
     }
 }

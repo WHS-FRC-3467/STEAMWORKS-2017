@@ -46,7 +46,7 @@ public class RobotMap {
 	public static final int l_intake_extend = 4;
 	public static final int l_intake_retract = 5;
 	
-	//Claw
+	//GearCatcher
 	public static final int claw_extend = 6;
 	public static final int claw_retract = 7;
 	

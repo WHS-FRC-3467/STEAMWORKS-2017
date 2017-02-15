@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3467.robot.triggers;
+package org.usfirst.frc3467.robot.control.triggers;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.*;

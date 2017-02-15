@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3467.robot.RobotMap;
-import org.usfirst.frc3467.subsystems.Climber.commands.ClimberDrive;
 
 import com.ctre.CANTalon;
 
