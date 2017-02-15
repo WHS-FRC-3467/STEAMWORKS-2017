@@ -1,4 +1,4 @@
-package org.usfirst.frc3467.subsystems.Brownout.commands;
+package org.usfirst.frc3467.subsystems.Brownout;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
