@@ -23,12 +23,13 @@ public class Hopper extends Subsystem {
 		hopperSolenoid = new DoubleSolenoid(RobotMap.hopper_solenoid_deploy,
 				RobotMap.hopper_solenoid_retract);
 	}
-	public void setHopper(Value EnR){
-		hopperSolenoid.set(EnR);
+	public void extend(){
+		hopperSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
-	public Value getHopperState(){
-		return hopperSolenoid.get();
+	public void retract(){
+		hopperSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
+	
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub

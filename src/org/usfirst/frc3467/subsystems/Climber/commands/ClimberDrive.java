@@ -1,4 +1,4 @@
-package org.usfirst.frc3467.subsystems.Climber;
+package org.usfirst.frc3467.subsystems.Climber.commands;
 
 import org.usfirst.frc3467.robot.CommandBase;
 import org.usfirst.frc3467.subsystems.Climber.Climber;;

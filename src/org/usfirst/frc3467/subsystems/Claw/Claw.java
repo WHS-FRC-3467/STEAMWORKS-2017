@@ -1,13 +1,12 @@
-
-package org.usfirst.frc3467.subsystems.Example;
+package org.usfirst.frc3467.subsystems.Claw;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
-public class Example extends Subsystem {
-    
+public class Claw extends Subsystem {
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 

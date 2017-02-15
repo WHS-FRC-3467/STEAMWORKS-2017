@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc3467.robot.OI;
 import org.usfirst.frc3467.subsystems.Brownout.Brownout;
+import org.usfirst.frc3467.subsystems.Claw.Claw;
 import org.usfirst.frc3467.subsystems.Climber.Climber;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 import org.usfirst.frc3467.subsystems.FloorIntake.FloorIntake;
-import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
 import org.usfirst.frc3467.subsystems.Gyro.Gyro;
 import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
 import org.usfirst.frc3467.subsystems.Hopper.Hopper;

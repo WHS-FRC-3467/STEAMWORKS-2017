@@ -1,30 +1,31 @@
-package org.usfirst.frc3467.subsystems.Hopper;
+package org.usfirst.frc3467.subsystems.Hopper.commands;
 
 import org.usfirst.frc3467.robot.CommandBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
-public class hopperActuate extends CommandBase{
+public class HopperActuate extends CommandBase{
 	
-	private Value INandOut;
+	private boolean INandOut;
 	
-	public hopperActuate(Value actuate){
+	public HopperActuate(boolean actuate){
 		requires(hopper);
 		INandOut = actuate;
 		setTimeout(1.0);
 	}
-	public hopperActuate(){
+	
+	public HopperActuate(){
 		requires(hopper);
 	}
+	
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-	hopper.setHopper(INandOut);	
+	if (INandOut) 
+		hopper.kExtend;
 	}
 
 	@Override
