@@ -27,7 +27,7 @@ public abstract class CommandBase extends Command {
 	public static Climber climber;
 	public static DriveBase driveBase;
 	public static FloorIntake flr_intake;
-	public static GearCatcher gearcatch;
+	public static Claw claw;
 	public static Gyro gyro;
 	public static HighIntake hi_intake;
 	public static Hopper hopper;
@@ -61,8 +61,8 @@ public abstract class CommandBase extends Command {
 		subsystemList.addElement(driveBase);
 		flr_intake = new FloorIntake();
 		subsystemList.addElement(flr_intake);
-		gearcatch = new GearCatcher();
-		subsystemList.addElement(gearcatch);
+		claw = new Claw();
+		subsystemList.addElement(claw);
 		gyro = new Gyro();
 		subsystemList.addElement(gyro);
 		hi_intake = new HighIntake();

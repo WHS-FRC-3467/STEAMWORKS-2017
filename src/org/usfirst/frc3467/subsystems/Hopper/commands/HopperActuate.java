@@ -25,26 +25,21 @@ public class HopperActuate extends CommandBase{
 	protected void execute() {
 		// TODO Auto-generated method stub
 	if (INandOut) 
-		hopper.kExtend;
+		hopper.extend();
+	else
+		hopper.retract();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return isTimedOut();
 	}
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
-		hopper.setHopper(Value.kOff);
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
 	}
-
-	
 }

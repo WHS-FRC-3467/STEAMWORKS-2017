@@ -8,10 +8,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Hopper extends Subsystem {
 	
-	public static final Value kExtend = Value.kForward;
-	public static final Value kIN = Value.kReverse;
-	public static final Value kOff = Value.kOff;
-
 	public static DoubleSolenoid hopperSolenoid;
 	private static Hopper instance;
 	
@@ -23,9 +19,11 @@ public class Hopper extends Subsystem {
 		hopperSolenoid = new DoubleSolenoid(RobotMap.hopper_solenoid_deploy,
 				RobotMap.hopper_solenoid_retract);
 	}
+	
 	public void extend(){
 		hopperSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
+	
 	public void retract(){
 		hopperSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
