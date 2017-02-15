@@ -1,31 +1,32 @@
-package org.usfirst.frc.team3467.robot.claw;
+package org.usfirst.frc3467.subsystems.GearCatcher;
 
-import org.usfirst.frc.team3467.robot.RobotMap;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Claw extends Subsystem {
 	
-		Solenoid piston = new Solenoid();
+		DoubleSolenoid piston = new DoubleSolenoid(0, 1);
 			
 		public void initDefaultCommand() {
 		} 
 		
 	public void open(){
-		piston.set(RobotMap.OPEN);
+		piston.set(DoubleSolenoid.Value.kForward);
 		
 	} 
 	
 	public void close(){
-		piston.set(RobotMap.CLOSED);
+		piston.set(DoubleSolenoid.Value.kReverse);
 		
 	}
 	
 	public boolean isOpen(){
-		return piston.get().equals(RobotMap.OPEN);
+		return piston.get().equals(DoubleSolenoid.Value.kForward);
 		
 	}
 	
 	public boolean isClosed() {
-		return piston.get().equals(RobotMap.CLOSED);
+		return piston.get().equals(DoubleSolenoid.Value.kReverse);
 	}
 	
 }
