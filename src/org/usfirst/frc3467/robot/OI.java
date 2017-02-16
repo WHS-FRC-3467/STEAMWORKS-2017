@@ -8,6 +8,8 @@ import org.usfirst.frc3467.robot.triggers.GamepadRightTrigger;
 import org.usfirst.frc3467.subsystems.Example.ExampleCommand;
 */
 
+import org.usfirst.frc3467.robot.control.Gamepad;
+
 import edu.wpi.first.wpilibj.Joystick;
 /*
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -22,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 	
 	public static Joystick PrimaryStick;
-//	public static Gamepad operator;
+	public static Gamepad operator;
 	
 /*
  * Joystick Mappings (done elsewhere in code)
@@ -37,7 +39,7 @@ public class OI {
 	
 	public OI(){
 		PrimaryStick = new Joystick(0);
-//		operator = new Gamepad(1);
+		operator = new Gamepad(1);
 	}
 	
 	

@@ -1,7 +1,6 @@
 package org.usfirst.frc3467.subsystems.Climber;
 
-import org.usfirst.frc3467.robot.CommandBase;
-import org.usfirst.frc3467.subsystems.Climber.Climber;;
+import org.usfirst.frc3467.robot.CommandBase;;
 
 public class ClimberDrive extends CommandBase {
 

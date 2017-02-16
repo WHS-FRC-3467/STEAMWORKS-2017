@@ -1,16 +1,15 @@
+package org.usfirst.frc3467.subsystems.Hopper;
 
-package org.usfirst.frc3467.subsystems.Example;
-
-import org.usfirst.frc3467.robot.CommandBase;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ExampleCommand extends CommandBase {
+public class Pivot extends Command {
 
-    public ExampleCommand() {
+    public Pivot() {
         // Use requires() here to declare subsystem dependencies
-        //requires(example);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
