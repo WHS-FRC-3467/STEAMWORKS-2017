@@ -49,5 +49,7 @@ public class RobotMap {
 	//GearCatcher
 	public static final int claw_extend = 6;
 	public static final int claw_retract = 7;
+	public static final int claw_grab = 8;
+	public static final int claw_release = 9;
 	
 }

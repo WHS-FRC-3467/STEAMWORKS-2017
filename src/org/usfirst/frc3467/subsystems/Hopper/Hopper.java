@@ -8,10 +8,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Hopper extends Subsystem {
 	
-	public static final Value kExtend = Value.kForward;
-	public static final Value kIN = Value.kReverse;
-	public static final Value kOff = Value.kOff;
-
 	public static DoubleSolenoid hopperSolenoid;
 	private static Hopper instance;
 	
