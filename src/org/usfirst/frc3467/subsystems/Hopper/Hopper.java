@@ -3,7 +3,6 @@ package org.usfirst.frc3467.subsystems.Hopper;
 import org.usfirst.frc3467.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Hopper extends Subsystem {
