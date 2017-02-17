@@ -56,8 +56,4 @@ public class FloorIntake extends Subsystem {
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-	
-	
 }
