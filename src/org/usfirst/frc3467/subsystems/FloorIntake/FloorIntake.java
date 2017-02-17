@@ -22,9 +22,9 @@ public class FloorIntake extends Subsystem {
 	
 	public FloorIntake() {
 
-	Lo_intake = new CANTalon(RobotMap.IntakeMotorOne);
-		rollerSolenoid = new DoubleSolenoid(RobotMap.intake_solenoid_extend, 
-											RobotMap.intake_solenoid_retract);
+	Lo_intake = new CANTalon(RobotMap.LIntakeMotor);
+		rollerSolenoid = new DoubleSolenoid(RobotMap.l_intake_extend, 
+											RobotMap.l_intake_retract);
 		
 	}
 

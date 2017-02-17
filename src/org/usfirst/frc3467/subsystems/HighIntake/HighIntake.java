@@ -1,6 +1,8 @@
 
 package org.usfirst.frc3467.subsystems.HighIntake;
 
+import org.usfirst.frc3467.robot.RobotMap;
+
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -12,14 +14,11 @@ public class HighIntake extends Subsystem {
 	public DoubleSolenoid hisolenoid;
 	
 	public HighIntake() {
-		upperIntake = new CANTalon(8);
-		hisolenoid = new DoubleSolenoid(3, 4);
+		upperIntake = new CANTalon(RobotMap.UIntakeMotor);
+		hisolenoid = new DoubleSolenoid(RobotMap.U_intake_extend, RobotMap.U_intake_retract);
 	}
 
     public void initDefaultCommand() {
-    	
-    	
-    	
     	
     }
 }

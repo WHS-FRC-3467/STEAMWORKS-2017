@@ -25,13 +25,18 @@ public class RobotMap {
 
 	//MOTORS
 	// Climber
-	public static final int climbMotor = 9;
+	public static final int climbMotor = 12;
 	
 	//Upper Intake
-	public static final int IntakeMotorOne = 0;
+	public static final int LIntakeMotor = 13;
 	
 	//Lower Intake
+	public static final int UIntakeMotor = 16;
 	
+	//Shooter
+	public static final int shooterMotor = 11;
+	public static final int beltMotor = 14;
+	public static final int spinnerMotor = 15;
 
 	//SOLENOIDS
 	// Hopper 
@@ -39,8 +44,8 @@ public class RobotMap {
 	public static final int hopper_solenoid_deploy = 1;
 
 	//Upper Intake
-	public static final int intake_solenoid_extend = 2;
-	public static final int intake_solenoid_retract = 3;
+	public static final int U_intake_extend = 2;
+	public static final int U_intake_retract = 3;
 
 	//Lower Intake
 	public static final int l_intake_extend = 4;
