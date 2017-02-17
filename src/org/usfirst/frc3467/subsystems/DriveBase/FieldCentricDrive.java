@@ -2,9 +2,9 @@ package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
-public class ArcadeDrive extends CommandBase {
+public class FieldCentricDrive extends CommandBase {
 	
-	public ArcadeDrive() {
+	public FieldCentricDrive() {
 		requires(driveBase);
 		this.setInterruptible(true);
 	}
@@ -13,8 +13,7 @@ public class ArcadeDrive extends CommandBase {
 	}
 
 	protected void execute() {
-		//Applies the driveTank method to the driveBase object
-		driveBase.driveArcade(oi.getDriveY(), oi.getDriveRotation(), true);
+		driveBase.driveFieldCentric(oi.getDriveX(), oi.getDriveY(), oi.getDriveRotation(), gyro.getAngle() - 180.0);
 	}
 
 	protected boolean isFinished() {
@@ -22,11 +21,9 @@ public class ArcadeDrive extends CommandBase {
 	}
 
 	protected void end() {
-		
 	}
 
 	protected void interrupted() {
 		end();
 	}
-
 }

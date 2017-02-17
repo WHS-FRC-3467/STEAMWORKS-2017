@@ -21,10 +21,10 @@ public class Auto_Intake extends CommandBase{
 	protected void execute() {
 		// TODO Auto-generated method stub
 		if (autoIntake) {
-			flr_intake.DriveAuto(FloorIntake.kIntake);
+			flr_intake.DriveAuto(1.0);
 			}
 		else {
-			flr_intake.DriveAuto((FloorIntake.kStop));
+			flr_intake.DriveAuto(0.0);
 		}
 	}
 

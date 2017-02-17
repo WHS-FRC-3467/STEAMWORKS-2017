@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc3467.robot.commands.Autonomous.Autonomous1;
 
-//Import subsystem classes from subsystem packages
+import org.usfirst.frc3467.robot.commands.Autonomous.Autonomous1;
+import org.usfirst.frc3467.subsystems.FieldCamera.FieldCamera;
 import org.usfirst.frc3467.robot.CommandBase;
 	
 /**
@@ -30,8 +30,11 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 
-        // Initialize all subsystems
-    	CommandBase.init();	
+		// Start the FieldCamera
+		FieldCamera fc = new FieldCamera();
+        
+		// Initialize all subsystems
+		CommandBase.init();	
     	
     	// Add autonomous selector
 		autoChooser = new SendableChooser();

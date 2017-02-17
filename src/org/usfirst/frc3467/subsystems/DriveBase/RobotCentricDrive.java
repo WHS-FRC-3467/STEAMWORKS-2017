@@ -13,9 +13,7 @@ public class RobotCentricDrive extends CommandBase {
 	}
 
 	protected void execute() {
-		driveBase.driveRobotCentric(oi.getPrimeY(), oi.getPrimeX(), oi.getPrimeTwist());
-		
-		gyro.reportGyroValues();
+		driveBase.driveRobotCentric(oi.getDriveX(), oi.getDriveY(), oi.getDriveRotation());
 	}
 
 	protected boolean isFinished() {

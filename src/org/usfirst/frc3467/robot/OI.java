@@ -10,8 +10,8 @@ import org.usfirst.frc3467.subsystems.Example.ExampleCommand;
 
 import org.usfirst.frc3467.robot.control.Gamepad;
 
-import edu.wpi.first.wpilibj.Joystick;
 /*
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,39 +23,39 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 	
-	public static Joystick PrimaryStick;
-	public static Gamepad operator;
-	
-/*
- * Joystick Mappings (done elsewhere in code)
- * 
- * Joystick PrimaryStick - used for Robot-centric. Field-centric, or Arcade Drive
- * 
- * Gamepad getRightStickX() - used for manual drive of Intake rollers
- * Gamepad getLeftStickY() - used for manual drive of Catapult reset bar
- * 
- */
-	
+	public static Gamepad driverPad;
+	public static Gamepad operatorPad;
+
+	// Normal: Left Stick: X/Y Translation; Right Stick X: Rotation
+	// Reverse: Right Stick: X/Y Translation; Left Stick X: Rotation
+	public static boolean reverseDriveSticks = false; 
 	
 	public OI(){
-		PrimaryStick = new Joystick(0);
-		operator = new Gamepad(1);
+		driverPad = new Gamepad(0);
+		operatorPad = new Gamepad(1);
 	}
 	
-	
-	//Joystick Methods that return values for specific joystick axes
-	public double getPrimeY(){
-		return PrimaryStick.getY();
+	// Methods that return values for specific driving parameters
+	public double getDriveX(){
+		if (reverseDriveSticks)
+			return driverPad.getRightStickX();
+		else
+			return driverPad.getLeftStickX();
 	}
 	
-	public double getPrimeX(){
-		return PrimaryStick.getX();
+	public double getDriveY(){
+		if (reverseDriveSticks)
+			return driverPad.getRightStickY();
+		else
+			return driverPad.getLeftStickY();
 	}
 	
-	public double getPrimeTwist() {
-		return PrimaryStick.getTwist();
+	public double getDriveRotation() {
+		if (reverseDriveSticks)
+			return driverPad.getLeftStickX();
+		else
+			return driverPad.getRightStickX();
 	}
-	
 	
 	//Method that binds certain commands to certain buttons
 	public void BindCommands() {
