@@ -9,6 +9,20 @@ import org.usfirst.frc3467.subsystems.Example.ExampleCommand;
 */
 
 import org.usfirst.frc3467.robot.control.Gamepad;
+import org.usfirst.frc3467.robot.control.triggers.DPadDown;
+import org.usfirst.frc3467.robot.control.triggers.DPadLeft;
+import org.usfirst.frc3467.robot.control.triggers.DPadRight;
+import org.usfirst.frc3467.robot.control.triggers.DPadUp;
+import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
+import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
+import org.usfirst.frc3467.subsystems.Climber.Climber;
+import org.usfirst.frc3467.subsystems.DriveBase.FieldCentricDrive;
+import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
+import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
+import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
+import org.usfirst.frc3467.subsystems.Hopper.Hopper;
+import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
+import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 
 /*
 import edu.wpi.first.wpilibj.Joystick;
@@ -60,6 +74,49 @@ public class OI {
 	//Method that binds certain commands to certain buttons
 	public void BindCommands() {
 
+/*
+ 		new DPadDown(PrimaryGPad)
+		.whenActive(new FieldCentricDrive());
+		new DPadUp(PrimaryGPad)
+		.whenActive(new RobotCentricDrive());
+		new DPadLeft(PrimaryGPad)
+		.whenActive(new PrecisionMode());
+		new DPadRight(PrimaryGPad)
+		.whenActive(new RobotCentricDrive2());
+		new GamepadLeftTrigger(PrimaryGPad)
+		.whenActive(new RunSpinner());
+		new GamepadRightTrigger(PrimaryGPad)
+		.whenActive(new GearCatcher());
+		new JoystickButton(PrimaryGPad, Gamepad.leftBumper)
+		.whenPressed(new LowIntake());
+		new JoystickButton(PrimaryGPad, Gamepad.rightBumper)
+		.whenPressed(new GearCatcher2());
+		new JoystickButton(PrimaryGPad, Gamepad.xButton)
+		.whenPressed(new Climber());
+		
+		new GamepadLeftTrigger(operator)
+		.whenActive(new Hopper());
+		new GamepadRightTrigger(operator)
+		.whenActive(new LowIntake());
+		new JoystickButton(operator, Gamepad.leftBumper)
+		.whenPressed(new LowIntake());
+		new JoystickButton(operator, Gamepad.rightBumper)
+		.whenPressed(new LowIntake());
+		new JoystickButton(operator, Gamepad.xButton)
+		.whenPressed(new RunSpinner());
+		new JoystickButton(operator, Gamepad.bButton)
+		.whenPressed(new RunSpinner());
+		new JoystickButton(operator, Gamepad.yButton)
+		.whenPressed(new RunTower());
+		new JoystickButton(operator, Gamepad.aButton)
+		.whenPressed(new RunTower());
+		new JoystickButton(operator, Gamepad.startButton)
+		.whenPressed(new DropTractionPlate());
+		new DPadUp(operator)
+		.whenActive(new HighIntake());
+		new DPadDown(operator)
+		.whenActive(new HighIntake());
+*/		
 
 	    //// CREATING BUTTONS
 	    // One type of button is a joystick button which is any button on a joystick.
