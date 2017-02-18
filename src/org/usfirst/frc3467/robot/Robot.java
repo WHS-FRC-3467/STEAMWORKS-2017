@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3467.robot.commands.Autonomous.Autonomous1;
+import org.usfirst.frc3467.robot.commands.Autonomous.DriveSideways;
 import org.usfirst.frc3467.subsystems.FieldCamera.FieldCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import org.usfirst.frc3467.robot.CommandBase;
 	
 /**
@@ -39,10 +41,11 @@ public class Robot extends IterativeRobot {
     	// Add autonomous selector
 		autoChooser = new SendableChooser();
 		//autoChooser.addDefault("Default Auto", new ExampleCommand());
-		autoChooser.addObject("40 Point Auto", new Autonomous1());
+		autoChooser.addDefault("Sideways", new DriveSideways());
 		//autoChooser.addObject("Drive Straight", new AutoDriveStraight());
 		
 		SmartDashboard.putData("Auto", autoChooser);
+		CameraServer.getInstance().startAutomaticCapture();
     }
 	
     /**
@@ -60,7 +63,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
 
     	// schedule the autonomous command
-		autonomousCommand = (Command) autoChooser.getSelected();
+ 		autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 

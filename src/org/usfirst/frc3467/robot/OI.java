@@ -20,18 +20,20 @@ import org.usfirst.frc3467.subsystems.DriveBase.ArcadeDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.FieldCentricDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.PrecisionDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
+import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
 import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
 import org.usfirst.frc3467.subsystems.Hopper.Hopper;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 
-/*
+
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-*/
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -107,6 +109,9 @@ public class OI {
 		new DPadRight(driverPad)
 			.whenActive(new ArcadeDrive());
 		
+		//new JoystickButton(operatorPad, Gamepad.yButton)
+		//	.whenPressed(new FieldCentricDrive());
+		
 		// X Button Climber = some sort of automated climbing routine, latches climber axle
 		
 		// On joystick move = traction plates come up
@@ -135,10 +140,10 @@ public class OI {
 		new GamepadLeftTrigger(driverPad)
 		.whenActive(new RunSpinner());
 		new GamepadRightTrigger(driverPad)
-		.whenActive(new GearCatcher());
+		.whenActive(new GearCatcher()); */
 		new JoystickButton(driverPad, Gamepad.leftBumper)
-		.whenPressed(new LowIntake());
-		new JoystickButton(driverPad, Gamepad.rightBumper)
+		.whenPressed(new IntakeDrive());
+		/*new JoystickButton(driverPad, Gamepad.rightBumper)
 		.whenPressed(new GearCatcher2());
 		new JoystickButton(driverPad, Gamepad.xButton)
 		.whenPressed(new Climber());

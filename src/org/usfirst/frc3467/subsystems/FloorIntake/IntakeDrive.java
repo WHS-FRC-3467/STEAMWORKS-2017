@@ -5,9 +5,9 @@ import org.usfirst.frc3467.robot.CommandBase;
 
 public class IntakeDrive extends CommandBase {
 
-	private Value UpnDown;
+	private double UpnDown;
 	
-	public IntakeDrive(Value upDown) {
+	public IntakeDrive(double upDown) {
 		// TODO Auto-generated constructor stub
 		requires (flr_intake);
 		UpnDown = upDown;
@@ -17,19 +17,14 @@ public class IntakeDrive extends CommandBase {
 		requires (flr_intake);
 	}
 
-	
-	public IntakeDrive(double kintake) {
-		// TODO Auto-generated constructor stub
-	}
 	protected void initialize() {
 		// TODO Auto-generated method stub
 
 	}
-
 	
 	protected void execute() {
 		// TODO Auto-generated method stub
-		//flr_intake.setIntake(UpnDown);
+		flr_intake.DriveAuto(UpnDown);
 	}
 
 	
@@ -41,7 +36,7 @@ public class IntakeDrive extends CommandBase {
 	
 	protected void end() {
 		// TODO Auto-generated method stub
-		//flr_intake.setIntake(Value.kOff);
+		flr_intake.DriveAuto(0);
 	}
 
 	

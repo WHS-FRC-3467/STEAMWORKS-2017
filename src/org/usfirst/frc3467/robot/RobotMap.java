@@ -35,6 +35,7 @@ public class RobotMap {
 	// Shooter - Contact Wheels
 	public static final int shooterWheel_Talon1 = 9;
 	public static final int shooterWheel_Talon2 = 10;
+	public static final int shooterConv_Talon3 = 11;
 	
 	//
 	// VICTORS - PWM Control
@@ -47,7 +48,6 @@ public class RobotMap {
 	
 	// Shooter - Spinner & Conveyor
 	public static final int shooterSpin_Victor = 2;
-	public static final int shooterConv_Victor = 3;
 	
 	
 	// SOLENOIDS
