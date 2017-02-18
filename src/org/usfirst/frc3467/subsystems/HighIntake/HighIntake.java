@@ -15,6 +15,7 @@ public class HighIntake extends Subsystem {
 	
 //	highIntake = new DoubleSolenoid(3, 4);
 //	port numbers, placeholder values currently
+		upperIntake = new Victor(8);
 	}
 	public void extend(){
 		Pneumatics.getInstance().highIntakeExtend();

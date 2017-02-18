@@ -1,13 +1,15 @@
 package org.usfirst.frc3467.subsystems.Shooter;
 
-
 import org.usfirst.frc3467.robot.CommandBase;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RunSpinner extends CommandBase {
+/**
+ *
+ */
+public class RunShooter extends CommandBase {
 
-    public RunSpinner() {
+    public RunShooter() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -18,7 +20,7 @@ public class RunSpinner extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	shooter.SpinnerRun();
+    	shooter.ShooterRun();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,4 +37,3 @@ public class RunSpinner extends CommandBase {
     protected void interrupted() {
     }
 }
-
