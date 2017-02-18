@@ -16,7 +16,7 @@ public class FieldCentricDrive extends CommandBase {
 	}
 
 	protected void execute() {
-		driveBase.driveFieldCentric(oi.getDriveX()*2, oi.getDriveY(), oi.getDriveRotation(), gyro.getAngle());
+		driveBase.driveFieldCentric(oi.getDriveX(), oi.getDriveY(), oi.getDriveRotation(), gyro.getAngle());
 	}
 
 	protected boolean isFinished() {
