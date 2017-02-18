@@ -15,6 +15,7 @@ public class ArcadeDrive extends CommandBase {
 	protected void execute() {
 		//Applies the driveTank method to the driveBase object
 		driveBase.driveArcade(oi.getDriveY(), oi.getDriveRotation(), true);
+//		driveBase.driveTank(oi.driverPad.getLeftStickY(), oi.driverPad.getRightStickY(), true);
 	}
 
 	protected boolean isFinished() {
