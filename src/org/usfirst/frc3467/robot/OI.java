@@ -9,6 +9,21 @@ import org.usfirst.frc3467.subsystems.Example.ExampleCommand;
 */
 
 import org.usfirst.frc3467.robot.control.Gamepad;
+import org.usfirst.frc3467.robot.control.triggers.DPadDown;
+import org.usfirst.frc3467.robot.control.triggers.DPadLeft;
+import org.usfirst.frc3467.robot.control.triggers.DPadRight;
+import org.usfirst.frc3467.robot.control.triggers.DPadUp;
+import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
+import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
+import org.usfirst.frc3467.subsystems.Climber.Climber;
+import org.usfirst.frc3467.subsystems.DriveBase.DropTractionPlate;
+import org.usfirst.frc3467.subsystems.DriveBase.FieldCentricDrive;
+import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
+import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
+import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
+import org.usfirst.frc3467.subsystems.Hopper.Hopper;
+import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
+import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 
 /*
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,7 +33,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 */
 
 /**
- * This class is the glue that binds the controls on the physical operator
+ * This class is the glue that binds the controls on the physical operatorPad
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
@@ -60,6 +75,48 @@ public class OI {
 	//Method that binds certain commands to certain buttons
 	public void BindCommands() {
 
+		new DPadDown(driverPad)
+		.whenActive(new FieldCentricDrive());
+		new DPadUp(driverPad)
+		.whenActive(new RobotCentricDrive());
+/*		new DPadLeft(driverPad)
+		.whenActive(new PrecisionMode());
+		new DPadRight(driverPad)
+		.whenActive(new RobotCentricDrive2());
+		new GamepadLeftTrigger(driverPad)
+		.whenActive(new RunSpinner());
+		new GamepadRightTrigger(driverPad)
+		.whenActive(new GearCatcher());
+		new JoystickButton(driverPad, Gamepad.leftBumper)
+		.whenPressed(new LowIntake());
+		new JoystickButton(driverPad, Gamepad.rightBumper)
+		.whenPressed(new GearCatcher2());
+		new JoystickButton(driverPad, Gamepad.xButton)
+		.whenPressed(new Climber());
+		
+		new GamepadLeftTrigger(operatorPad)
+		.whenActive(new Hopper());
+		new GamepadRightTrigger(operatorPad)
+		.whenActive(new LowIntake());
+		new JoystickButton(operatorPad, Gamepad.leftBumper)
+		.whenPressed(new LowIntake());
+		new JoystickButton(operatorPad, Gamepad.rightBumper)
+		.whenPressed(new LowIntake());
+		new JoystickButton(operatorPad, Gamepad.xButton)
+		.whenPressed(new RunSpinner());
+		new JoystickButton(operatorPad, Gamepad.bButton)
+		.whenPressed(new RunSpinner());
+		new JoystickButton(operatorPad, Gamepad.yButton)
+		.whenPressed(new RunTower());
+		new JoystickButton(operatorPad, Gamepad.aButton)
+		.whenPressed(new RunTower());
+		new JoystickButton(operatorPad, Gamepad.startButton)
+		.whenPressed(new DropTractionPlate());
+		new DPadUp(operatorPad)
+		.whenActive(new HighIntake());
+		new DPadDown(operatorPad)
+		.whenActive(new HighIntake());
+*/		
 
 	    //// CREATING BUTTONS
 	    // One type of button is a joystick button which is any button on a joystick.
@@ -113,11 +170,11 @@ public class OI {
   	//Utility Bar
  
 		//Utility bar up
-		new GamepadLeftTrigger(operator)
+		new GamepadLeftTrigger(operatorPad)
 		.whenActive(new Bar_actuate(UtilityBar.kOut));
 		
 		//Utility bar down
-		new GamepadRightTrigger(operator)
+		new GamepadRightTrigger(operatorPad)
 			.whenActive(new Bar_actuate(UtilityBar.kIn));
 */	
 		
@@ -125,19 +182,19 @@ public class OI {
  	//Intake
  
 		//Eject Fast
-		new JoystickButton(operator, Gamepad.xButton)
+		new JoystickButton(operatorPad, Gamepad.xButton)
 			.whileHeld(new IntakeDrive(Intake.kEjectFast));
 		
 		//Intake Fast
-		new JoystickButton(operator, Gamepad.bButton)
+		new JoystickButton(operatorPad, Gamepad.bButton)
 			.whileHeld(new IntakeDrive(Intake.kIntakeFast));
 		
 		//Intake up
-		new JoystickButton(operator, Gamepad.aButton)
+		new JoystickButton(operatorPad, Gamepad.aButton)
 			.whenActive(new Roller_Actuate(true));
 		
 		//Intake down
-		new JoystickButton(operator, Gamepad.yButton)
+		new JoystickButton(operatorPad, Gamepad.yButton)
 			.whenActive(new Roller_Actuate(false));
 		
 		/*
@@ -153,19 +210,19 @@ public class OI {
 /*
  		// Gamepad DPad actions
  
-		new DPadUp(operator)
+		new DPadUp(operatorPad)
 			.whenActive(new SetBrakeMode(false));
 
 		// DPad Down
-		new DPadDown(operator)
+		new DPadDown(operatorPad)
 			.whenActive(new SetBrakeMode(true));
  		
 		 DPad Right
-		new DPadRight(operator)
+		new DPadRight(operatorPad)
 			.whenActive(new ShooterLatch());
 
 		DPad Left
-		new DPadLeft(operator)
+		new DPadLeft(operatorPad)
 			.whenActive(new ShooterClear());
  */
 		
