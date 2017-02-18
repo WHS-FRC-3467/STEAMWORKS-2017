@@ -27,7 +27,7 @@ public class HighIntake extends Subsystem {
 		upperIntake.set(1.0);
 	}
 	public void vixTract(Victor upperIntake){
-		upperIntake.set(-1.0);
+		upperIntake.set(-0.7);
 	}
     public void vicStop(Victor upperIntake){
     	upperIntake.set(0);
