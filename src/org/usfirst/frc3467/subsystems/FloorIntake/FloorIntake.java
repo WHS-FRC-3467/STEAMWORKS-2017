@@ -1,6 +1,7 @@
 
 package org.usfirst.frc3467.subsystems.FloorIntake;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc3467.robot.RobotMap;
@@ -38,7 +39,11 @@ public class FloorIntake extends Subsystem {
 	public void retract() {
 		Pneumatics.getInstance().floorIntakeRetract();
 	}
-	
-	
-	
+
+
+	public void setIntake(Value upnDown) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
