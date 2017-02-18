@@ -26,12 +26,12 @@ import org.usfirst.frc3467.subsystems.Hopper.Hopper;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 
-/*
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-*/
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -106,6 +106,9 @@ public class OI {
 		// DPad Right = Robot Centric Mode(No center wheel)
 		new DPadRight(driverPad)
 			.whenActive(new ArcadeDrive());
+		
+		//new JoystickButton(operatorPad, Gamepad.yButton)
+		//	.whenPressed(new FieldCentricDrive());
 		
 		// X Button Climber = some sort of automated climbing routine, latches climber axle
 		
