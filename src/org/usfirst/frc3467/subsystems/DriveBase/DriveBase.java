@@ -87,10 +87,15 @@ public class DriveBase extends Subsystem {
 	}
 	
     public void driveRobotCentric(double x, double y, double z) {
+    	
+    	double xScale = 2;
+    	
     	z = z*-1;
     	double left = -1.0*(y + (width/2) * z);
     	double right = y - (width/2) * z;
     	double center = x;
+    	
+    	center = center*xScale;
     	
     	lTalon1.set(left);
     	rTalon1.set(right);
@@ -101,20 +106,24 @@ public class DriveBase extends Subsystem {
 
     	double radAngle = angle * (3.14159 / 180.0); // Convert degrees to radians
     	
-    	z = z*-1;
+    	z = z;
     	
-    	double left =-1.0*( x * Math.sin(radAngle) +y * Math.cos(radAngle) + (width/2) * z);
-    	double right = x * Math.sin(radAngle) + y * Math.cos(radAngle) - (width/2) * z;
-    	double center = x * Math.cos(radAngle) + y * Math.sin(radAngle);
+    	double yNet  = y*Math.cos(radAngle)-x*Math.sin(radAngle);
     	
-    	SmartDashboard.putNumber("left val", left);
+    	//double left =-1.0*( x * Math.sin(radAngle) +y * Math.cos(radAngle) + (width/2) * z);
+    	//double right = x * Math.sin(radAngle) + y * Math.cos(radAngle) - (width/2) * z;
+    	double xNet = x * Math.cos(radAngle) + y * Math.sin(radAngle);
+    	
+    	driveRobotCentric(xNet, yNet, z);
+    	
+    	/*SmartDashboard.putNumber("left val", left);
     	SmartDashboard.putNumber("right val", right);
     	System.out.println("L:" + left + "R:" + right);
     	System.out.println("sin(a): "+Math.cos(radAngle));
     	
     	lTalon1.set(left);
     	rTalon1.set(right);
-    	cTalon1.set(center);
+    	cTalon1.set(center);*/
     }
     
 	// pass-thru to RobotDrive method (drive using one stick)

@@ -20,11 +20,13 @@ import org.usfirst.frc3467.subsystems.DriveBase.ArcadeDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.FieldCentricDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.PrecisionDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
+import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
 import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
 import org.usfirst.frc3467.subsystems.Hopper.Hopper;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.Shooter;
+
 
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -138,10 +140,10 @@ public class OI {
 		new GamepadLeftTrigger(driverPad)
 		.whenActive(new RunSpinner());
 		new GamepadRightTrigger(driverPad)
-		.whenActive(new GearCatcher());
+		.whenActive(new GearCatcher()); */
 		new JoystickButton(driverPad, Gamepad.leftBumper)
-		.whenPressed(new LowIntake());
-		new JoystickButton(driverPad, Gamepad.rightBumper)
+		.whenPressed(new IntakeDrive());
+		/*new JoystickButton(driverPad, Gamepad.rightBumper)
 		.whenPressed(new GearCatcher2());
 		new JoystickButton(driverPad, Gamepad.xButton)
 		.whenPressed(new Climber());
