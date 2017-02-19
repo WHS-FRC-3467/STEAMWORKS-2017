@@ -22,7 +22,7 @@ public class DriveBase extends Subsystem {
 	private TalonControlMode 	t_controlMode;
 	
 	public DriveBase() {
-		rTalon1 = new CANTalon(RobotMap.drivebase_LeftTalon);
+		rTalon1 = new CANTalon(RobotMap.drivebase_RightTalon);
 		rTalon2 = new CANTalon(RobotMap.drivebase_RightTalon2);
 		rTalon3 = new CANTalon(RobotMap.drivebase_RightTalon3);
 		lTalon1 = new CANTalon(RobotMap.drivebase_LeftTalon);
@@ -43,6 +43,8 @@ public class DriveBase extends Subsystem {
 		rTalon3.set(RobotMap.drivebase_RightTalon);
 		cTalon2.set(RobotMap.drivebase_CenterTalon);
 
+		lTalon1.reverseOutput(true);
+		
 		// Set encoders as feedback devices
 		lTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -65,7 +67,7 @@ public class DriveBase extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new RobotCentricDrive());
+        setDefaultCommand(new FieldCentricDrive());
     }
     
 	/**
@@ -85,9 +87,15 @@ public class DriveBase extends Subsystem {
 	}
 	
     public void driveRobotCentric(double x, double y, double z) {
-    	double left = y + (width/2) * z;
+    	
+    	double xScale = 2;
+    	
+    	z = z*-1;
+    	double left = -1.0*(y + (width/2) * z);
     	double right = y - (width/2) * z;
     	double center = x;
+    	
+    	center = center*xScale;
     	
     	lTalon1.set(left);
     	rTalon1.set(right);
@@ -98,13 +106,24 @@ public class DriveBase extends Subsystem {
 
     	double radAngle = angle * (3.14159 / 180.0); // Convert degrees to radians
     	
-    	double left = x * Math.acos(radAngle) + y * Math.asin(radAngle) + (width/2) * z;
-    	double right = x * Math.asin(radAngle) + y * Math.acos(radAngle) - (width/2) * z;
-    	double center = x * Math.acos(radAngle) + y * Math.asin(radAngle);
+    	z = z;
+    	
+    	double yNet  = y*Math.cos(radAngle)-x*Math.sin(radAngle);
+    	
+    	//double left =-1.0*( x * Math.sin(radAngle) +y * Math.cos(radAngle) + (width/2) * z);
+    	//double right = x * Math.sin(radAngle) + y * Math.cos(radAngle) - (width/2) * z;
+    	double xNet = x * Math.cos(radAngle) + y * Math.sin(radAngle);
+    	
+    	driveRobotCentric(xNet, yNet, z);
+    	
+    	/*SmartDashboard.putNumber("left val", left);
+    	SmartDashboard.putNumber("right val", right);
+    	System.out.println("L:" + left + "R:" + right);
+    	System.out.println("sin(a): "+Math.cos(radAngle));
     	
     	lTalon1.set(left);
     	rTalon1.set(right);
-    	cTalon1.set(center);
+    	cTalon1.set(center);*/
     }
     
 	// pass-thru to RobotDrive method (drive using one stick)

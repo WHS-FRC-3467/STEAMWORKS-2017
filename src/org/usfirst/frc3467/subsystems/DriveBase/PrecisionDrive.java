@@ -2,9 +2,11 @@ package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
-public class ArcadeDrive extends CommandBase {
+public class PrecisionDrive extends CommandBase {
 	
-	public ArcadeDrive() {
+	static double scaleFactor = 0.1;
+	
+	public PrecisionDrive() {
 		requires(driveBase);
 		this.setInterruptible(true);
 	}
@@ -13,9 +15,9 @@ public class ArcadeDrive extends CommandBase {
 	}
 
 	protected void execute() {
-		//Applies the driveTank method to the driveBase object
-		driveBase.driveArcade(oi.getDriveY(), oi.getDriveRotation(), true);
-//		driveBase.driveTank(oi.driverPad.getLeftStickY(), oi.driverPad.getRightStickY(), true);
+		driveBase.driveRobotCentric(oi.getDriveX() * scaleFactor,
+									oi.getDriveY() * scaleFactor,
+									oi.getDriveRotation() * scaleFactor);
 	}
 
 	protected boolean isFinished() {
@@ -23,11 +25,9 @@ public class ArcadeDrive extends CommandBase {
 	}
 
 	protected void end() {
-		
 	}
 
 	protected void interrupted() {
 		end();
 	}
-
 }

@@ -9,13 +9,31 @@ import org.usfirst.frc3467.subsystems.Example.ExampleCommand;
 */
 
 import org.usfirst.frc3467.robot.control.Gamepad;
+import org.usfirst.frc3467.robot.control.triggers.DPadDown;
+import org.usfirst.frc3467.robot.control.triggers.DPadLeft;
+import org.usfirst.frc3467.robot.control.triggers.DPadRight;
+import org.usfirst.frc3467.robot.control.triggers.DPadUp;
+import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
+import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
+import org.usfirst.frc3467.subsystems.Climber.Climber;
+import org.usfirst.frc3467.subsystems.DriveBase.ArcadeDrive;
+import org.usfirst.frc3467.subsystems.DriveBase.FieldCentricDrive;
+import org.usfirst.frc3467.subsystems.DriveBase.PrecisionDrive;
+import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
+import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
+import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
+import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
+import org.usfirst.frc3467.subsystems.Hopper.Hopper;
+import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
+import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 
-/*
+
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-*/
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -59,7 +77,100 @@ public class OI {
 	
 	//Method that binds certain commands to certain buttons
 	public void BindCommands() {
+		
+		/*
+			Driver GamePad
+		*/
+		
+		// Left Trigger: Shoot = run shooter, run spinner, run tower, run bottom intake, run top intake, drop traction plates, actuate bottom intake in, actuate top intake out
+		
+		// Left Bumper: Intake = bottom intake out, bottom intake running
+		
+		// Right Trigger: GearCatcher = toggles gear claw angle
+		
+		// Right Bumper: GearClaw = clamp/release claw
+		
+		/*
+		 * DPad(Directional Pad)
+		*/
+		// DPad Up = Field Centric Mode
+		new DPadUp(driverPad)
+			.whenActive(new RobotCentricDrive());
+		
+		// DPad Down = Robot Centric Mode
+ 		new DPadDown(driverPad)
+ 			.whenActive(new FieldCentricDrive());
+		
+		// DPad Left = Precision Mode
+		new DPadLeft(driverPad)
+			.whenActive(new PrecisionDrive());
+		
+		// DPad Right = Robot Centric Mode(No center wheel)
+		new DPadRight(driverPad)
+			.whenActive(new ArcadeDrive());
+		
+		//new JoystickButton(operatorPad, Gamepad.yButton)
+		//	.whenPressed(new FieldCentricDrive());
+		
+		// X Button Climber = some sort of automated climbing routine, latches climber axle
+		
+		// On joystick move = traction plates come up
+		
+		/*
+		 * Operator GamePad
+		 */
 
+		//LT = Toggle Hopper
+		//RT = Bottom intake run/Top intake run
+		//LB = Bottom intake in
+		//RB = Bottom intake out
+		//X Button = RunSpinner Left
+		//B Button = RunSpinner RIght
+		//Y Button = RunTower Up
+		//A Button = RunTower Down
+		//Start Button = Drop Traction Plate
+		//Select Button = Rise Traction Plate
+		//DPad
+		//DPad Up = Top Intake In
+		//DPad Down  Top Intake Out
+
+
+
+/*
+		new GamepadLeftTrigger(driverPad)
+		.whenActive(new RunSpinner());
+		new GamepadRightTrigger(driverPad)
+		.whenActive(new GearCatcher()); */
+		new JoystickButton(driverPad, Gamepad.leftBumper)
+		.whenPressed(new IntakeDrive());
+		/*new JoystickButton(driverPad, Gamepad.rightBumper)
+		.whenPressed(new GearCatcher2());
+		new JoystickButton(driverPad, Gamepad.xButton)
+		.whenPressed(new Climber());
+		
+		new GamepadLeftTrigger(operatorPad)
+		.whenActive(new Hopper());
+		new GamepadRightTrigger(operatorPad)
+		.whenActive(new LowIntake());
+		new JoystickButton(operatorPad, Gamepad.leftBumper)
+		.whenPressed(new LowIntake());
+		new JoystickButton(operatorPad, Gamepad.rightBumper)
+		.whenPressed(new LowIntake());
+		new JoystickButton(operatorPad, Gamepad.xButton)
+		.whenPressed(new RunSpinner());
+		new JoystickButton(operatorPad, Gamepad.bButton)
+		.whenPressed(new RunSpinner());
+		new JoystickButton(operatorPad, Gamepad.yButton)
+		.whenPressed(new RunTower());
+		new JoystickButton(operatorPad, Gamepad.aButton)
+		.whenPressed(new RunTower());
+		new JoystickButton(operatorPad, Gamepad.startButton)
+		.whenPressed(new DropTractionPlate());
+		new DPadUp(operatorPad)
+		.whenActive(new HighIntake());
+		new DPadDown(operatorPad)
+		.whenActive(new HighIntake());
+*/		
 
 	    //// CREATING BUTTONS
 	    // One type of button is a joystick button which is any button on a joystick.
