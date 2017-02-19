@@ -26,7 +26,7 @@ public class ClimberDrive extends CommandBase {
 		double speed = 0;
 		
 		if(velocity == 0){
-			speed = oi.getPrimeX();
+			speed = oi.operatorPad.getLeftStickY();
 			
 			//deadband
 			if (speed > -0.08 && speed < 0.08) speed = 0;

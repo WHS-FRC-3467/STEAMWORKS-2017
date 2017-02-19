@@ -3,60 +3,41 @@ package org.usfirst.frc3467.subsystems.FloorIntake;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import org.usfirst.frc3467.robot.RobotMap;
+import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 
 import com.ctre.CANTalon;
 
 public class FloorIntake extends Subsystem {
 	
 	// Controls display to SmartDashboard
-		private static final boolean debugging = true;
+	private static final boolean debugging = true;
 	
-	public static final double kIntake = 1;
-	public static final double kStop = 0;
-
 	public CANTalon Lo_intake;
-	public DoubleSolenoid rollerSolenoid;
 	
 	public FloorIntake() {
-
-	Lo_intake = new CANTalon(RobotMap.LIntakeMotor);
-		rollerSolenoid = new DoubleSolenoid(RobotMap.l_intake_extend, 
-											RobotMap.l_intake_retract);
-		
+		Lo_intake = new CANTalon(RobotMap.floorIntake_Victor);
 	}
 
 	protected void initDefaultCommand() {
 		this.setDefaultCommand(new IntakeDrive());
 	}
-	public void DriveAuto(double Speed) {
+	public void DriveAuto(double speed) {
 		// TODO Auto-generated method stub
 		if (debugging) {
-	    	SmartDashboard.putNumber("Intake Speed", Speed);
+	    	SmartDashboard.putNumber("Floor Intake Speed", speed);
 		}
-			Lo_intake.set(Speed);
+		Lo_intake.set(speed);
 	}
 	
 	// Extend or Retract Intake
 	public void extend() {
-		rollerSolenoid.set(DoubleSolenoid.Value.kForward);
+		Pneumatics.getInstance().floorIntakeExtend();
 	}
 	
 	public void retract() {
-		rollerSolenoid.set(DoubleSolenoid.Value.kReverse);
+		Pneumatics.getInstance().floorIntakeRetract();
 	}
-	
-	public void hold() {
-		rollerSolenoid.set(DoubleSolenoid.Value.kOff);		
-	}
-
-	public void setIntake(Value upnDown) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 	
 	

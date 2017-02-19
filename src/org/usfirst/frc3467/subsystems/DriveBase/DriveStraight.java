@@ -120,7 +120,7 @@ public class DriveStraight extends CommandBase {
 			driveBase.drive(d, m_curveValue);
 		}
 			else  {
-				driveBase.drive(d, -(gyro.getGyroYaw()/240.));
+				driveBase.drive(d, -(gyro.getAngle()/240.));
 				}
 		}
 	
@@ -129,7 +129,7 @@ public class DriveStraight extends CommandBase {
     protected void initialize() {
     	// Get everything in a safe starting state.
         driveBase.resetEncoders();
-        gyro.gyroReset();
+       // gyro.gyroReset();
     	m_pid.reset();
         m_pid.enable();
     }

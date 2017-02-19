@@ -29,7 +29,7 @@ public class IntakeDrive extends CommandBase {
 	
 	protected void execute() {
 		// TODO Auto-generated method stub
-		flr_intake.setIntake(UpnDown);
+		//flr_intake.setIntake(UpnDown);
 	}
 
 	
@@ -41,7 +41,7 @@ public class IntakeDrive extends CommandBase {
 	
 	protected void end() {
 		// TODO Auto-generated method stub
-		flr_intake.setIntake(Value.kOff);
+		//flr_intake.setIntake(Value.kOff);
 	}
 
 	

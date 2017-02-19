@@ -19,12 +19,12 @@ public class Climber extends Subsystem {
 	public static final double kStop = 0;
 
 	//Roller class objects
-	public CANTalon climbMotor;
+//	public CANTalon climbMotor;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public Climber(){
-		climbMotor = new CANTalon(RobotMap.climbMotor);
+//		climbMotor = new CANTalon(RobotMap.climbMotor);
 	}
     public void initDefaultCommand() {
 
@@ -37,7 +37,7 @@ public class Climber extends Subsystem {
 		if (debugging) {
 	    	SmartDashboard.putNumber("Climbing Speed", speed);
 		}
-		climbMotor.set(speed);
+//		climbMotor.set(speed);
 		
 	}
 }

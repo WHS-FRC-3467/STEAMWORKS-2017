@@ -43,12 +43,24 @@ public class DriveBase extends Subsystem {
 		rTalon3.set(RobotMap.drivebase_RightTalon);
 		cTalon2.set(RobotMap.drivebase_CenterTalon);
 
+		// Set encoders as feedback devices
+		lTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		cTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		
 		// Set default control Modes for Master CANTalons
-		// (This will change to Speed control once encoders are installed)
+		// (This will change to Speed control once encoders are installed and calibrated)
 		setControlMode(TalonControlMode.PercentVbus);
 
 		// Set up a RobotDrive object for normal driving
 		dBase = new RobotDrive(lTalon1, rTalon1);
+		
+		//RobotDrive Parameters
+		dBase.setSafetyEnabled(true);
+		dBase.setExpiration(1.0);
+		dBase.setSensitivity(0.5);
+		dBase.setMaxOutput(1.0);
+
 	}
 
     public void initDefaultCommand() {
@@ -65,10 +77,13 @@ public class DriveBase extends Subsystem {
 		cTalon1.changeControlMode(controlMode);
 		
 		// Save control mode so we will know if we have to set it back later
-		this.t_controlMode = controlMode;
+		t_controlMode = controlMode;
 	}
 	
-
+	public TalonControlMode getControlMode() {
+		return t_controlMode;
+	}
+	
     public void driveRobotCentric(double x, double y, double z) {
     	double left = y + (width/2) * z;
     	double right = y - (width/2) * z;
