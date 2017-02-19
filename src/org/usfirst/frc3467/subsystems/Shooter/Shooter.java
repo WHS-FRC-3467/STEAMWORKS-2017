@@ -29,7 +29,7 @@ public class Shooter extends Subsystem {
     	beltTalon.set(.7);
     }
     
-    public void ShooterRun() {
+    public void Shoot() {
     	shooterTalon1.set(.7);
     	shooterTalon2.set(.7);
     }
