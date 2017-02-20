@@ -1,10 +1,8 @@
 package org.usfirst.frc3467.robot;
 
 import java.util.Vector;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 import org.usfirst.frc3467.robot.OI;
 import org.usfirst.frc3467.subsystems.Brownout.Brownout;
 import org.usfirst.frc3467.subsystems.Climber.Climber;

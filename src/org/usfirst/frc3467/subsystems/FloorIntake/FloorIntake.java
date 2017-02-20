@@ -13,7 +13,7 @@ import com.ctre.CANTalon;
 public class FloorIntake extends Subsystem {
 	
 	// Controls display to SmartDashboard
-	private static final boolean debugging = true;
+	private static final boolean debugging = false;
 	
 	public Victor Lo_intake;
 	
@@ -24,6 +24,7 @@ public class FloorIntake extends Subsystem {
 	protected void initDefaultCommand() {
 		this.setDefaultCommand(new IntakeDrive());
 	}
+	
 	public void DriveAuto(double speed) {
 		// TODO Auto-generated method stub
 		if (debugging) {

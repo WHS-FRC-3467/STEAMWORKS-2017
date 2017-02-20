@@ -10,7 +10,7 @@ public class HopperActuate extends CommandBase{
 	public HopperActuate(boolean actuate){
 		requires(hopper);
 		INandOut = actuate;
-		setTimeout(1.0);
+		setTimeout(2.0);
 	}
 	
 	public HopperActuate(){

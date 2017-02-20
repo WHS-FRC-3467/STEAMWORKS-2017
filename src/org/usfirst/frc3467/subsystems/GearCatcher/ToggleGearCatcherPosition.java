@@ -1,5 +1,8 @@
 package org.usfirst.frc3467.subsystems.GearCatcher;
 
+import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
+
+import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc3467.robot.CommandBase;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,6 +23,7 @@ public class ToggleGearCatcherPosition extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+
     	boolean isUp = gearcatch.getCatcherState();
     	
     	if (isUp == true)
