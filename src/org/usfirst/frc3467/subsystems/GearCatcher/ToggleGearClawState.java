@@ -1,18 +1,17 @@
 package org.usfirst.frc3467.subsystems.GearCatcher;
 
-import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
+import org.usfirst.frc3467.robot.CommandBase;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class Pivot extends Command {
+public class ToggleGearClawState extends CommandBase {
 
-	private boolean ACTUATE;
-	
-    public Pivot(boolean actuate) {
-        ACTUATE = actuate;
+    public ToggleGearClawState() {
+        requires (pneumatics);
+        requires (gearcatch);
     }
 
     // Called just before this Command runs the first time
@@ -21,15 +20,20 @@ public class Pivot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(ACTUATE)
-    		Pneumatics.getInstance().gearCatchDown();
+    	boolean isClosed = gearcatch.getClawState();
+    	
+    	if (isClosed == true)
+    		pneumatics.gearClawRelease();
     	else
-    		Pneumatics.getInstance().gearCatchUp();
+    		pneumatics.gearClawHold();
+
+    	gearcatch.setClawState(!isClosed);
+    	SmartDashboard.putString("Gear Claw Position", isClosed ? "CLOSED" : "OPEN");
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
@@ -39,5 +43,6 @@ public class Pivot extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
