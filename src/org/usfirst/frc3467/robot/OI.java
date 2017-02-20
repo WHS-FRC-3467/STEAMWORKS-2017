@@ -22,13 +22,28 @@ import org.usfirst.frc3467.subsystems.DriveBase.PrecisionDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
 import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
+import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
+import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
 import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
 import org.usfirst.frc3467.subsystems.Hopper.Hopper;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorRetract;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearDown;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearHold;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearRelease;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearUp;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.highExtend;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.highRetract;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.hopperContract;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.hopperExpand;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.pusherExtend;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.pusherRetract;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionDeploy;
+import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 
-
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -87,8 +102,13 @@ public class OI {
 		// Left Bumper: Intake = bottom intake out, bottom intake running
 		
 		// Right Trigger: GearCatcher = toggles gear claw angle
+		new GamepadRightTrigger(driverPad)
+			.whenActive(new ToggleGearCatcherPosition());
 		
 		// Right Bumper: GearClaw = clamp/release claw
+		new JoystickButton(driverPad, Gamepad.rightBumper)
+		.whenActive(new ToggleGearClawState());
+	
 		
 		/*
 		 * DPad(Directional Pad)
@@ -290,11 +310,22 @@ public class OI {
 		SmartDashboard.putData("Vision: Target Goal", new TargetGoal());
 		SmartDashboard.putData("Vision: AimBot", new AimBot());
 		SmartDashboard.putData("Shooter MP", new ShootMP());
-		
-		//Test Buttons
-		SmartDashboard.putData("Test AutoTarget", new AutoTarget());
-		SmartDashboard.putData("Test Motion Profiling", new DriveMotionProfiling(90, 0.1, 0.1, 3, true));
 */
+		
+		// Pneumatic Test Buttons
+		SmartDashboard.putData("tractionFeetRetract", new tractionRetract());
+		SmartDashboard.putData("tractionFeetDeploy", new tractionDeploy());
+		SmartDashboard.putData("floorIntakeRetract", new floorRetract());
+		SmartDashboard.putData("floorIntakeExtend", new floorExtend());
+		SmartDashboard.putData("highIntakeRetract", new highRetract());
+		SmartDashboard.putData("highIntakeExtend", new highExtend());
+		SmartDashboard.putData("gearCatchUp", new gearUp());
+		SmartDashboard.putData("gearCatchDown", new gearDown());
+		SmartDashboard.putData("gearClawHold", new gearHold());
+		SmartDashboard.putData("gearClawRelease", new gearRelease());
+		SmartDashboard.putData("hopperContract", new hopperContract());
+		SmartDashboard.putData("hopperExpand", new hopperExpand());
+		SmartDashboard.putData("pusherBarsRetract", new pusherRetract());
+		SmartDashboard.putData("pusherBarsExtend", new pusherExtend());
 	}
-
 }
