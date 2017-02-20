@@ -22,7 +22,6 @@ import org.usfirst.frc3467.subsystems.DriveBase.PrecisionDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
 import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
-import org.usfirst.frc3467.subsystems.GearCatcher.Pivot;
 import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
 import org.usfirst.frc3467.subsystems.Hopper.Hopper;
 import org.usfirst.frc3467.subsystems.Hopper.HopperActuate;
@@ -138,8 +137,6 @@ public class OI {
 
 
 
-		new GamepadLeftTrigger(driverPad).whenActive(new Pivot(false));
-		new GamepadRightTrigger(driverPad).whenActive(new Pivot(true)); 
 		new JoystickButton(driverPad, Gamepad.leftBumper)
 		.whileHeld(new IntakeDrive(.5));
 		//new JoystickButton(driverPad, Gamepad.rightBumper)
