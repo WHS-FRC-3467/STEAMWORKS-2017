@@ -1,10 +1,9 @@
 
 package org.usfirst.frc3467.subsystems.FloorIntake;
 
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc3467.robot.RobotMap;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 
@@ -15,10 +14,10 @@ public class FloorIntake extends Subsystem {
 	// Controls display to SmartDashboard
 	private static final boolean debugging = true;
 	
-	public Victor Lo_intake;
+	public CANTalon Lo_intake;
 	
 	public FloorIntake() {
-		Lo_intake = new Victor(RobotMap.floorIntake_Victor);
+		Lo_intake = new CANTalon(RobotMap.floorIntake_Victor);
 	}
 
 	protected void initDefaultCommand() {
@@ -40,7 +39,11 @@ public class FloorIntake extends Subsystem {
 	public void retract() {
 		Pneumatics.getInstance().floorIntakeRetract();
 	}
-	
-	
-	
+
+
+	public void setIntake(Value upnDown) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
