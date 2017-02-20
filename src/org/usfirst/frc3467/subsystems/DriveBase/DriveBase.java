@@ -43,8 +43,6 @@ public class DriveBase extends Subsystem {
 		rTalon3.set(RobotMap.drivebase_RightTalon);
 		cTalon2.set(RobotMap.drivebase_CenterTalon);
 
-		lTalon1.reverseOutput(true);
-		
 		// Set encoders as feedback devices
 		lTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);

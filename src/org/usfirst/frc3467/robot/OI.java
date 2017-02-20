@@ -26,6 +26,8 @@ import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
 import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
 import org.usfirst.frc3467.subsystems.Hopper.Hopper;
+import org.usfirst.frc3467.subsystems.Hopper.HopperActuate;
+
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorRetract;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearDown;
@@ -156,21 +158,11 @@ public class OI {
 
 
 
-/*
-		new GamepadLeftTrigger(driverPad)
-		.whenActive(new RunSpinner());
-		new GamepadRightTrigger(driverPad)
-		.whenActive(new GearCatcher()); */
 		new JoystickButton(driverPad, Gamepad.leftBumper)
-		.whenPressed(new IntakeDrive());
-		/*new JoystickButton(driverPad, Gamepad.rightBumper)
-		.whenPressed(new GearCatcher2());
-		new JoystickButton(driverPad, Gamepad.xButton)
-		.whenPressed(new Climber());
-		
+		.whileHeld(new IntakeDrive(.5));
 		new GamepadLeftTrigger(operatorPad)
-		.whenActive(new Hopper());
-		new GamepadRightTrigger(operatorPad)
+		.whenActive(new HopperActuate(true));
+		/*new GamepadRightTrigger(operatorPad)
 		.whenActive(new LowIntake());
 		new JoystickButton(operatorPad, Gamepad.leftBumper)
 		.whenPressed(new LowIntake());

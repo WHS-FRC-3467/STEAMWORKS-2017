@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc3467.robot.commands.Autonomous.Autonomous1;
 import org.usfirst.frc3467.robot.commands.Autonomous.DriveSideways;
 import org.usfirst.frc3467.subsystems.FieldCamera.FieldCamera;
 import edu.wpi.first.wpilibj.CameraServer;
