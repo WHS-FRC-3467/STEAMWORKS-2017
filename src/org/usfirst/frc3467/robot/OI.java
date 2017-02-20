@@ -22,8 +22,10 @@ import org.usfirst.frc3467.subsystems.DriveBase.PrecisionDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
 import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
+import org.usfirst.frc3467.subsystems.GearCatcher.Pivot;
 import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
 import org.usfirst.frc3467.subsystems.Hopper.Hopper;
+import org.usfirst.frc3467.subsystems.Hopper.HopperActuate;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 
@@ -136,21 +138,16 @@ public class OI {
 
 
 
-/*
-		new GamepadLeftTrigger(driverPad)
-		.whenActive(new RunSpinner());
-		new GamepadRightTrigger(driverPad)
-		.whenActive(new GearCatcher()); */
+		new GamepadLeftTrigger(driverPad).whenActive(new Pivot(false));
+		new GamepadRightTrigger(driverPad).whenActive(new Pivot(true)); 
 		new JoystickButton(driverPad, Gamepad.leftBumper)
-		.whenPressed(new IntakeDrive());
-		/*new JoystickButton(driverPad, Gamepad.rightBumper)
-		.whenPressed(new GearCatcher2());
-		new JoystickButton(driverPad, Gamepad.xButton)
-		.whenPressed(new Climber());
+		.whileHeld(new IntakeDrive(.5));
+		//new JoystickButton(driverPad, Gamepad.rightBumper)
+		//.whenPressed(new GearCatcher2());
 		
 		new GamepadLeftTrigger(operatorPad)
-		.whenActive(new Hopper());
-		new GamepadRightTrigger(operatorPad)
+		.whenActive(new HopperActuate(true));
+		/*new GamepadRightTrigger(operatorPad)
 		.whenActive(new LowIntake());
 		new JoystickButton(operatorPad, Gamepad.leftBumper)
 		.whenPressed(new LowIntake());
@@ -188,7 +185,7 @@ public class OI {
 	    // three ways:
 	    
 	    // Start the command when the button is pressed and let it run the command
-	    // until it is finished as determined by it's isFinished method.
+	    // until it is finished as determined by its isFinished method.
 	    // button.whenPressed(new ExampleCommand());
 	    
 	    // Run the command while the button is being held down and interrupt it once

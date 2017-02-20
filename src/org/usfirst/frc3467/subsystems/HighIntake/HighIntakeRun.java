@@ -1,18 +1,16 @@
-package org.usfirst.frc3467.subsystems.GearCatcher;
+package org.usfirst.frc3467.subsystems.HighIntake;
 
-import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
-
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc3467.robot.CommandBase;
 
 /**
  *
  */
-public class Pivot extends Command {
+public class HighIntakeRun extends CommandBase {
 
-	private boolean ACTUATE;
+	private double SPEED;
 	
-    public Pivot(boolean actuate) {
-        ACTUATE = actuate;
+    public HighIntakeRun(double speed) {
+        SPEED = speed;
     }
 
     // Called just before this Command runs the first time
@@ -21,10 +19,7 @@ public class Pivot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(ACTUATE)
-    		Pneumatics.getInstance().gearCatchDown();
-    	else
-    		Pneumatics.getInstance().gearCatchUp();
+    	hi_intake.HIntakeRun(SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()

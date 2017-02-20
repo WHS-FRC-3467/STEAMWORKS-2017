@@ -2,11 +2,9 @@
 package org.usfirst.frc3467.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 import org.usfirst.frc3467.robot.RobotMap;
 import org.usfirst.frc3467.subsystems.Brownout.Brownout;
 import org.usfirst.frc3467.subsystems.Brownout.PowerConsumer;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
