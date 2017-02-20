@@ -1,6 +1,5 @@
 package org.usfirst.frc3467.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
