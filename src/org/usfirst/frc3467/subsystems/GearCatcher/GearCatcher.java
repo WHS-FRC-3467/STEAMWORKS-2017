@@ -7,12 +7,26 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GearCatcher extends Subsystem {
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
+	boolean catcherState = true; // true = up
+	boolean clawState = true; // true = closed
+	
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+    }
+    
+    public boolean getCatcherState() {
+    	return catcherState;
+    }
+    
+    public void setCatcherState(boolean newState) {
+    	catcherState = newState;
+    }
+
+    public boolean getClawState() {
+    	return clawState;
+    }
+    
+    public void setClawState(boolean newState) {
+    	clawState = newState;
     }
 }
 
