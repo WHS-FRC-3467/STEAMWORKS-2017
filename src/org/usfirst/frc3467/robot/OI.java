@@ -22,6 +22,7 @@ import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
 import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
+import org.usfirst.frc3467.subsystems.HighIntake.HighIntakeRun;
 import org.usfirst.frc3467.subsystems.Hopper.ToggleHopper;
 
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
@@ -103,7 +104,8 @@ public class OI {
 		// Right Bumper: GearClaw = clamp/release claw
 		new JoystickButton(driverPad, Gamepad.rightBumper)
 		.whenActive(new ToggleGearClawState());
-	
+		
+		
 		
 		/*
 		 * DPad(Directional Pad)
@@ -149,8 +151,10 @@ public class OI {
 		.whileHeld(new IntakeDrive(.5));
 
 		// LeftTrigger - Toggle Hopper
+		//new GamepadLeftTrigger(operatorPad)
+		//.whenActive(new ToggleHopper());
 		new GamepadLeftTrigger(operatorPad)
-		.whenActive(new ToggleHopper());
+		.whenActive(new HighIntakeRun(.5));
 
 		//LB = Bottom intake in
 		//RB = Bottom intake out
