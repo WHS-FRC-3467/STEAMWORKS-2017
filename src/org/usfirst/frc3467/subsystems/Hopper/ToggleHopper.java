@@ -1,14 +1,17 @@
-package org.usfirst.frc3467.subsystems.Shooter;
+package org.usfirst.frc3467.subsystems.Hopper;
 
 import org.usfirst.frc3467.robot.CommandBase;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class RunShooter extends CommandBase {
+public class ToggleHopper extends CommandBase {
 
-    public RunShooter() {
-        requires(shooter);
+    public ToggleHopper() {
+        requires (pneumatics);
+        requires (hopper);
     }
 
     // Called just before this Command runs the first time
@@ -17,21 +20,29 @@ public class RunShooter extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	shooter.ShooterRun(.7);
+    	boolean isClosed = hopper.getHopperState();
+    	
+    	if (isClosed == true)
+    		pneumatics.hopperExpand();
+    	else
+    		pneumatics.hopperContract();
+
+    	hopper.setHopperState(!isClosed);
+    	SmartDashboard.putString("Hopper Position", isClosed ? "CLOSED" : "OPEN");
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.ShooterRun(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

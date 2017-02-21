@@ -57,8 +57,8 @@ public class RobotMap {
 	public static final int traction_module = 0;
 	
 	// Hopper 
-	public static final int hopper_solenoid_expand = 0;
-	public static final int hopper_solenoid_contract = 1;
+	public static final int hopper_solenoid_contract = 0;
+	public static final int hopper_solenoid_expand = 1;
 
 	// High Intake
 	public static final int highintake_solenoid_retract = 2;
