@@ -8,6 +8,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
+import org.usfirst.frc3467.subsystems.Pneumatics.*;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -78,7 +79,11 @@ public class Shooter extends Subsystem {
     }
     public void tractionExtend() {
     	Pneumatics.getInstance().tractionFeetDeploy();
+<<<<<<< HEAD
     }
+=======
+}
+>>>>>>> refs/remotes/origin/master
     public void tractionRetract() {
     	Pneumatics.getInstance().tractionFeetRetract();
     }
