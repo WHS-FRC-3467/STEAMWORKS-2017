@@ -7,8 +7,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Hopper extends Subsystem {
 	
+	boolean hopperState = true; // true = closed
+	
 	public Hopper(){
 	}
+	
+    public boolean getHopperState() {
+    	return hopperState;
+    }
+    
+    public void setHopperState(boolean newState) {
+    	hopperState = newState;
+    }
 
 	public void expand(){
 		Pneumatics.getInstance().hopperExpand();
@@ -17,9 +27,7 @@ public class Hopper extends Subsystem {
 		Pneumatics.getInstance().hopperContract();
 	}
 	
-	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
 		
 	}
 

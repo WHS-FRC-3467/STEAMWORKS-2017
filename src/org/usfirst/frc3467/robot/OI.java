@@ -15,18 +15,14 @@ import org.usfirst.frc3467.robot.control.triggers.DPadRight;
 import org.usfirst.frc3467.robot.control.triggers.DPadUp;
 import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
-import org.usfirst.frc3467.subsystems.Climber.Climber;
 import org.usfirst.frc3467.subsystems.DriveBase.ArcadeDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.FieldCentricDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.PrecisionDrive;
 import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
 import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
-import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
-import org.usfirst.frc3467.subsystems.HighIntake.HighIntake;
-import org.usfirst.frc3467.subsystems.Hopper.Hopper;
-import org.usfirst.frc3467.subsystems.Hopper.HopperActuate;
+import org.usfirst.frc3467.subsystems.Hopper.ToggleHopper;
 
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorRetract;
@@ -42,12 +38,9 @@ import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.pusherExtend;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.pusherRetract;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionDeploy;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
-import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
-import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
+//import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -142,10 +135,6 @@ public class OI {
 		 * Operator GamePad
 		 */
 
-		//LT = Toggle Hopper
-		//RT = Bottom intake run/Top intake run
-		//LB = Bottom intake in
-		//RB = Bottom intake out
 		//X Button = RunSpinner Left
 		//B Button = RunSpinner RIght
 		//Y Button = RunTower Up
@@ -156,12 +145,17 @@ public class OI {
 		//DPad Up = Top Intake In
 		//DPad Down  Top Intake Out
 
-
-
 		new JoystickButton(driverPad, Gamepad.leftBumper)
 		.whileHeld(new IntakeDrive(.5));
+
+		// LeftTrigger - Toggle Hopper
 		new GamepadLeftTrigger(operatorPad)
-		.whenActive(new HopperActuate(true));
+		.whenActive(new ToggleHopper());
+
+		//LB = Bottom intake in
+		//RB = Bottom intake out
+
+		//RT = Bottom intake run/Top intake run
 		/*new GamepadRightTrigger(operatorPad)
 		.whenActive(new LowIntake());
 		new JoystickButton(operatorPad, Gamepad.leftBumper)

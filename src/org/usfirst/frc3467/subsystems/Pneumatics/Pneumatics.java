@@ -9,7 +9,6 @@ import org.usfirst.frc3467.subsystems.Brownout.PowerConsumer;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -56,8 +55,8 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	}
 	
 	private void initSolenoids() {
-		hopperSides = new DoubleSolenoid(RobotMap.hopper_module, RobotMap.hopper_solenoid_expand,
-										 RobotMap.hopper_solenoid_contract);
+		hopperSides = new DoubleSolenoid(RobotMap.hopper_module, RobotMap.hopper_solenoid_contract,
+										 RobotMap.hopper_solenoid_expand);
 
 		highIntake = new DoubleSolenoid(RobotMap.highintake_module, RobotMap.highintake_solenoid_retract,
 										RobotMap.highintake_solenoid_extend);
