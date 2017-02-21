@@ -2,6 +2,7 @@
 package org.usfirst.frc3467.subsystems.Shooter;
 
 import org.usfirst.frc3467.robot.RobotMap;
+import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -74,6 +75,12 @@ public class Shooter extends Subsystem {
 		
     	shooterTalon1.set(target);
     	shooterTalon2.set(target);
+    }
+    public void tractionExtend() {
+    	Pneumatics.getInstance().tractionFeetDeploy();
+    }
+    public void tractionRetract() {
+    	Pneumatics.getInstance().tractionFeetRetract();
     }
 }
 

@@ -13,6 +13,7 @@ public class RunShooter extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	shooter.tractionExtend();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,6 +29,7 @@ public class RunShooter extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
     	shooter.ShooterRun(0);
+    	shooter.tractionRetract();
     }
 
     // Called when another command which requires one or more of the same
