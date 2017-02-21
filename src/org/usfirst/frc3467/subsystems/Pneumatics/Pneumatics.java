@@ -9,7 +9,6 @@ import org.usfirst.frc3467.subsystems.Brownout.PowerConsumer;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,7 +24,7 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	public DoubleSolenoid highIntake;
 	public DoubleSolenoid gearCatch;
 	public DoubleSolenoid gearClaw;
-	public Solenoid hopperSides;
+	public DoubleSolenoid hopperSides;
 	public DoubleSolenoid pusherBars;
 	
 	// Pneumatics is a singleton
@@ -56,20 +55,33 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	}
 	
 	private void initSolenoids() {
-		tractionFeet = new DoubleSolenoid(RobotMap.traction_solenoid_retract, RobotMap.traction_solenoid_deploy);
-		floorIntake = new DoubleSolenoid(RobotMap.floorintake_solenoid_retract, RobotMap.floorintake_solenoid_extend);
-		highIntake = new DoubleSolenoid(RobotMap.highintake_solenoid_retract, RobotMap.highintake_solenoid_extend);
-		gearCatch = new DoubleSolenoid(RobotMap.gearcatch_solenoid__up, RobotMap.gearcatch_solenoid__down);
-		gearClaw = new DoubleSolenoid(RobotMap.gearclaw_solenoid__hold, RobotMap.gearclaw_solenoid__release);
-		hopperSides = new Solenoid(RobotMap.hopper_solenoid);
-		pusherBars = new DoubleSolenoid(RobotMap.pusher_solenoid_retract, RobotMap.pusher_solenoid_extend);
+		hopperSides = new DoubleSolenoid(RobotMap.hopper_module, RobotMap.hopper_solenoid_contract,
+										 RobotMap.hopper_solenoid_expand);
+
+		highIntake = new DoubleSolenoid(RobotMap.highintake_module, RobotMap.highintake_solenoid_retract,
+										RobotMap.highintake_solenoid_extend);
+
+		floorIntake = new DoubleSolenoid(RobotMap.floorintake_module, RobotMap.floorintake_solenoid_retract,
+										 RobotMap.floorintake_solenoid_extend);
+
+		tractionFeet = new DoubleSolenoid(RobotMap.traction_module, RobotMap.traction_solenoid_retract,
+										  RobotMap.traction_solenoid_deploy);
+
+		gearCatch = new DoubleSolenoid(RobotMap.gearcatch_module, RobotMap.gearcatch_solenoid__up,
+									   RobotMap.gearcatch_solenoid__down);
+
+		gearClaw = new DoubleSolenoid(RobotMap.gearclaw_module, RobotMap.gearclaw_solenoid__hold,
+									  RobotMap.gearclaw_solenoid__release);
+
+		pusherBars = new DoubleSolenoid(RobotMap.pusher_module, RobotMap.pusher_solenoid_retract,
+										RobotMap.pusher_solenoid_extend);
 		
-		tractionFeet.set(DoubleSolenoid.Value.kForward);
-		floorIntake.set(DoubleSolenoid.Value.kForward);
+		hopperSides.set(DoubleSolenoid.Value.kForward);
 		highIntake.set(DoubleSolenoid.Value.kForward);
+		floorIntake.set(DoubleSolenoid.Value.kForward);
+		tractionFeet.set(DoubleSolenoid.Value.kForward);
 		gearCatch.set(DoubleSolenoid.Value.kForward);
 		gearClaw.set(DoubleSolenoid.Value.kForward);
-		hopperSides.set(false);
 		pusherBars.set(DoubleSolenoid.Value.kForward);
 		
 	}
@@ -114,10 +126,10 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	}
 
 	public void hopperContract() {
-		hopperSides.set(false);
+		hopperSides.set(DoubleSolenoid.Value.kForward);
 	}
 	public void hopperExpand() {
-		hopperSides.set(true);
+		hopperSides.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	public void pusherBarsRetract() {

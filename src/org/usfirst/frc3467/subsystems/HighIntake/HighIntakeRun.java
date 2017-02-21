@@ -1,14 +1,16 @@
-package org.usfirst.frc3467.subsystems.Shooter;
+package org.usfirst.frc3467.subsystems.HighIntake;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
 /**
  *
  */
-public class RunShooter extends CommandBase {
+public class HighIntakeRun extends CommandBase {
 
-    public RunShooter() {
-        requires(shooter);
+	private double SPEED;
+	
+    public HighIntakeRun(double speed) {
+        SPEED = speed;
     }
 
     // Called just before this Command runs the first time
@@ -17,7 +19,7 @@ public class RunShooter extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	shooter.ShooterRun(.7);
+    	hi_intake.HIntakeRun(SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -27,7 +29,6 @@ public class RunShooter extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.ShooterRun(0);
     }
 
     // Called when another command which requires one or more of the same

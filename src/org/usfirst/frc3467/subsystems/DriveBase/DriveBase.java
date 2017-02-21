@@ -43,8 +43,6 @@ public class DriveBase extends Subsystem {
 		rTalon3.set(RobotMap.drivebase_RightTalon);
 		cTalon2.set(RobotMap.drivebase_CenterTalon);
 
-		lTalon1.reverseOutput(true);
-		
 		// Set encoders as feedback devices
 		lTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -106,24 +104,12 @@ public class DriveBase extends Subsystem {
 
     	double radAngle = angle * (3.14159 / 180.0); // Convert degrees to radians
     	
-    	z = z;
-    	
     	double yNet  = y*Math.cos(radAngle)-x*Math.sin(radAngle);
     	
-    	//double left =-1.0*( x * Math.sin(radAngle) +y * Math.cos(radAngle) + (width/2) * z);
-    	//double right = x * Math.sin(radAngle) + y * Math.cos(radAngle) - (width/2) * z;
     	double xNet = x * Math.cos(radAngle) + y * Math.sin(radAngle);
     	
     	driveRobotCentric(xNet, yNet, z);
     	
-    	/*SmartDashboard.putNumber("left val", left);
-    	SmartDashboard.putNumber("right val", right);
-    	System.out.println("L:" + left + "R:" + right);
-    	System.out.println("sin(a): "+Math.cos(radAngle));
-    	
-    	lTalon1.set(left);
-    	rTalon1.set(right);
-    	cTalon1.set(center);*/
     }
     
 	// pass-thru to RobotDrive method (drive using one stick)

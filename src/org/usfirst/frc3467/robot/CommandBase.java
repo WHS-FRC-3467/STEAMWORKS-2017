@@ -49,8 +49,8 @@ public abstract class CommandBase extends Command {
 		subsystemList = new Vector<Subsystem>();
 		
 		//Add instances of subsystems
-		//pneumatics = Pneumatics.getInstance();
-		//subsystemList.addElement(pneumatics);		
+		pneumatics = Pneumatics.getInstance();
+		subsystemList.addElement(pneumatics);		
 		brownout = Brownout.getInstance();
 		subsystemList.addElement(brownout);
 

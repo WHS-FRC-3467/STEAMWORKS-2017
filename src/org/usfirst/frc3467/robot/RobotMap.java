@@ -1,6 +1,5 @@
 package org.usfirst.frc3467.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -50,33 +49,45 @@ public class RobotMap {
 	public static final int shooterSpin_Victor = 2;
 	
 	
-	// SOLENOIDS
+	// SOLENOIDS - Module 0
 	
-	// Traction
-	public static final int traction_solenoid_retract = 0;
-	public static final int traction_solenoid_deploy = 1;
+	public static final int hopper_module = 0;
+	public static final int highintake_module = 0;
+	public static final int floorintake_module = 0;
+	public static final int traction_module = 0;
+	
+	// Hopper 
+	public static final int hopper_solenoid_contract = 0;
+	public static final int hopper_solenoid_expand = 1;
+
+	// High Intake
+	public static final int highintake_solenoid_retract = 2;
+	public static final int highintake_solenoid_extend = 3;
 
 	// Floor Intake
-	public static final int floorintake_solenoid_retract = 2;
-	public static final int floorintake_solenoid_extend = 3;
+	public static final int floorintake_solenoid_retract = 4;
+	public static final int floorintake_solenoid_extend = 5;
 	
-	// High Intake
-	public static final int highintake_solenoid_retract = 4;
-	public static final int highintake_solenoid_extend = 5;
+	// Traction
+	public static final int traction_solenoid_retract = 6;
+	public static final int traction_solenoid_deploy = 7;
+
+	// SOLENOIDS - Module 1
+
+	public static final int gearcatch_module = 1;
+	public static final int gearclaw_module = 1;
+	public static final int pusher_module = 1;
 
 	// GearCatcher
-	public static final int gearcatch_solenoid__up = 6;
-	public static final int gearcatch_solenoid__down = 7;
+	public static final int gearcatch_solenoid__up = 0;
+	public static final int gearcatch_solenoid__down = 1;
 	
 	// GearClaw
-	public static final int gearclaw_solenoid__hold = 8;
-	public static final int gearclaw_solenoid__release = 9;
-
-	// Hopper (Single) 
-	public static final int hopper_solenoid = 10;
+	public static final int gearclaw_solenoid__hold = 2;
+	public static final int gearclaw_solenoid__release = 3;
 
 	// Pushers 
-	public static final int pusher_solenoid_retract = 11;
-	public static final int pusher_solenoid_extend = 12;
+	public static final int pusher_solenoid_retract = 4;
+	public static final int pusher_solenoid_extend = 5;
 	
 }
