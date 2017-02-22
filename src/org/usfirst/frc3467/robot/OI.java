@@ -15,14 +15,11 @@ import org.usfirst.frc3467.robot.control.triggers.DPadRight;
 import org.usfirst.frc3467.robot.control.triggers.DPadUp;
 import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
-import org.usfirst.frc3467.subsystems.DriveBase.ArcadeDrive;
-import org.usfirst.frc3467.subsystems.DriveBase.FieldCentricDrive;
-import org.usfirst.frc3467.subsystems.DriveBase.PrecisionDrive;
-import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
 import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
-import org.usfirst.frc3467.subsystems.HighIntake.HighIntakeRun;
 import org.usfirst.frc3467.subsystems.Hopper.ToggleHopper;
 
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
@@ -112,19 +109,19 @@ public class OI {
 		*/
 		// DPad Up = Field Centric Mode
 		new DPadUp(driverPad)
-			.whenActive(new RobotCentricDrive());
+			.whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 		
 		// DPad Down = Robot Centric Mode
  		new DPadDown(driverPad)
- 			.whenActive(new FieldCentricDrive());
+ 			.whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
 		
 		// DPad Left = Precision Mode
 		new DPadLeft(driverPad)
-			.whenActive(new PrecisionDrive());
+			.whenActive(new DriveBot(DriveBase.driveMode_Precision));
 		
 		// DPad Right = Robot Centric Mode(No center wheel)
 		new DPadRight(driverPad)
-			.whenActive(new ArcadeDrive());
+			.whenActive(new DriveBot(DriveBase.driveMode_Arcade));
 		
 		// X Button Climber = some sort of automated climbing routine, latches climber axle
 		
