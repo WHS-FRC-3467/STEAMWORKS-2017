@@ -31,6 +31,8 @@ DPad(Directional Pad) buttons:(whenActive)
 			- Actuate High intake out
 			- Run Lower intake in
 			- Run High intake in
+			- Start Pixy camera high boiler goal tracking
+			- Turn drivebase to aim at high boiler goal (any stick movement following this will cancel tracking; tracking may be resumed by entering Precision Drive mode (Y-button))
 			- Run shooter wheels under Velocity Control (speed dependent on image in Pixy camers)
 			** Drop traction plates? (Do we really want to do this automatically when shooting?)
 		Activating the Left Trigger does the following:
@@ -66,11 +68,11 @@ RT (Right Trigger)  Lower intake	(whenActive)
 RB (Right Bumper) High Intake	(whenActive)
 	Toggle High intake in/out
 	
+// Manual shooter feed controls (for freeing jams)
 X Button = RunSpinner Left		(whileActive)
 B Button = RunSpinner Right		(whileActive)
 Y Button = RunTower Up			(whileActive)
 A Button = RunTower Down		(whileActive)
-
 
 DPad (Directional Pad):
 	DPad Up - Lift Traction Plates		(whenActive)

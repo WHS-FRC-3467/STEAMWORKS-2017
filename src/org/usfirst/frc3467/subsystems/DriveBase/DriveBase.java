@@ -20,6 +20,23 @@ public class DriveBase extends Subsystem {
     
 	private static RobotDrive dBase;
 	private TalonControlMode 	t_controlMode;
+
+	
+	public static final int driveMode_FieldCentric = 0;
+	public static final int driveMode_RobotCentric = 1;
+	public static final int driveMode_Arcade = 2;
+	public static final int driveMode_Precision = 3;
+	public static final int driveMode_Tank = 4;
+	
+	private static final String[] driveModeNames = {
+			"Field-Centric",
+			"Robot-Centric",
+			"Arcade",
+			"Precision",
+			"Tank"
+	};
+
+	private int current_driveMode = driveMode_FieldCentric;
 	
 	public DriveBase() {
 		rTalon1 = new CANTalon(RobotMap.drivebase_RightTalon);
@@ -65,8 +82,24 @@ public class DriveBase extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new FieldCentricDrive());
+        setDefaultCommand(new DriveBot(current_driveMode));
     }
+    
+    /*
+     * Drive mode support
+     */
+    public void setDriveMode(int dMode) {
+    	current_driveMode = dMode;
+    }
+    
+    public int getDriveMode() {
+    	return current_driveMode;
+    }
+    
+    public String getDriveModeName() {
+    	return driveModeNames[current_driveMode];
+    }
+    
     
 	/**
 	 * @param controlMode Set the control mode of the master CANTalons
