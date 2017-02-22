@@ -30,7 +30,11 @@ public class RunShooter extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
     	shooter.ShooterRun(0);
+<<<<<<< HEAD
+    	shooter.tractionRetract();
+=======
     	shooter.tractionRetract();	
+>>>>>>> refs/remotes/origin/master
     }
 
     // Called when another command which requires one or more of the same
