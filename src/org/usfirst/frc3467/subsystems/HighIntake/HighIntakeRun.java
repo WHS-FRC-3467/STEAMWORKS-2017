@@ -10,6 +10,7 @@ public class HighIntakeRun extends CommandBase {
 	private double SPEED;
 	
     public HighIntakeRun(double speed) {
+    	requires(hi_intake);
         SPEED = speed;
     }
 
@@ -34,5 +35,6 @@ public class HighIntakeRun extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc3467.robot.RobotMap;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 
-import com.ctre.CANTalon;
-
 public class FloorIntake extends Subsystem {
 	
 	// Controls display to SmartDashboard

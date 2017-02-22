@@ -1,6 +1,5 @@
 package org.usfirst.frc3467.subsystems.FloorIntake;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import org.usfirst.frc3467.robot.CommandBase;
 
 public class IntakeDrive extends CommandBase {
