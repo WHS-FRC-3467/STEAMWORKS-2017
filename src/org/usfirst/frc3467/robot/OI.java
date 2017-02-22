@@ -90,8 +90,10 @@ public class OI {
 	public void BindCommands() {
 		
 		/*
-			Driver GamePad
-		*/
+		 *
+		 * Driver GamePad
+		 * 
+		 */
 		
 		// Left Trigger: Shoot = run shooter, run spinner, run tower, run bottom intake, run top intake, drop traction plates, actuate bottom intake in, actuate top intake out
 		
@@ -103,9 +105,7 @@ public class OI {
 		
 		// Right Bumper: GearClaw = clamp/release claw
 		new JoystickButton(driverPad, Gamepad.rightBumper)
-		.whenActive(new ToggleGearClawState());
-		
-		
+			.whenActive(new ToggleGearClawState());
 		
 		/*
 		 * DPad(Directional Pad)
@@ -126,15 +126,14 @@ public class OI {
 		new DPadRight(driverPad)
 			.whenActive(new ArcadeDrive());
 		
-		//new JoystickButton(operatorPad, Gamepad.yButton)
-		//	.whenPressed(new FieldCentricDrive());
-		
 		// X Button Climber = some sort of automated climbing routine, latches climber axle
 		
 		// On joystick move = traction plates come up
 		
 		/*
+		 * 
 		 * Operator GamePad
+		 * 
 		 */
 
 		//X Button = RunSpinner Left
@@ -151,10 +150,11 @@ public class OI {
 		.whileHeld(new IntakeDrive(.5));
 
 		// LeftTrigger - Toggle Hopper
-		//new GamepadLeftTrigger(operatorPad)
-		//.whenActive(new ToggleHopper());
 		new GamepadLeftTrigger(operatorPad)
-		.whenActive(new HighIntakeRun(.5));
+			.whenActive(new ToggleHopper());
+		
+		//new GamepadLeftTrigger(operatorPad)
+		//.whenActive(new HighIntakeRun(.5));
 
 		//LB = Bottom intake in
 		//RB = Bottom intake out

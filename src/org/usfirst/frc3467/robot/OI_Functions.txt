@@ -1,0 +1,70 @@
+
+***** Operator Interface Functions ******
+
+//
+// Driver GamePad
+//
+
+On any joystick move -> traction plates come up
+
+LT(Left Trigger) Shoot 				(whenActive)
+	Actuate Lower intake in
+	Actuate High intake out
+	Run Lower intake in
+	Run High intake in
+	Run shooter wheels
+	Run spinner
+	Run conveyor
+	*Drop traction plates?
+
+LB(Left Bumper) LowerIntake  		(whenActive)
+	Toggle:
+		Lower intake out; running in
+		Lower intake in; not running
+	
+RT(Right Trigger) Gear Catcher 		(whenActive)
+	Toggle gear catcher angle
+
+RB(Right Bumper) Gearclaw 			(whenActive)
+	Toggle gearclaw hold/release
+	
+X Button = Field Centric Mode    	(whenActive)
+B Button = Robot Centric Mode		(whenActive)
+Y Button = Precision Mode			(whenActive)
+A Button = Robot Centric (No CW)	(whenActive)
+
+DPad(Directional Pad): 				(whenActive)
+	DPad Up - Lift Traction Plates
+	DPad Down - Drop Traction Plates
+	DPad Left - 
+	DPad Right - 
+
+?? Climber
+	Some sort of automated climbing routine, latches climber axle
+
+//
+//  Operator GamePad
+//
+
+LT (Left Trigger) Hopper 		(whenActive)
+	Toggle hopper contract/expand
+	
+LB (Left Bumper) Lower intake	(whenActive)
+	Toggle Lower intake in/out
+	
+RT (Right Trigger)  ??
+	
+RB (Right Bumper) High Intake	(whenActive)
+	Toggle High intake in/out
+	
+X Button = RunSpinner Left		(whileActive)
+B Button = RunSpinner Right		(whileActive)
+Y Button = RunTower Up			(whileActive)
+A Button = RunTower Down		(whileActive)
+
+
+DPad (Directional Pad):
+	DPad Up - Lift Traction Plates		(whenActive)
+	DPad Down - Drop Traction Plates	(whenActive)
+	DPad Right - Run both intakes in	(whenActive)
+	DPad Left - Run both intakes out	(whenActive)
