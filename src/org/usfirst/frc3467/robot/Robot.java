@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3467.robot.commands.Autonomous.DriveSideways;
 import org.usfirst.frc3467.subsystems.FieldCamera.FieldCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import org.usfirst.frc3467.robot.CommandBase;
 	
 /**
@@ -44,7 +43,7 @@ public class Robot extends IterativeRobot {
 		//autoChooser.addObject("Drive Straight", new AutoDriveStraight());
 		
 		SmartDashboard.putData("Auto", autoChooser);
-		CameraServer.getInstance().startAutomaticCapture();
+
     }
 	
     /**

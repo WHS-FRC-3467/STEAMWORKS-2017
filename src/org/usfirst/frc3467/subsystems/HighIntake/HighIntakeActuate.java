@@ -10,7 +10,8 @@ public class HighIntakeActuate extends CommandBase {
 	private boolean ACTUATE;
 	
     public HighIntakeActuate(boolean actuate) {
-       ACTUATE  = actuate;
+    	requires(hi_intake);
+    	ACTUATE  = actuate;
     }
 
     // Called just before this Command runs the first time
@@ -37,5 +38,6 @@ public class HighIntakeActuate extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

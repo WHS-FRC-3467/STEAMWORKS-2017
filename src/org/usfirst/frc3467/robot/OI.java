@@ -15,14 +15,11 @@ import org.usfirst.frc3467.robot.control.triggers.DPadRight;
 import org.usfirst.frc3467.robot.control.triggers.DPadUp;
 import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
-import org.usfirst.frc3467.subsystems.DriveBase.ArcadeDrive;
-import org.usfirst.frc3467.subsystems.DriveBase.FieldCentricDrive;
-import org.usfirst.frc3467.subsystems.DriveBase.PrecisionDrive;
-import org.usfirst.frc3467.subsystems.DriveBase.RobotCentricDrive;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
 import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
-import org.usfirst.frc3467.subsystems.HighIntake.HighIntakeRun;
 import org.usfirst.frc3467.subsystems.Hopper.ToggleHopper;
 
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
@@ -90,8 +87,10 @@ public class OI {
 	public void BindCommands() {
 		
 		/*
-			Driver GamePad
-		*/
+		 *
+		 * Driver GamePad
+		 * 
+		 */
 		
 		// Left Trigger: Shoot = run shooter, run spinner, run tower, run bottom intake, run top intake, drop traction plates, actuate bottom intake in, actuate top intake out
 		
@@ -103,38 +102,35 @@ public class OI {
 		
 		// Right Bumper: GearClaw = clamp/release claw
 		new JoystickButton(driverPad, Gamepad.rightBumper)
-		.whenActive(new ToggleGearClawState());
-		
-		
+			.whenActive(new ToggleGearClawState());
 		
 		/*
 		 * DPad(Directional Pad)
 		*/
 		// DPad Up = Field Centric Mode
 		new DPadUp(driverPad)
-			.whenActive(new RobotCentricDrive());
+			.whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 		
 		// DPad Down = Robot Centric Mode
  		new DPadDown(driverPad)
- 			.whenActive(new FieldCentricDrive());
+ 			.whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
 		
 		// DPad Left = Precision Mode
 		new DPadLeft(driverPad)
-			.whenActive(new PrecisionDrive());
+			.whenActive(new DriveBot(DriveBase.driveMode_Precision));
 		
 		// DPad Right = Robot Centric Mode(No center wheel)
 		new DPadRight(driverPad)
-			.whenActive(new ArcadeDrive());
-		
-		//new JoystickButton(operatorPad, Gamepad.yButton)
-		//	.whenPressed(new FieldCentricDrive());
+			.whenActive(new DriveBot(DriveBase.driveMode_Arcade));
 		
 		// X Button Climber = some sort of automated climbing routine, latches climber axle
 		
 		// On joystick move = traction plates come up
 		
 		/*
+		 * 
 		 * Operator GamePad
+		 * 
 		 */
 
 		//X Button = RunSpinner Left
@@ -151,10 +147,11 @@ public class OI {
 		.whileHeld(new IntakeDrive(.5));
 
 		// LeftTrigger - Toggle Hopper
-		//new GamepadLeftTrigger(operatorPad)
-		//.whenActive(new ToggleHopper());
 		new GamepadLeftTrigger(operatorPad)
-		.whenActive(new HighIntakeRun(.5));
+			.whenActive(new ToggleHopper());
+		
+		//new GamepadLeftTrigger(operatorPad)
+		//.whenActive(new HighIntakeRun(.5));
 
 		//LB = Bottom intake in
 		//RB = Bottom intake out

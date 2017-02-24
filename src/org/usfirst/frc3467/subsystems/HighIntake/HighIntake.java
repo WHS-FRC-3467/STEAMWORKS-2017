@@ -3,8 +3,6 @@ package org.usfirst.frc3467.subsystems.HighIntake;
 
 import org.usfirst.frc3467.robot.RobotMap;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
-import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
