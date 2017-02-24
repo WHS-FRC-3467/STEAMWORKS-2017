@@ -86,46 +86,38 @@ public class OI {
 	//Method that binds certain commands to certain buttons
 	public void BindCommands() {
 		
+		final double FLOOR_INTAKE_SPEED_NORMAL = 0.5;
+		final double FLOOR_INTAKE_SPEED_BACKWARD = -0.5;
+		final double HIGH_INTAKE_SPEED_NORMAL = 0.5;
+
+		final double SPINNER_SPEED_NORMAL = 0.5;
+		final double SPINNER_SPEED_BACKWARD = -0.5;
+		final double BELT_SPEED_NORMAL = 0.5;
+		final double BELT_SPEED_BACKWARD = -0.5;
+		
+		final double SHOOTER_SPEED_DEFAULT = 100;
+
 		/*
 		 *
 		 * Driver GamePad
 		 * 
 		 */
 		
-		// Left Trigger: Shoot = run shooter, run spinner, run tower, run bottom intake, run top intake, drop traction plates, actuate bottom intake in, actuate top intake out
-		
-		// Left Bumper: Intake = bottom intake out, bottom intake running
-		
-		// Right Trigger: GearCatcher = toggles gear claw angle
-		new GamepadRightTrigger(driverPad)
-			.whenActive(new ToggleGearCatcherPosition());
-		
-		// Right Bumper: GearClaw = clamp/release claw
-		new JoystickButton(driverPad, Gamepad.rightBumper)
-			.whenActive(new ToggleGearClawState());
-		
-		/*
-		 * DPad(Directional Pad)
-		*/
-		// DPad Up = Field Centric Mode
-		new DPadUp(driverPad)
-			.whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
-		
-		// DPad Down = Robot Centric Mode
- 		new DPadDown(driverPad)
- 			.whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
-		
-		// DPad Left = Precision Mode
-		new DPadLeft(driverPad)
-			.whenActive(new DriveBot(DriveBase.driveMode_Precision));
-		
-		// DPad Right = Robot Centric Mode(No center wheel)
-		new DPadRight(driverPad)
-			.whenActive(new DriveBot(DriveBase.driveMode_Arcade));
-		
-		// X Button Climber = some sort of automated climbing routine, latches climber axle
-		
-		// On joystick move = traction plates come up
+		new GamepadLeftTrigger(driverPad).whenActive(new OperateShooter());
+		new GamepadRightTrigger(driverPad).whenActive(new ToggleGearCatcherPosition());
+		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new ToggleFloorIntakeOperation());
+		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new ToggleGearClawState());
+
+		new JoystickButton(driverPad, Gamepad.xButton).whenPressed(new ZeroGyro());
+		new JoystickButton(driverPad, Gamepad.bButton).whenPressed(new OperateShooter(false, SHOOTER_SPEED_DEFAULT));
+		new JoystickButton(driverPad, Gamepad.yButton).whenPressed(new AutoClimber());
+		new JoystickButton(driverPad, Gamepad.aButton).whenPressed(new AutoAimShooter(true, 0.0));
+
+		new DPadUp(driverPad).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
+		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
+		new DPadLeft(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Precision));
+		new DPadRight(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Arcade));
+
 		
 		/*
 		 * 
@@ -133,173 +125,25 @@ public class OI {
 		 * 
 		 */
 
-		//X Button = RunSpinner Left
-		//B Button = RunSpinner RIght
-		//Y Button = RunTower Up
-		//A Button = RunTower Down
-		//Start Button = Drop Traction Plate
-		//Select Button = Rise Traction Plate
-		//DPad
-		//DPad Up = Top Intake In
-		//DPad Down  Top Intake Out
+		new GamepadLeftTrigger(operatorPad).whenActive(new ToggleHopper());
+		new GamepadRightTrigger(operatorPad).whileActive(new RunBothIntakes(FLOOR_INTAKE_SPEED_NORMAL));
+		new JoystickButton(operatorPad, Gamepad.leftBumper).whileActive(new RunFloorIntake(FLOOR_INTAKE_SPEED_BACKWARD));
+		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new ToggleFloorIntakePosition());
 
-		new JoystickButton(driverPad, Gamepad.leftBumper)
-		.whileHeld(new IntakeDrive(.5));
+		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunSpinner(SPINNER_SPEED_NORMAL));
+		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunSpinner(SPINNER_SPEED_BACKWARD));
+		new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunBelt(BELT_SPEED_NORMAL));
+		new JoystickButton(operatorPad, Gamepad.aButton).whileActive(new RunBelt(BELT_SPEED_BACKWARD));
 
-		// LeftTrigger - Toggle Hopper
-		new GamepadLeftTrigger(operatorPad)
-			.whenActive(new ToggleHopper());
-		
-		//new GamepadLeftTrigger(operatorPad)
-		//.whenActive(new HighIntakeRun(.5));
-
-		//LB = Bottom intake in
-		//RB = Bottom intake out
-
-		//RT = Bottom intake run/Top intake run
-		/*new GamepadRightTrigger(operatorPad)
-		.whenActive(new LowIntake());
-		new JoystickButton(operatorPad, Gamepad.leftBumper)
-		.whenPressed(new LowIntake());
-		new JoystickButton(operatorPad, Gamepad.rightBumper)
-		.whenPressed(new LowIntake());
-		new JoystickButton(operatorPad, Gamepad.xButton)
-		.whenPressed(new RunSpinner());
-		new JoystickButton(operatorPad, Gamepad.bButton)
-		.whenPressed(new RunSpinner());
-		new JoystickButton(operatorPad, Gamepad.yButton)
-		.whenPressed(new RunTower());
-		new JoystickButton(operatorPad, Gamepad.aButton)
-		.whenPressed(new RunTower());
-		new JoystickButton(operatorPad, Gamepad.startButton)
-		.whenPressed(new DropTractionPlate());
-		new DPadUp(operatorPad)
-		.whenActive(new HighIntake());
-		new DPadDown(operatorPad)
-		.whenActive(new HighIntake());
-*/		
-
-	    //// CREATING BUTTONS
-	    // One type of button is a joystick button which is any button on a joystick.
-	    // You create one by telling it which joystick it's on and which button
-	    // number it is.
-	    // Joystick stick = new Joystick(port);
-	    // Button button = new JoystickButton(stick, buttonNumber);
-	    
-	    // There are a few additional built in buttons you can use. Additionally,
-	    // by subclassing Button you can create custom triggers and bind those to
-	    // commands the same as any other Button.
-	    
-	    //// TRIGGERING COMMANDS WITH BUTTONS
-	    // Once you have a button, it's trivial to bind it to a button in one of
-	    // three ways:
-	    
-	    // Start the command when the button is pressed and let it run the command
-	    // until it is finished as determined by it's isFinished method.
-	    // button.whenPressed(new ExampleCommand());
-	    
-	    // Run the command while the button is being held down and interrupt it once
-	    // the button is released.
-	    // button.whileHeld(new ExampleCommand());
-	    
-	    // Start the command when the button is released  and let it run the command
-	    // until it is finished as determined by it's isFinished method.
-	    // button.whenReleased(new ExampleCommand());
-		
-		
-		
-		
-/*
- 	//DriveBase
-
-		//Toggle in and out of precision angle mode
-		new JoystickButton(PrimaryStick, 3)
-			.whenPressed(new PreciseRotateToAngle());
-		
-		new JoystickButton(PrimaryStick, 4)
-			.whenPressed(new RobotCentricDrive());
-		
-		//Toggle in and out of AimBot
-		new JoystickButton(PrimaryStick, 1)
-			.whileHeld(new AimBot());
-		
-		new JoystickButton(PrimaryStick, 2)
-			.whenPressed(new RobotCentricDrive());
-*/
-		
-/*
-  	//Utility Bar
- 
-		//Utility bar up
-		new GamepadLeftTrigger(operator)
-		.whenActive(new Bar_actuate(UtilityBar.kOut));
-		
-		//Utility bar down
-		new GamepadRightTrigger(operator)
-			.whenActive(new Bar_actuate(UtilityBar.kIn));
-*/	
-		
-/*
- 	//Intake
- 
-		//Eject Fast
-		new JoystickButton(operator, Gamepad.xButton)
-			.whileHeld(new IntakeDrive(Intake.kEjectFast));
-		
-		//Intake Fast
-		new JoystickButton(operator, Gamepad.bButton)
-			.whileHeld(new IntakeDrive(Intake.kIntakeFast));
-		
-		//Intake up
-		new JoystickButton(operator, Gamepad.aButton)
-			.whenActive(new Roller_Actuate(true));
-		
-		//Intake down
-		new JoystickButton(operator, Gamepad.yButton)
-			.whenActive(new Roller_Actuate(false));
-		
-		/*
-		//Intake Extend
-		new JoystickButton(SecondaryStick, 1)
-		.whenPressed(new Roller_Actuate(true));
-		
-		new JoystickButton(SecondaryStick, 2)
-		.whenPressed(new Roller_Actuate(false));	
-*/
+		new DPadUp(operatorPad).whenActive(new LiftTractionPlates());
+		new DPadDown(operatorPad).whenActive(new DropTractionPlates());
+		new DPadLeft(operatorPad).whenActive(new ToggleHighIntakePosition());
+		new DPadRight(operatorPad).whileActive(new RunHighIntake(HIGH_INTAKE_SPEED_NORMAL));
 
 		
-/*
- 		// Gamepad DPad actions
- 
-		new DPadUp(operator)
-			.whenActive(new SetBrakeMode(false));
-
-		// DPad Down
-		new DPadDown(operator)
-			.whenActive(new SetBrakeMode(true));
- 		
-		 DPad Right
-		new DPadRight(operator)
-			.whenActive(new ShooterLatch());
-
-		DPad Left
-		new DPadLeft(operator)
-			.whenActive(new ShooterClear());
- */
-		
-		
-/*
- 		// SmartDashboard Buttons
-
-		SmartDashboard.putData("Drivebase: Reset Encoders", new ResetDriveEncoders());
-		SmartDashboard.putData("Shooter: Calibrate", new ShooterOneWayCalibrate());
-		SmartDashboard.putData("AHRS: Reset Gyro", new ResetGyro());
-		SmartDashboard.putData("Vision: Target Goal", new TargetGoal());
-		SmartDashboard.putData("Vision: AimBot", new AimBot());
-		SmartDashboard.putData("Shooter MP", new ShootMP());
-*/
-		
+		//
 		// Pneumatic Test Buttons
+		//
 		SmartDashboard.putData("tractionFeetRetract", new tractionRetract());
 		SmartDashboard.putData("tractionFeetDeploy", new tractionDeploy());
 		SmartDashboard.putData("floorIntakeRetract", new floorRetract());
