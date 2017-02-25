@@ -13,6 +13,8 @@ public class FloorIntake extends Subsystem {
 	// Controls display to SmartDashboard
 	private static final boolean debugging = false;
 	
+	//boolean state =  true;
+	
 	public Victor Lo_intake;
 	
 	public FloorIntake() {
@@ -29,6 +31,10 @@ public class FloorIntake extends Subsystem {
 		}
 		Lo_intake.set(speed);
 	}
+	
+	//public boolean getFloorState() {
+	//	return state;
+	//}
 	
 	// Extend or Retract Intake
 	public void extend() {
