@@ -1,17 +1,16 @@
-package org.usfirst.frc3467.subsystems.Shooter;
+package org.usfirst.frc3467.subsystems.HighIntake;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
 /**
  *
  */
-public class RunBelt extends CommandBase {
+public class ToggleHighIntakePosition extends CommandBase {
 
-	private double SPEED;
+	private static boolean ACTUATE = false;
 	
-    public RunBelt(double speed) {
-        requires(shooter);
-        SPEED = speed;
+    public ToggleHighIntakePosition() {
+    	requires(hi_intake);
     }
 
     // Called just before this Command runs the first time
@@ -20,8 +19,14 @@ public class RunBelt extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	shooter.BeltRun(SPEED);
-    	
+    	if(ACTUATE){
+    		hi_intake.hiIntakeExtend();
+    		ACTUATE = true;
+    	}
+    	else {
+    		hi_intake.hiIntakeRetract();
+    		ACTUATE = false;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,11 +36,11 @@ public class RunBelt extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.BeltRun(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
