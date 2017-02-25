@@ -6,7 +6,9 @@ import org.usfirst.frc3467.robot.RobotMap;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //
 //
 public class DriveBase extends Subsystem {
+	private Servo latchServo;
+	private PowerDistributionPanel pdp;
 
 	private static CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3, cTalon1, cTalon2;
 	private static final double width = 1;
@@ -64,6 +68,11 @@ public class DriveBase extends Subsystem {
 		lTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		cTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		
+		latchServo = new Servo(0);
+		
+		pdp = new PowerDistributionPanel();
+
 		
 		// Set default control Modes for Master CANTalons
 		// (This will change to Speed control once encoders are installed and calibrated)
@@ -175,6 +184,15 @@ public class DriveBase extends Subsystem {
 	public void resetEncoders() {
 		lTalon1.setPosition(0);
 		rTalon1.setPosition(0);
+	}
+	public CANTalon getMiddleTalon(){
+		return cTalon1;
+	}
+	public PowerDistributionPanel getPDP(){
+		return pdp;
+	}
+	public Servo getLatchServo(){
+		return latchServo;
 	}
 
     
