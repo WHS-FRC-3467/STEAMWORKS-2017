@@ -1,10 +1,8 @@
 package org.usfirst.frc3467.robot.commands.Autonomous;
 
-import org.usfirst.frc3467.robot.CommandBase;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class Autonomous1  extends CommandGroup{
+public class AutoClimber  extends CommandGroup{
 	
 	protected boolean isFinished(double time) {
 		//requires(driveBase);
