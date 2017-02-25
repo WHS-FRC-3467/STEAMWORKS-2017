@@ -45,7 +45,6 @@ public class DriveStraight extends CommandBase {
     	m_maxSpeed = maxSpeed;
     	m_distance = distance;
     	buildController();
-    	;
     }
 	
 	public DriveStraight(double distance) {

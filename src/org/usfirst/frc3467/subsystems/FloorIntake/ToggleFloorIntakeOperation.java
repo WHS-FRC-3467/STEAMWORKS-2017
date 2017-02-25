@@ -22,6 +22,8 @@ public class ToggleFloorIntakeOperation extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
+    	//boolean isIn = flr_intake.getFloorState();
+    	
     	if (isIn == true) {
     		pneumatics.floorIntakeExtend();
     		isIn = false;
