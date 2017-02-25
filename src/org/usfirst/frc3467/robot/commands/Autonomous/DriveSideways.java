@@ -1,6 +1,6 @@
 package org.usfirst.frc3467.robot.commands.Autonomous;
 
-import org.usfirst.frc3467.subsystems.DriveBase.SidewaysDrive;
+import org.usfirst.frc3467.subsystems.DriveBase.DiagonalDrive;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveSideways extends CommandGroup {
 
     public DriveSideways() {
-    	addSequential(new SidewaysDrive());
+    	addSequential(new DiagonalDrive());
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

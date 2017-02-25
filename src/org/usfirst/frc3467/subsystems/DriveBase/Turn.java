@@ -2,14 +2,15 @@ package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
+import edu.wpi.first.wpilibj.command.Command;
+
 /**
  *
  */
-public class SidewaysDrive extends CommandBase {
+public class Turn extends CommandBase {
 
-    public SidewaysDrive(double TOut) {
+    public Turn() {
         requires(driveBase);
-        setTimeout(TOut);
     }
 
     // Called just before this Command runs the first time
@@ -18,17 +19,16 @@ public class SidewaysDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	driveBase.driveFieldCentric(.6, 0, 0, 0);
+    	driveBase.driveArcade(0, 90, false);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	driveBase.driveFieldCentric(0, 0, 0, 0);
     }
 
     // Called when another command which requires one or more of the same
