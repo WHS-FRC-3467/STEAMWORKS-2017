@@ -6,6 +6,7 @@ import org.usfirst.frc3467.robot.RobotMap;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //
 //
 public class DriveBase extends Subsystem {
-
+	private static PowerDistributionPanel pdp;
 	private static CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3, cTalon1, cTalon2;
 	private static final double width = 1;
     
@@ -39,6 +40,7 @@ public class DriveBase extends Subsystem {
 	private int current_driveMode = driveMode_FieldCentric;
 	
 	public DriveBase() {
+		pdp = new PowerDistributionPanel();
 		rTalon1 = new CANTalon(RobotMap.drivebase_RightTalon);
 		rTalon2 = new CANTalon(RobotMap.drivebase_RightTalon2);
 		rTalon3 = new CANTalon(RobotMap.drivebase_RightTalon3);
@@ -176,7 +178,12 @@ public class DriveBase extends Subsystem {
 		lTalon1.setPosition(0);
 		rTalon1.setPosition(0);
 	}
-
+	public CANTalon getMiddleTalon(){
+		return cTalon1;
+	}
+	public PowerDistributionPanel getPDP(){
+		return pdp;
+	}
     
 }
 
