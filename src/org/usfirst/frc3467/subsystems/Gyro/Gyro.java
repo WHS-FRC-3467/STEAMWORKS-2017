@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Gyro extends Subsystem {
     
 	private static BNO055 imu;
+	public static double zeroed = 0;
 
 	public Gyro() {
     	imu = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS,
@@ -51,7 +52,11 @@ public class Gyro extends Subsystem {
     }
     
     public double getAngle() {
-    	return this.getVector()[0];
+    	return this.getVector()[0] - zeroed;
+    }
+    
+    public void zeroGyro() {
+    	zeroed = getAngle();
     }
     
     public void reportGyroValues() {

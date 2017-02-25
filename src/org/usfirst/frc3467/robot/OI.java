@@ -1,5 +1,8 @@
 package org.usfirst.frc3467.robot;
 
+import org.usfirst.frc3467.robot.commands.Autonomous.AutoAimShooter;
+import org.usfirst.frc3467.robot.commands.Autonomous.AutoClimber;
+
 /*
 import org.usfirst.frc3467.robot.triggers.DPadDown;
 import org.usfirst.frc3467.robot.triggers.DPadUp;
@@ -18,8 +21,11 @@ import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
 import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
+import org.usfirst.frc3467.subsystems.FloorIntake.ToggleFloorIntakeOperation;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
+import org.usfirst.frc3467.subsystems.Gyro.Gyro;
+import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
 import org.usfirst.frc3467.subsystems.Hopper.ToggleHopper;
 
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
