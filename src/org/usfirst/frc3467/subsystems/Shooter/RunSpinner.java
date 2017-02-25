@@ -7,8 +7,11 @@ import org.usfirst.frc3467.robot.CommandBase;
  */
 public class RunSpinner extends CommandBase {
 
-    public RunSpinner() {
+	private double SPEED;
+	
+    public RunSpinner(double speed) {
         requires(shooter);
+        SPEED = speed;
     }
 
     // Called just before this Command runs the first time
@@ -17,7 +20,7 @@ public class RunSpinner extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	shooter.SpinnerRun(.7);
+    	shooter.SpinnerRun(SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()

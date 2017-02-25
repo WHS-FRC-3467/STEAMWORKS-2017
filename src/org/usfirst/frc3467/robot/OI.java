@@ -2,7 +2,6 @@ package org.usfirst.frc3467.robot;
 
 import org.usfirst.frc3467.robot.commands.Autonomous.AutoAimShooter;
 import org.usfirst.frc3467.robot.commands.Autonomous.AutoClimber;
-
 /*
 import org.usfirst.frc3467.robot.triggers.DPadDown;
 import org.usfirst.frc3467.robot.triggers.DPadUp;
@@ -10,7 +9,6 @@ import org.usfirst.frc3467.robot.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.triggers.GamepadRightTrigger;
 import org.usfirst.frc3467.subsystems.Example.ExampleCommand;
 */
-
 import org.usfirst.frc3467.robot.control.Gamepad;
 import org.usfirst.frc3467.robot.control.triggers.DPadDown;
 import org.usfirst.frc3467.robot.control.triggers.DPadLeft;
@@ -26,8 +24,10 @@ import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
 import org.usfirst.frc3467.subsystems.Gyro.Gyro;
 import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
+import org.usfirst.frc3467.subsystems.HighIntake.HighIntakeRun;
+import org.usfirst.frc3467.subsystems.HighIntake.RunBothIntakes;
+import org.usfirst.frc3467.subsystems.HighIntake.ToggleHighIntakePosition;
 import org.usfirst.frc3467.subsystems.Hopper.ToggleHopper;
-
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorRetract;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearDown;
@@ -42,6 +42,10 @@ import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.pusherExtend;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.pusherRetract;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionDeploy;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
+import org.usfirst.frc3467.subsystems.Shooter.DropTractionPlates;
+import org.usfirst.frc3467.subsystems.Shooter.LiftTractionPlates;
+import org.usfirst.frc3467.subsystems.Shooter.RunBelt;
+import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 
 //import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
@@ -116,7 +120,7 @@ public class OI {
 
 		new JoystickButton(driverPad, Gamepad.xButton).whenPressed(new ZeroGyro());
 		new JoystickButton(driverPad, Gamepad.bButton).whenPressed(new OperateShooter(false, SHOOTER_SPEED_DEFAULT));
-		new JoystickButton(driverPad, Gamepad.yButton).whenPressed(new AutoClimber());
+		new JoystickButton(driverPad, Gamepad.yButton).whenPressed(new AutoClimber()); // Not done
 		new JoystickButton(driverPad, Gamepad.aButton).whenPressed(new AutoAimShooter(true, 0.0));
 
 		new DPadUp(driverPad).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
@@ -131,10 +135,11 @@ public class OI {
 		 * 
 		 */
 
+		//Changed how the toggles work, may need to change back, but I want to try to see if this works
 		new GamepadLeftTrigger(operatorPad).whenActive(new ToggleHopper());
 		new GamepadRightTrigger(operatorPad).whileActive(new RunBothIntakes(FLOOR_INTAKE_SPEED_NORMAL));
-		new JoystickButton(operatorPad, Gamepad.leftBumper).whileActive(new RunFloorIntake(FLOOR_INTAKE_SPEED_BACKWARD));
-		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new ToggleFloorIntakePosition());
+		new JoystickButton(operatorPad, Gamepad.leftBumper).whileActive(new IntakeDrive(FLOOR_INTAKE_SPEED_BACKWARD));
+		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new ToggleFloorIntakeOperation());
 
 		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunSpinner(SPINNER_SPEED_NORMAL));
 		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunSpinner(SPINNER_SPEED_BACKWARD));
@@ -144,7 +149,7 @@ public class OI {
 		new DPadUp(operatorPad).whenActive(new LiftTractionPlates());
 		new DPadDown(operatorPad).whenActive(new DropTractionPlates());
 		new DPadLeft(operatorPad).whenActive(new ToggleHighIntakePosition());
-		new DPadRight(operatorPad).whileActive(new RunHighIntake(HIGH_INTAKE_SPEED_NORMAL));
+		new DPadRight(operatorPad).whileActive(new HighIntakeRun(HIGH_INTAKE_SPEED_NORMAL));
 
 		
 		//

@@ -22,10 +22,14 @@ public class ToggleFloorIntakeOperation extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if (isIn == true)
+    	if (isIn == true) {
     		pneumatics.floorIntakeExtend();
-    	else
+    		isIn = false;
+    	}
+    	else {
     		pneumatics.floorIntakeRetract();
+    		isIn = true;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

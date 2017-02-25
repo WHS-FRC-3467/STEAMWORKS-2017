@@ -1,17 +1,13 @@
-package org.usfirst.frc3467.subsystems.HighIntake;
+package org.usfirst.frc3467.subsystems.Shooter;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
 /**
  *
  */
-public class HighIntakeActuate extends CommandBase {
+public class DropTractionPlates extends CommandBase {
 
-	private boolean ACTUATE;
-	
-    public HighIntakeActuate(boolean actuate) {
-    	requires(hi_intake);
-    	ACTUATE  = actuate;
+    public DropTractionPlates() {
     }
 
     // Called just before this Command runs the first time
@@ -20,10 +16,7 @@ public class HighIntakeActuate extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(ACTUATE)
-    		hi_intake.hiIntakeExtend();
-    	else
-    		hi_intake.hiIntakeRetract();
+    	shooter.tractionExtend();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,6 +31,5 @@ public class HighIntakeActuate extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
