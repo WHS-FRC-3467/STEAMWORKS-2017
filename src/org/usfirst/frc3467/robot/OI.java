@@ -1,7 +1,5 @@
 package org.usfirst.frc3467.robot;
 
-import org.usfirst.frc3467.robot.commands.Autonomous.AutoAimShooter;
-import org.usfirst.frc3467.robot.commands.Autonomous.AutoClimber;
 /*
 import org.usfirst.frc3467.robot.triggers.DPadDown;
 import org.usfirst.frc3467.robot.triggers.DPadUp;
@@ -14,11 +12,14 @@ import org.usfirst.frc3467.robot.control.triggers.DPadDown;
 import org.usfirst.frc3467.robot.control.triggers.DPadLeft;
 import org.usfirst.frc3467.robot.control.triggers.DPadRight;
 import org.usfirst.frc3467.robot.control.triggers.DPadUp;
+import org.usfirst.frc3467.robot.control.triggers.DoubleButton;
 import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
+import org.usfirst.frc3467.subsystems.Climber.AutoClimber;
+import org.usfirst.frc3467.subsystems.DriveBase.AutoAim;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
-import org.usfirst.frc3467.subsystems.FloorIntake.IntakeDrive;
+import org.usfirst.frc3467.subsystems.FloorIntake.FloorIntakeRun;
 import org.usfirst.frc3467.subsystems.FloorIntake.ToggleFloorIntakeOperation;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
@@ -44,6 +45,7 @@ import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionDeploy;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
 import org.usfirst.frc3467.subsystems.Shooter.DropTractionPlates;
 import org.usfirst.frc3467.subsystems.Shooter.LiftTractionPlates;
+import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunBelt;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 
@@ -118,10 +120,9 @@ public class OI {
 		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new ToggleFloorIntakeOperation());
 		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new ToggleGearClawState());
 
-		new JoystickButton(driverPad, Gamepad.xButton).whenPressed(new ZeroGyro());
-		new JoystickButton(driverPad, Gamepad.bButton).whenPressed(new OperateShooter(false, SHOOTER_SPEED_DEFAULT));
-		new JoystickButton(driverPad, Gamepad.yButton).whenPressed(new AutoClimber()); // Not done
-		new JoystickButton(driverPad, Gamepad.aButton).whenPressed(new AutoAimShooter(true, 0.0));
+		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new ZeroGyro());
+		new DoubleButton(driverPad, Gamepad.yButton, Gamepad.bButton).whenActive(new AutoClimber());
+		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new AutoAim());
 
 		new DPadUp(driverPad).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
@@ -138,7 +139,7 @@ public class OI {
 		//Changed how the toggles work, may need to change back, but I want to try to see if this works
 		new GamepadLeftTrigger(operatorPad).whenActive(new ToggleHopper());
 		new GamepadRightTrigger(operatorPad).whileActive(new RunBothIntakes(FLOOR_INTAKE_SPEED_NORMAL));
-		new JoystickButton(operatorPad, Gamepad.leftBumper).whileActive(new IntakeDrive(FLOOR_INTAKE_SPEED_BACKWARD));
+		new JoystickButton(operatorPad, Gamepad.leftBumper).whileActive(new FloorIntakeRun(FLOOR_INTAKE_SPEED_BACKWARD));
 		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new ToggleFloorIntakeOperation());
 
 		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunSpinner(SPINNER_SPEED_NORMAL));
