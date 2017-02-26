@@ -13,8 +13,6 @@ public class FloorIntake extends Subsystem {
 	// Controls display to SmartDashboard
 	private static final boolean debugging = false;
 	
-	//boolean state =  true;
-	
 	public Victor Lo_intake;
 	
 	public FloorIntake() {
@@ -22,19 +20,15 @@ public class FloorIntake extends Subsystem {
 	}
 
 	protected void initDefaultCommand() {
-		this.setDefaultCommand(new IntakeDrive());
 	}
-	public void DriveAuto(double speed) {
+	
+	public void drive(double speed) {
 		// TODO Auto-generated method stub
 		if (debugging) {
 	    	SmartDashboard.putNumber("Floor Intake Speed", speed);
 		}
 		Lo_intake.set(speed);
 	}
-	
-	//public boolean getFloorState() {
-	//	return state;
-	//}
 	
 	// Extend or Retract Intake
 	public void extend() {
