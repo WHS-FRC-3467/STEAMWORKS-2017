@@ -5,11 +5,6 @@ import org.usfirst.frc3467.robot.CommandBase;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Drive the given distance straight (negative values go backwards).
@@ -41,6 +36,7 @@ public class DriveMotionMagic extends CommandBase {
 		Accel = accel;
 	}
 	protected void initialize(){
+		driveBase.liftFeetBeforeDriving();
 		leftTalon = driveBase.getLeftTalon();
 		rightTalon = driveBase.getRightTalon();
 		leftTalon.changeControlMode(TalonControlMode.MotionMagic);
