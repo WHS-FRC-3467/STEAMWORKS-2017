@@ -240,6 +240,12 @@ public class DriveBase extends Subsystem {
 	public CANTalon getMiddleTalon(){
 		return cTalon1;
 	}
+	public CANTalon getRightTalon(){
+		return rTalon1;
+	}
+	public CANTalon getLeftTalon(){
+		return lTalon1;
+	}
 	public PowerDistributionPanel getPDP(){
 		return pdp;
 	}
