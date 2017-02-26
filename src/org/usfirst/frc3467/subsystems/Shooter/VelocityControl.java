@@ -32,7 +32,7 @@ public class VelocityControl extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	hi_intake.HIntakeRun(hiIntakeSpeed);
-    	flr_intake.DriveAuto(floorIntakeSpeed);
+    	flr_intake.drive(floorIntakeSpeed);
     	shooter.SpinnerRun(spinnerSpeed);
     	shooter.BeltRun(beltSpeed);
     	shooter.ShooterRun(shooterVelocity);    	
@@ -46,7 +46,7 @@ public class VelocityControl extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
     	hi_intake.HIntakeRun(0.0);
-    	flr_intake.DriveAuto(0.0);
+    	flr_intake.drive(0.0);
     	shooter.SpinnerRun(0.0);
     	shooter.BeltRun(0.0);
     	shooter.ShooterRun(0.0);

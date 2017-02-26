@@ -2,6 +2,7 @@
 package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.RobotMap;
+import org.usfirst.frc3467.subsystems.PixyCam.PixyCmu5;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -131,13 +132,13 @@ public class DriveBase extends Subsystem {
     	double xScale = 2;
     	
     	z = z*-1;
-    	double left = -1.0*(y + (width/2) * z);
+    	double left = (y + (width/2) * z);
     	double right = y - (width/2) * z;
     	double center = x;
     	
     	center = center*xScale;
     	
-    	lTalon1.set(left);
+    	lTalon1.set(-left);
     	rTalon1.set(right);
     	cTalon1.set(center);
     }
@@ -152,6 +153,57 @@ public class DriveBase extends Subsystem {
     	
     	driveRobotCentric(xNet, yNet, z);
     	
+    }
+    public boolean driveAutoAim(double x, double y, double targetDistance, double anglePrecision, double distanceTolerance) {
+    	double xOut = 0;
+    	double yOut = 0;
+    	double zOut = 0;
+    	final double goalHeight = .5;
+    	final double pixyAngle = 0.174;
+    	double angleX = x*(2*3.14159/360);//2*x*Math.tan(PixyCmu5.PIXY_X_FOV/(4*3.14159))/PixyCmu5.PIXY_MAX_X;
+    	double angleY = -y*(2*3.14159/360)+pixyAngle;//2*y*Math.tan(PixyCmu5.PIXY_Y_FOV/(4*3.14159))/PixyCmu5.PIXY_MAX_Y;
+    	final double distance = goalHeight/Math.tan(angleY);
+    	final double zScale = 1.7;
+    	double distanceScale = Math.abs(distance-targetDistance);
+    	if(distanceScale > .7){
+    		distanceScale = .7;
+    	}
+    	if(Math.abs(angleX)>anglePrecision)
+    		zOut = angleX*zScale;
+    	if(Math.abs(distance-targetDistance) > distanceTolerance){
+    		xOut = (distance-targetDistance)*Math.sin(angleX)*distanceScale;
+    		yOut = (distance-targetDistance)*Math.cos(angleX)*distanceScale;
+    	}
+    	else{
+    		xOut = 0;
+    		yOut = 0;
+    	}
+    	/*if(xOut > 0){
+    	xOut = Math.sqrt(xOut);
+    	}else{
+    		xOut = -1*Math.sqrt(xOut*-1);
+    	}
+    	
+    	if(yOut > 0){
+        	yOut = Math.sqrt(yOut);
+        }else{
+        	yOut = -1*Math.sqrt(yOut*-1);
+        }*/
+    	if(xOut > 0){
+    		xOut = Math.pow(xOut, 2.0/3);
+    	}
+    	else{
+    		xOut = -Math.pow(xOut, 2.0/3);
+    	}
+    	if(yOut > 0){
+    		yOut = Math.pow(yOut, 2.0/3);
+    	}
+    	else{
+    		yOut = -Math.pow(yOut, 2.0/3);
+    	}
+    	System.out.println(angleY+"     " +distance+ "     "+targetDistance+"     "+zOut +"     "+angleX+"     "+(angleX*zScale));
+    	driveRobotCentric(xOut, -yOut, zOut);
+    	return true;
     }
     
 	// pass-thru to RobotDrive method (drive using one stick)

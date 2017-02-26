@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class Drivestraight extends CommandGroup {
+public class JustDrive extends CommandGroup {
 
-    public Drivestraight() {
+    public JustDrive() {
     	addSequential(new DriveStraight(3000));
     }
 }

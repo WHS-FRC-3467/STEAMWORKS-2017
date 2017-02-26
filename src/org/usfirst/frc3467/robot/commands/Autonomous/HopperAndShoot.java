@@ -18,6 +18,6 @@ public class HopperAndShoot extends CommandGroup {
         addSequential(new WaitCommand(3.0));
         addSequential(new DriveStraight(-2000));
         addSequential(new Turn());
-        addSequential(new AutoAimShooter());
+        //addSequential(new AutoAimShooter());
     }
 }

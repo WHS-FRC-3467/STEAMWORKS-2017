@@ -43,7 +43,8 @@ public class PixyCam extends Subsystem {
     
     public void detectTarget() {
 
-    	double degFromCenter = 0;
+    	double degFromCenterX = 0;
+    	double degFromCenterY = 0;
 
     	// If an object is detected in the frame
 		if(!pixyCamera.getCurrentframes().isEmpty())
@@ -53,17 +54,31 @@ public class PixyCam extends Subsystem {
 			try
 			{
 				// Calculate the number of degrees from the center the current frame 
-				degFromCenter = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(0));
-				SmartDashboard.putString("Aim", Double.toString(degFromCenter) + " degrees from target");
+				degFromCenterX = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(0));
+				degFromCenterY = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(0));
+				SmartDashboard.putString("AimX", Double.toString(degFromCenterX) + " degrees from target");
+				SmartDashboard.putString("AimY", Double.toString(degFromCenterY) + " degrees from target");
 			
 			} catch  (RuntimeException ex ){
 
 			}
 		} else {
-			SmartDashboard.putBoolean("Target Detected", true);
-			SmartDashboard.putString("Aim", "No visible target");
+			SmartDashboard.putBoolean("Target Detected", false);
+			SmartDashboard.putString("AimX", "No visible target");
+			SmartDashboard.putString("AimY", "No visible target");
 		}
 
+    }
+    public double[] boilerDistance() {
+    	double tapePosx = 0;
+    	double tapePosy = 0;
+    	try
+    	{
+    		tapePosy = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(0));
+    		tapePosx = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(0));
+    	} catch (RuntimeException ex ) {
+    	}
+		return new double[] {tapePosx, tapePosy};
     }
 }
 
