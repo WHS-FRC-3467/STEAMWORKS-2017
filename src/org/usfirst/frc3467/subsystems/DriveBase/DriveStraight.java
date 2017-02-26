@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Drive the given distance straight (negative values go backwards).
@@ -127,8 +126,9 @@ public class DriveStraight extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
     	// Get everything in a safe starting state.
-        driveBase.resetEncoders();
-       // gyro.gyroReset();
+        driveBase.liftFeetBeforeDriving();
+    	driveBase.resetEncoders();
+        gyro.zeroGyro();
     	m_pid.reset();
         m_pid.enable();
     }

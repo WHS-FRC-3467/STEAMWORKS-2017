@@ -8,18 +8,21 @@ import org.usfirst.frc3467.robot.CommandBase;
  */
 public class RunShooter extends CommandBase {
 
-    public RunShooter() {
+    double velocity = 0.0;
+    		
+	public RunShooter(double speed) {
         requires(shooter);
+        
+        velocity = speed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	shooter.tractionExtend();
     }
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	shooter.ShooterRun(.7);
+    	shooter.ShooterRun(velocity);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -30,7 +33,6 @@ public class RunShooter extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
     	shooter.ShooterRun(0);
-    	shooter.tractionRetract();	
     }
 
     // Called when another command which requires one or more of the same

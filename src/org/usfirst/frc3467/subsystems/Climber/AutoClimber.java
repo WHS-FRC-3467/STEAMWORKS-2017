@@ -6,7 +6,6 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoClimber  extends CommandBase{
 	PowerDistributionPanel pdp;

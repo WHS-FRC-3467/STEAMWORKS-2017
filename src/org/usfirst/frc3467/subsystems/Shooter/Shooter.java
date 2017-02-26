@@ -76,11 +76,5 @@ public class Shooter extends Subsystem {
     	shooterTalon1.set(target);
     	shooterTalon2.set(target);
     }
-    public void tractionExtend() {
-    	Pneumatics.getInstance().tractionFeetDeploy();
-}
-    public void tractionRetract() {
-    	Pneumatics.getInstance().tractionFeetRetract();
-    }
-}
+ }
 
