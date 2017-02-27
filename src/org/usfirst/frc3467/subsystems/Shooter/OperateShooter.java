@@ -3,6 +3,7 @@ package org.usfirst.frc3467.subsystems.Shooter;
 import org.usfirst.frc3467.robot.CommandBase;
 import org.usfirst.frc3467.robot.OI;
 import org.usfirst.frc3467.robot.control.Gamepad;
+import org.usfirst.frc3467.subsystems.PixyCam.NoTargetException;
 
 import edu.wpi.first.wpilibj.Timer;
 
@@ -26,6 +27,10 @@ public class OperateShooter extends CommandBase {
         requires(shooter);
         requires(flr_intake);
         requires(hi_intake);
+
+        // Don't allow interruptions; command will have to timeout on it's own
+        // This will prevent extra Trigger activations from starting a new instance of this command
+        this.setInterruptible(false);
 
         timeOutTimer = new Timer();
 	}
@@ -54,10 +59,17 @@ public class OperateShooter extends CommandBase {
         // Run shooter wheels under Velocity Control
     	double shooterVelocity = 1.0;
     	
-    	double distance = pixyCam.getBoilerDistance();
-    	// Convert distance to velocity
-    	// shooterVelocity = fn(distance);
-    	
+    	try {
+			// Get distance to target
+    		double distance = pixyCam.getBoilerDistance();
+    		
+        	// Convert distance to velocity
+        	// shooterVelocity = fn(distance);
+
+    	} catch (NoTargetException ex) {
+    		// Can't get distance; keep ShooterVelocity at default value
+    	}
+     	
     	shooter.ShooterRun(shooterVelocity);    	
 
         // Look for Left Trigger activation
@@ -103,7 +115,9 @@ public class OperateShooter extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+    	
+    	// This should never be called if interruptible is false
+    	// end();
     }
     
 }

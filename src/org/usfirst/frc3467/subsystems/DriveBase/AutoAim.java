@@ -17,6 +17,7 @@ public class AutoAim extends CommandBase {
 	double xOut = 0;
 	double yOut = 0;
 	double zOut = 0;
+	boolean targetFound = false;
 
 	public AutoAim() {
 		this(DEFAULT_TARGET_DISTANCE);
@@ -33,7 +34,7 @@ public class AutoAim extends CommandBase {
 	}
 	
 	public void initialize() {
-		
+		targetFound = false;
 	}
 	
 	public void execute() {
@@ -75,7 +76,13 @@ public class AutoAim extends CommandBase {
     		yOut = 0;
     	}
     	
-    	/*if(xOut > 0){
+		// Command is completed if we are on target (i.e. all three terms are 0.0)
+		if (xOut == 0.0 && yOut == 0.0 && zOut == 0.0) {
+			targetFound = true;
+			return;
+		}
+
+		/*if(xOut > 0){
     	xOut = Math.sqrt(xOut);
     	}else{
     		xOut = -1*Math.sqrt(xOut*-1);
@@ -115,8 +122,7 @@ public class AutoAim extends CommandBase {
 	}
 	
 	protected boolean isFinished() {
-		// Command is completed if we are on target (i.e. all three terms are 0.0)
-		return (xOut == 0.0 && yOut == 0.0 && zOut == 0.0);
+		return targetFound;
 	}
 	
 	public void end() {
