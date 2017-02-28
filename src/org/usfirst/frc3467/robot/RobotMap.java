@@ -45,9 +45,13 @@ public class RobotMap {
 	// High Intake
 	public static final int highIntake_Victor = 1;
 	
-	// Shooter - Spinner & Conveyor
+	// Shooter - Spinner
 	public static final int shooterSpin_Victor = 2;
 	
+	//
+	// SERVOS - PWM Control
+	//
+	public static final int climberLatch_Servo = 3;
 	
 	// SOLENOIDS - Module 0
 	
