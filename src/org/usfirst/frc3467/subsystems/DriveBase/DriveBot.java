@@ -10,6 +10,10 @@ public class DriveBot extends CommandBase {
 	int _driveMode;
 	static double precision_scaleFactor = 0.1;
 	
+    // square the inputs (while preserving the sign) to increase fine control
+    // while permitting full power
+	static final boolean SQUARE_INPUTS = true;
+	
 	public DriveBot(int driveMode) {
 		requires(driveBase);
 		this.setInterruptible(true);
@@ -28,25 +32,25 @@ public class DriveBot extends CommandBase {
 		
 		default:
 		case DriveBase.driveMode_FieldCentric:
-			driveBase.driveRobotCentric(oi.getDriveX(), oi.getDriveY(), oi.getDriveRotation());
+			driveBase.driveFieldCentric(getX(), getY(), getRot(), gyro.getAngle());
 			break;
 			
 		case DriveBase.driveMode_RobotCentric:
-			driveBase.driveRobotCentric(oi.getDriveX(), oi.getDriveY(), oi.getDriveRotation());
+			driveBase.driveRobotCentric(getX(), getY(), getRot());
 			break;
 			
 		case DriveBase.driveMode_Arcade:
-			driveBase.driveArcade(oi.getDriveY(), oi.getDriveRotation(), true);
+			driveBase.driveArcade(getY(), getRot(), SQUARE_INPUTS);
 			break;
 			
 		case DriveBase.driveMode_Precision:
-			driveBase.driveRobotCentric(oi.getDriveX() * precision_scaleFactor,
-					oi.getDriveY() * precision_scaleFactor,
-					oi.getDriveRotation() * precision_scaleFactor);
+			driveBase.driveRobotCentric(getX() * precision_scaleFactor,
+					getY() * precision_scaleFactor,
+					getRot() * precision_scaleFactor);
 			break;
 			
 		case DriveBase.driveMode_Tank:
-			driveBase.driveTank(OI.driverPad.getLeftStickY(), OI.driverPad.getRightStickY(), true);
+			driveBase.driveTank(OI.driverPad.getLeftStickY(), OI.driverPad.getRightStickY(), SQUARE_INPUTS);
 			break;
 		}
 	}
@@ -60,5 +64,37 @@ public class DriveBot extends CommandBase {
 
 	protected void interrupted() {
 		end();
+	}
+	
+	private double getX() {
+		if (SQUARE_INPUTS) {
+			return squareInput(oi.getDriveX());
+		} else {
+			return oi.getDriveX();
+		}
+	}
+
+	private double getY() {
+		if (SQUARE_INPUTS) {
+			return squareInput(oi.getDriveY());
+		} else {
+			return oi.getDriveX();
+		}
+	}
+	
+	private double getRot() {
+		if (SQUARE_INPUTS) {
+			return squareInput(oi.getDriveRotation());
+		} else {
+			return oi.getDriveX();
+		}
+	}
+	
+	private double squareInput(double input) {
+		if (input >= 0.0) {
+	          return (input * input);
+        } else {
+	          return -(input * input);
+        }
 	}
 }

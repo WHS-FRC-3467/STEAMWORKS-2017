@@ -2,7 +2,6 @@ package org.usfirst.frc3467.subsystems.HighIntake;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
@@ -25,7 +24,7 @@ public class RunBothIntakes extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	flr_intake.DriveAuto(SPEED);
+    	flr_intake.drive(SPEED);
     	hi_intake.HIntakeRun(SPEED);
     }
 
@@ -36,8 +35,8 @@ public class RunBothIntakes extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	flr_intake.DriveAuto(0);
-    	hi_intake.HIntakeRun(0);
+    	flr_intake.drive(0.0);
+    	hi_intake.HIntakeRun(0.0);
     }
 
     // Called when another command which requires one or more of the same

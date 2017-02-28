@@ -2,8 +2,6 @@ package org.usfirst.frc3467.subsystems.FloorIntake;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 /**
  *
  */

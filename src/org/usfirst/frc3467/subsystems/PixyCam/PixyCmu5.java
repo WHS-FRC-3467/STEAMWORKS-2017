@@ -99,14 +99,14 @@ public class PixyCmu5 implements PIDSource
     /**********************************************************
 	 *  I2C
 	 **********************************************************/
-    public static final int PIXY_I2C_DEFAULT_ADDR = 0x54; //0xa8;
+    public static final int PIXY_I2C_DEFAULT_ADDR = 0xa8; //0xa8;
     private I2C m_i2cbus;
     private int m_i2caddress = PIXY_I2C_DEFAULT_ADDR;
     
     /**********************************************************
 	 *  Debug variables
 	 **********************************************************/
-    private static boolean flg_debug = false;
+    private static boolean flg_debug = true;
     
 	/**
 	 * PixyTask is the private scheduler within PixyCMU5 that 
@@ -157,7 +157,7 @@ public class PixyCmu5 implements PIDSource
     public PixyCmu5(int i2c_address_in)
     {
     	setI2CAddress(i2c_address_in);
-    	m_i2cbus = new I2C(I2C.Port.kOnboard, getI2CAddress());
+    	m_i2cbus = new I2C(I2C.Port.kMXP, getI2CAddress());
     	m_currentframes = new LinkedList<PixyFrame>();
     	m_zeroBuffer = new byte [DATA_SIZE];
     	Arrays.fill(m_zeroBuffer, (byte)0);
@@ -174,7 +174,7 @@ public class PixyCmu5 implements PIDSource
     	// Set I2C address and period
     	this.setI2CAddress(i2c_address_in);
     	this.setPeriod(period);
-    	m_i2cbus = new I2C(I2C.Port.kOnboard, getI2CAddress());
+    	m_i2cbus = new I2C(I2C.Port.kMXP, getI2CAddress());
     	m_currentframes = new LinkedList<PixyFrame>();
     	m_zeroBuffer = new byte [DATA_SIZE];
     	Arrays.fill(m_zeroBuffer, (byte)0);
@@ -582,6 +582,10 @@ public class PixyCmu5 implements PIDSource
     	return frame.xCenter - PixyCmu5.PIXY_X_CENTER;
     }
     
+    public static double yCenterDelta(PixyFrame frame)
+    {
+    	return frame.yCenter - PixyCmu5.PIXY_Y_CENTER;
+    }
     /**
      * Returns the number of degrees along the horizontal axis the detected object is away from the center
      * $
@@ -591,6 +595,10 @@ public class PixyCmu5 implements PIDSource
     public static double degreesXFromCenter(PixyFrame frame)
     {
     	return xCenterDelta(frame)*PIXY_X_DEG_PER_PIXEL;
+    }
+    public static double degreesYFromCenter(PixyFrame frame)
+    {
+    	return yCenterDelta(frame)*PIXY_Y_DEG_PER_PIXEL;
     }
     
     /**************************************************************

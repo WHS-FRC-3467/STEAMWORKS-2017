@@ -1,0 +1,90 @@
+
+***** Operator Interface Functions ******
+
+Triggers:
+	(whenActive) - action is performed as soon as the control becomes active (i.e. button is pressed, stick is moved, etc.)
+	(whileActive) - action is repeated continuously as long as control is active, and stops when control becomes inactive
+	
+//
+// Driver GamePad
+//
+Traction plates:
+	- Go Down after Auto-Aiming or when Shooting
+	- Traction plates should not go down until drivebase encoders show no (or minimal) velocity
+	- On any drive joystick move -> traction plates come Up
+
+Joysticks (Left and Right):
+	Drive in various modes as determined by the DPad buttons:
+		DPad Up = Field Centric Mode (default)	(whenActive)
+		DPad Down = Robot Centric Mode		(whenActive)
+		DPad Left = Precision Mode			(whenActive)
+		DPad Right = Robot Centric (No CW)	(whenActive)
+
+A Button - Auto-Aim & Shooter Power Up	(whileActive)
+LT(Left Trigger) Power Up & Shoot ASAP	(whileActive)
+		Auto-Aim:
+			- Start Pixy camera high boiler goal tracking
+			- Turn drivebase to aim at high boiler goal (any stick movement following this will cancel tracking; tracking may be resumed by entering Precision Drive mode (Y-button))
+			- When on target, start spinner (slow) & drop traction plates
+		Powering up the Shooter:
+			- Actuate Lower intake in
+			- Actuate High intake out
+			- Run Lower intake in
+			- Run High intake in
+			- Run shooter wheels under Velocity Control (speed dependent on image in Pixy camers)
+		Activating the Left Trigger does the following:
+			- Run conveyor and spinner at speed determined by Left Trigger movement (0.0 -> 1.0)
+			- This permits Driver to control the flow of fuel out of the shooter, to allow for test shots, realignment, etc. without wasting a lot of fuel before proper alignment is achieved.
+			
+Y & B Buttons - Climb
+	- Automated climber routine
+	- Latch climber axle rachet; drive center wheel
+	- Stop when center wheel current (read from PDB) reaches predetermined maximum value
+	
+X Button - "Zero" the Gyro
+	- Save current setting as offset, and subtract from all subsequent readings.
+			
+LB(Left Bumper) LowerIntake  		(whenActive)
+	Toggle:
+		Lower intake out; running in
+		Lower intake in; not running
+	
+RT(Right Trigger) Gear Catcher 		(whenActive)
+	Toggle gear catcher angle
+
+RB(Right Bumper) Gearclaw 			(whenActive)
+	Toggle gearclaw hold/release
+	
+//
+//  Operator GamePad
+//
+
+LT (Left Trigger) Hopper 		(whenActive)
+	Toggle hopper contract/expand
+	
+RT (Right Trigger)  Run intakes	(whileActive)
+	Run Upper and Lower intakes inward
+	
+LB (Left Bumper) Empty Hopper (whileActive)
+	Run Lower intake outward
+	
+RB (Right Bumper) Toggle Lower Intake	(whenActive)
+	Toggle Lower intake in/out
+	
+// Manual shooter feed controls (for freeing jams)
+X Button = RunSpinner Left		(whileActive)
+B Button = RunSpinner Right		(whileActive)
+Y Button = RunTower Up			(whileActive)
+A Button = RunTower Down		(whileActive)
+
+DPad (Directional Pad):
+	DPad Up - Lift Traction Plates		(whenActive)
+	DPad Down - Drop Traction Plates	(whenActive)
+	DPad Left - Toggle Upper Intake position	(whenActive)
+	DPad Right - Run Upper intake inward	(whileActive)
+
+
+?Control? Climb Mode (whileActive)
+	While in Climbing Mode:
+		- Right (or Left?) Stick Y-axis controls climbing motor (whileActive)
+		- Right Trigger locks climber rachet (whenActive)

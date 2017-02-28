@@ -2,6 +2,7 @@
 package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.RobotMap;
+import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -22,9 +23,12 @@ public class DriveBase extends Subsystem {
 	private static CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3, cTalon1, cTalon2;
 	private static final double width = 1;
     
+	private static DriveBase dBInstance;
 	private static RobotDrive dBase;
 	private TalonControlMode 	t_controlMode;
+	private double m_maxOutput = 1.0;
 
+	public boolean tractionFeetState = false; // false = up; true = down
 	
 	public static final int driveMode_FieldCentric = 0;
 	public static final int driveMode_RobotCentric = 1;
@@ -42,7 +46,14 @@ public class DriveBase extends Subsystem {
 
 	private int current_driveMode = driveMode_FieldCentric;
 	
+	public static DriveBase getInstance() {
+		return DriveBase.dBInstance;
+	}
+	
 	public DriveBase() {
+	
+		dBInstance = this;
+		
 		rTalon1 = new CANTalon(RobotMap.drivebase_RightTalon);
 		rTalon2 = new CANTalon(RobotMap.drivebase_RightTalon2);
 		rTalon3 = new CANTalon(RobotMap.drivebase_RightTalon3);
@@ -69,15 +80,19 @@ public class DriveBase extends Subsystem {
 		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		cTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		
-		latchServo = new Servo(0);
+		latchServo = new Servo(RobotMap.climberLatch_Servo);
 		
 		pdp = new PowerDistributionPanel();
 
 		
 		// Set default control Modes for Master CANTalons
 		// (This will change to Speed control once encoders are installed and calibrated)
-		setControlMode(TalonControlMode.PercentVbus);
-
+		t_controlMode = TalonControlMode.PercentVbus;
+		lTalon1.changeControlMode(t_controlMode);
+		rTalon1.changeControlMode(t_controlMode);
+		cTalon1.changeControlMode(t_controlMode);
+		m_maxOutput = 1.0;
+		
 		// Set up a RobotDrive object for normal driving
 		dBase = new RobotDrive(lTalon1, rTalon1);
 		
@@ -111,15 +126,47 @@ public class DriveBase extends Subsystem {
     
     
 	/**
-	 * @param controlMode Set the control mode of the master CANTalons
+	 * Set Talons to Voltage mode
 	 */
-	public void setControlMode(TalonControlMode controlMode) {
-		lTalon1.changeControlMode(controlMode);
-		rTalon1.changeControlMode(controlMode);
-		cTalon1.changeControlMode(controlMode);
+	public void setVoltageMode() {
 		
-		// Save control mode so we will know if we have to set it back later
-		t_controlMode = controlMode;
+		if (t_controlMode != TalonControlMode.PercentVbus) {
+			t_controlMode = TalonControlMode.PercentVbus;
+			lTalon1.changeControlMode(t_controlMode);
+			rTalon1.changeControlMode(t_controlMode);
+			cTalon1.changeControlMode(t_controlMode);
+		}
+		m_maxOutput = 1.0;
+		dBase.setMaxOutput(m_maxOutput);
+	}
+    
+	/**
+	 * Set Talons to Speed mode
+	 */
+	public void setSpeedMode() {
+		
+		if (t_controlMode != TalonControlMode.Speed) {
+			t_controlMode = TalonControlMode.Speed;
+			lTalon1.changeControlMode(t_controlMode);
+			rTalon1.changeControlMode(t_controlMode);
+			cTalon1.changeControlMode(t_controlMode);
+		}
+        /*
+         *  Set maximum velocity of our wheels (in counts per 0.1 second)
+	     *	
+	     *	
+	     *	Wheel Circ. = 4 in * 3.14159	
+	     *
+	     *
+	     *	16fps -> ??? counts/0.1 seconds
+		 *
+		 *	Values computed by the RobotDrive code from the OI input (usually -1 -> +1)
+		 *	will be multiplied by this value before being sent to the controllers' set() methods.
+		 *
+		 *	If drive stick(s) max out too early, lower this value.
+	     */
+		m_maxOutput = 1.0;
+		dBase.setMaxOutput(m_maxOutput);
 	}
 	
 	public TalonControlMode getControlMode() {
@@ -128,18 +175,25 @@ public class DriveBase extends Subsystem {
 	
     public void driveRobotCentric(double x, double y, double z) {
     	
-    	double xScale = 2;
+    	final double xScale = 2;
+   
+    	if (tractionFeetState == true && 
+    		(x > 0.05 || y > 0.05 || z > 0.05 ||
+    		x < -0.05 || y < -0.05 || z < -0.05	))
+    	{
+    		liftFeetBeforeDriving();
+    	}
     	
     	z = z*-1;
-    	double left = -1.0*(y + (width/2) * z);
+    	double left = (y + (width/2) * z);
     	double right = y - (width/2) * z;
     	double center = x;
     	
     	center = center*xScale;
     	
-    	lTalon1.set(left);
-    	rTalon1.set(right);
-    	cTalon1.set(center);
+    	lTalon1.set(-left * m_maxOutput);
+    	rTalon1.set(right * m_maxOutput);
+    	cTalon1.set(center * m_maxOutput);
     }
     
     public void driveFieldCentric(double x, double y, double z, double angle) {
@@ -153,20 +207,33 @@ public class DriveBase extends Subsystem {
     	driveRobotCentric(xNet, yNet, z);
     	
     }
-    
+   
 	// pass-thru to RobotDrive method (drive using one stick)
     public void driveArcade(double move, double rotate, boolean square) {
+
+    	checkFeetBeforeRobotDrive(move, rotate);    	
     	dBase.arcadeDrive(move, rotate, square);
     }
     
 	// pass-thru to RobotDrive method (drive using 2 sticks)
     public void driveTank(double leftStick, double rightStick, boolean square) {
+    	checkFeetBeforeRobotDrive(leftStick, rightStick);    	
     	dBase.tankDrive(leftStick, rightStick, square);
     }
     
 	// pass-thru to RobotDrive method (used in autonomous)
 	public void drive(double outputMagnitude, double curve) {
+    	checkFeetBeforeRobotDrive(outputMagnitude, curve);    	
 		dBase.drive(outputMagnitude, curve);
+	}
+
+	private void checkFeetBeforeRobotDrive(double x, double y) {
+		if (tractionFeetState == true && 
+    		(x > 0.05 || y > 0.05 ||
+    		x < -0.05 || y < -0.05 ))
+    	{
+    		liftFeetBeforeDriving();
+    	}
 	}
 
 	/**
@@ -188,11 +255,39 @@ public class DriveBase extends Subsystem {
 	public CANTalon getMiddleTalon(){
 		return cTalon1;
 	}
+	public CANTalon getRightTalon(){
+		return rTalon1;
+	}
+	public CANTalon getLeftTalon(){
+		return lTalon1;
+	}
 	public PowerDistributionPanel getPDP(){
 		return pdp;
 	}
 	public Servo getLatchServo(){
 		return latchServo;
+	}
+
+	/*
+	 * Traction control
+	 */
+	public void liftFeetBeforeDriving() {
+	   	Pneumatics.getInstance().tractionFeetRetract();
+	   	this.tractionFeetState = false;
+	}
+	
+	public void tractionExtend() {
+		
+		if (this.tractionFeetState == false)
+			Pneumatics.getInstance().tractionFeetDeploy();
+	   	this.tractionFeetState = true;
+	}
+
+	public void tractionRetract() {
+
+		if (this.tractionFeetState == true)
+			Pneumatics.getInstance().tractionFeetRetract();
+	   	this.tractionFeetState = false;
 	}
 
     
