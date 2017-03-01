@@ -53,12 +53,12 @@ public class RobotMap {
 	//
 	public static final int climberLatch_Servo = 3;
 	
-	// SOLENOIDS - Module 0
+	// SOLENOIDS - Module 1
 	
-	public static final int hopper_module = 0;
-	public static final int highintake_module = 0;
-	public static final int floorintake_module = 0;
-	public static final int traction_module = 0;
+	public static final int hopper_module = 1;
+	public static final int highintake_module = 1;
+	public static final int floorintake_module = 1;
+	public static final int traction_module = 1;
 	
 	// Hopper 
 	public static final int hopper_solenoid_contract = 0;
@@ -76,11 +76,11 @@ public class RobotMap {
 	public static final int traction_solenoid_retract = 6;
 	public static final int traction_solenoid_deploy = 7;
 
-	// SOLENOIDS - Module 1
+	// SOLENOIDS - Module 2
 
-	public static final int gearcatch_module = 1;
-	public static final int gearclaw_module = 1;
-	public static final int pusher_module = 1;
+	public static final int gearcatch_module = 2;
+	public static final int gearclaw_module = 2;
+	public static final int pusher_module = 2;
 
 	// GearCatcher
 	public static final int gearcatch_solenoid__up = 0;

@@ -28,7 +28,7 @@ public class OperateShooter extends CommandBase {
         requires(flr_intake);
         requires(hi_intake);
 
-        // Don't allow interruptions; command will have to timeout on it's own
+        // Don't allow interruptions; command will have to timeout on its own
         // This will prevent extra Trigger activations from starting a new instance of this command
         this.setInterruptible(false);
 
