@@ -22,10 +22,10 @@ import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
 import org.usfirst.frc3467.subsystems.DriveBase.DropTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.LiftTractionPlates;
 import org.usfirst.frc3467.subsystems.FloorIntake.FloorIntakeRun;
+import org.usfirst.frc3467.subsystems.FloorIntake.TestFloorIntake;
 import org.usfirst.frc3467.subsystems.FloorIntake.ToggleFloorIntakeOperation;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
-import org.usfirst.frc3467.subsystems.Gyro.Gyro;
 import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
 import org.usfirst.frc3467.subsystems.HighIntake.HighIntakeRun;
 import org.usfirst.frc3467.subsystems.HighIntake.RunBothIntakes;
@@ -48,6 +48,9 @@ import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
 import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunBelt;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
+import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
+import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
+import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
 
 //import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
@@ -107,8 +110,6 @@ public class OI {
 		final double BELT_SPEED_NORMAL = 0.3;
 		final double BELT_SPEED_BACKWARD = -0.3;
 		
-		final double SHOOTER_SPEED_DEFAULT = 100;
-
 		/*
 		 *
 		 * Driver GamePad
@@ -170,5 +171,11 @@ public class OI {
 		SmartDashboard.putData("hopperExpand", new hopperExpand());
 		SmartDashboard.putData("pusherBarsRetract", new pusherRetract());
 		SmartDashboard.putData("pusherBarsExtend", new pusherExtend());
+		
+		SmartDashboard.putData("Test Shooter Belt", new TestBelt());
+		SmartDashboard.putData("Test Shooter Spinner", new TestSpinner());
+		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
+		SmartDashboard.putData("Test Floor Intake", new TestFloorIntake());
+		
 	}
 }

@@ -69,8 +69,8 @@ public abstract class CommandBase extends Command {
 		subsystemList.addElement(hi_intake);
 		hopper = new Hopper();
 		subsystemList.addElement(hopper);
-		lidar = new LIDAR();
-		subsystemList.addElement(lidar);
+		//lidar = new LIDAR();
+		//subsystemList.addElement(lidar);
 		pixyCam = new PixyCam();
 		subsystemList.addElement(pixyCam);
 		shooter = new Shooter();

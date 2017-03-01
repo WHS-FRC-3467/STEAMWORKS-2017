@@ -2,6 +2,8 @@ package org.usfirst.frc3467.subsystems.FloorIntake;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  */
@@ -20,8 +22,6 @@ public class ToggleFloorIntakeOperation extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	//boolean isIn = flr_intake.getFloorState();
-    	
     	if (isIn == true) {
     		pneumatics.floorIntakeExtend();
     		isIn = false;
@@ -30,6 +30,7 @@ public class ToggleFloorIntakeOperation extends CommandBase {
     		pneumatics.floorIntakeRetract();
     		isIn = true;
     	}
+    	SmartDashboard.putString("Floor Intake Position",  isIn ? "IN" : "OUT");
     }
 
     // Make this return true when this Command no longer needs to run execute()

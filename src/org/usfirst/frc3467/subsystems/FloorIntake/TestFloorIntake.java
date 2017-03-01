@@ -1,30 +1,28 @@
-package org.usfirst.frc3467.subsystems.Shooter;
+package org.usfirst.frc3467.subsystems.FloorIntake;
 
 import org.usfirst.frc3467.robot.CommandBase;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 /**
  *
  */
-public class TestShooter extends CommandBase {
+public class TestFloorIntake extends CommandBase {
+	
+	double speed;
 
-    double speed;
-    		
-	public TestShooter() {
-        requires(shooter);
-    	SmartDashboard.putNumber("Set Shooter Speed", .1);
+    public TestFloorIntake() {
+    	requires (flr_intake);
+    	SmartDashboard.putNumber("Set Floor Intake Speed", .1);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     }
-    
+
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	speed = SmartDashboard.getNumber("Set Shooter Speed", .1);
-    	shooter.ShooterRun(speed);
+	protected void execute() {
+    	speed = SmartDashboard.getNumber("Set Floor Intake Speed", .1);
+    	flr_intake.drive(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +32,8 @@ public class TestShooter extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.ShooterRun(0.0);
+    	flr_intake.drive(0.0);
+    	
     }
 
     // Called when another command which requires one or more of the same

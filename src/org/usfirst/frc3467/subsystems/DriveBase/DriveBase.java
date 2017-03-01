@@ -246,6 +246,7 @@ public class DriveBase extends Subsystem {
 	public void reportEncoders() {
 		SmartDashboard.putNumber("Left Encoder", lTalon1.getPosition());
 		SmartDashboard.putNumber("Right Encoder", rTalon1.getPosition() * -1.0);			
+		SmartDashboard.putNumber("Center Encoder", cTalon1.getPosition());			
 	}
 
 	public void resetEncoders() {
