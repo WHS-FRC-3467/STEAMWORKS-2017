@@ -48,6 +48,9 @@ import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
 import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunBelt;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
+import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
+import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
+import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
 
 //import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
@@ -102,10 +105,10 @@ public class OI {
 		final double FLOOR_INTAKE_SPEED_BACKWARD = -0.5;
 		final double HIGH_INTAKE_SPEED_NORMAL = 0.5;
 
-		final double SPINNER_SPEED_NORMAL = 0.5;
-		final double SPINNER_SPEED_BACKWARD = -0.5;
-		final double BELT_SPEED_NORMAL = 0.5;
-		final double BELT_SPEED_BACKWARD = -0.5;
+		final double SPINNER_SPEED_NORMAL = 0.3;
+		final double SPINNER_SPEED_BACKWARD = -0.3;
+		final double BELT_SPEED_NORMAL = 0.3;
+		final double BELT_SPEED_BACKWARD = -0.3;
 		
 		final double SHOOTER_SPEED_DEFAULT = 100;
 
@@ -170,5 +173,11 @@ public class OI {
 		SmartDashboard.putData("hopperExpand", new hopperExpand());
 		SmartDashboard.putData("pusherBarsRetract", new pusherRetract());
 		SmartDashboard.putData("pusherBarsExtend", new pusherExtend());
+		SmartDashboard.putData("ConveyorBelt", new TestBelt());
+		SmartDashboard.putData("Ball Spinner", new TestSpinner());
+		SmartDashboard.putData("Shooter", new TestShooter());
+		
+		
+		
 	}
 }

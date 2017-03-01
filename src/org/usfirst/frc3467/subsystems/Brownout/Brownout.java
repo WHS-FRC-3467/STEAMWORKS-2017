@@ -79,7 +79,7 @@ public class Brownout extends Subsystem {
 
 	// Initialize the Default Command
 	protected void initDefaultCommand() {
-		this.setDefaultCommand(new checkPower());
+//		this.setDefaultCommand(new checkPower());
 	}
 
 	public double getVoltage() {
