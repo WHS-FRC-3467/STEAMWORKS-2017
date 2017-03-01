@@ -12,7 +12,7 @@ public class TestSpinner extends CommandBase {
 
     public TestSpinner() {
 
-    	speed = SmartDashboard.getNumber("Set Spinner Speed", .1);
+    	SmartDashboard.putNumber("Set Spinner Speed", .1);
     }
 
     // Called just before this Command runs the first time

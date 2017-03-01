@@ -4,11 +4,13 @@ package org.usfirst.frc3467.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc3467.robot.commands.Autonomous.DriveSideways;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveMotionMagic;
+import org.usfirst.frc3467.subsystems.DriveBase.SidewaysDrive;
 import org.usfirst.frc3467.subsystems.FieldCamera.FieldCamera;
 import org.usfirst.frc3467.robot.CommandBase;
 	
@@ -21,8 +23,8 @@ import org.usfirst.frc3467.robot.CommandBase;
  */
 public class Robot extends IterativeRobot {
 
-    Command autonomousCommand;
-	SendableChooser autoChooser;
+	Command autonomousCommand;
+	SendableChooser<CommandBase> autoChooser;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -31,18 +33,18 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 
 		// Start the FieldCamera
-		FieldCamera fc = new FieldCamera();
+		new FieldCamera();
         
 		// Initialize all subsystems
 		CommandBase.init();	
     	
     	// Add autonomous selector
-		autoChooser = new SendableChooser();
+		autoChooser = new SendableChooser<CommandBase>();
 		//autoChooser.addDefault("Default Auto", new ExampleCommand());
-		autoChooser.addDefault("Sideways", new DriveSideways());
-		//autoChooser.addObject("Drive Straight", new AutoDriveStraight());
+		autoChooser.addDefault("Sideways", new SidewaysDrive(4.0));
+		autoChooser.addObject("Drive Straight", new DriveMotionMagic(200.0));
 		
-		SmartDashboard.putData("Auto", autoChooser);
+		SmartDashboard.putData("Autonomous Command Chooser", autoChooser);
 
     }
 	
@@ -51,11 +53,16 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
+    	SmartDashboard.putString("Robot", "Robot Disabled");
     }
 
 	public void disabledPeriodic() {
+		
+		// Scheduler can continue to run while robot is disabled
 		Scheduler.getInstance().run();
+		
+		autonomousCommand = autoChooser.getSelected();
+		SmartDashboard.putString("Selected Autonomous Mode", autonomousCommand.toString());
 	}
 
     public void autonomousInit() {
@@ -63,6 +70,8 @@ public class Robot extends IterativeRobot {
     	// schedule the autonomous command
  		autonomousCommand = (Command) autoChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
+
+    	SmartDashboard.putString("Robot", "Autonomous Started");
     }
 
     /**
@@ -90,6 +99,15 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        
+        // Show running command(s) on SmartDash
+        SmartDashboard.putData(Scheduler.getInstance());
+        
+        // Show status of running commands for each subsystem
+        for (Subsystem s : CommandBase.subsystemList) {
+        	SmartDashboard.putData(s);
+        }
+
         SmartDashboard.putString("Robot", "Teleop Periodic");
     }
     

@@ -12,7 +12,7 @@ public class TestBelt extends CommandBase {
 
     public TestBelt() {
 
-    	speed = SmartDashboard.getNumber("Set Belt Speed", .1);
+    	SmartDashboard.putNumber("Set Belt Speed", .1);
     }
 
     // Called just before this Command runs the first time

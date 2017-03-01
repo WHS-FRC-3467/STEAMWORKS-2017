@@ -14,7 +14,7 @@ public class TestShooter extends CommandBase {
     		
 	public TestShooter() {
         requires(shooter);
-    	speed = SmartDashboard.getNumber("Set Shooter Speed", .1);
+    	SmartDashboard.putNumber("Set Shooter Speed", .1);
     }
 
     // Called just before this Command runs the first time
