@@ -109,8 +109,8 @@ public class AutoAim extends CommandBase {
     		yOut = -Math.pow(yOut*yOut, 1.0/3);
     	}
     	
-    	System.out.println(angleY+"     " +distance+ "     "+targetDistance+"     "+zOut +"     "+angleX+"     "+(angleX*Z_SCALE));
-    	System.out.println(distanceScale);
+    	SmartDashboard.putString("Vision Tracking", angleY+"     " +distance+ "     "+targetDistance+"     "+zOut +"     "+angleX+"     "+(angleX*Z_SCALE));
+    	SmartDashboard.putString("Vision Distance Scale", "dScale " + distanceScale);
 
     	// Send command to the drivebase
     	driveBase.driveRobotCentric(xOut, -yOut, zOut);

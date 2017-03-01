@@ -22,10 +22,10 @@ import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
 import org.usfirst.frc3467.subsystems.DriveBase.DropTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.LiftTractionPlates;
 import org.usfirst.frc3467.subsystems.FloorIntake.FloorIntakeRun;
+import org.usfirst.frc3467.subsystems.FloorIntake.TestFloorIntake;
 import org.usfirst.frc3467.subsystems.FloorIntake.ToggleFloorIntakeOperation;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
-import org.usfirst.frc3467.subsystems.Gyro.Gyro;
 import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
 import org.usfirst.frc3467.subsystems.HighIntake.HighIntakeRun;
 import org.usfirst.frc3467.subsystems.HighIntake.RunBothIntakes;
@@ -101,17 +101,15 @@ public class OI {
 	//Method that binds certain commands to certain buttons
 	public void BindCommands() {
 		
-		final double FLOOR_INTAKE_SPEED_NORMAL = 0.5;
-		final double FLOOR_INTAKE_SPEED_BACKWARD = -0.5;
-		final double HIGH_INTAKE_SPEED_NORMAL = 0.5;
+		final double FLOOR_INTAKE_SPEED_NORMAL = 0.2;
+		final double FLOOR_INTAKE_SPEED_BACKWARD = -0.2;
+		final double HIGH_INTAKE_SPEED_NORMAL = 0.2;
 
 		final double SPINNER_SPEED_NORMAL = 0.3;
 		final double SPINNER_SPEED_BACKWARD = -0.3;
 		final double BELT_SPEED_NORMAL = 0.3;
 		final double BELT_SPEED_BACKWARD = -0.3;
 		
-		final double SHOOTER_SPEED_DEFAULT = 100;
-
 		/*
 		 *
 		 * Driver GamePad
@@ -173,11 +171,11 @@ public class OI {
 		SmartDashboard.putData("hopperExpand", new hopperExpand());
 		SmartDashboard.putData("pusherBarsRetract", new pusherRetract());
 		SmartDashboard.putData("pusherBarsExtend", new pusherExtend());
-		SmartDashboard.putData("ConveyorBelt", new TestBelt());
-		SmartDashboard.putData("Ball Spinner", new TestSpinner());
-		SmartDashboard.putData("Shooter", new TestShooter());
-		
-		
+
+    SmartDashboard.putData("Test Shooter Belt", new TestBelt());
+		SmartDashboard.putData("Test Shooter Spinner", new TestSpinner());
+		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
+		SmartDashboard.putData("Test Floor Intake", new TestFloorIntake());
 		
 	}
 }

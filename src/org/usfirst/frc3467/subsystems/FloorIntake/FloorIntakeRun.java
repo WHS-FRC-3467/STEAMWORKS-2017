@@ -21,7 +21,7 @@ public class FloorIntakeRun extends CommandBase {
 
 	
 	protected boolean isFinished() {
-		return isTimedOut();
+		return false;
 	}
 
 	

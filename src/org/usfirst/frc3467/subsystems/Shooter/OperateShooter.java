@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class OperateShooter extends CommandBase {
 
-	static final double HI_INTAKE_SPEED = 0.5;
-	static final double FLOOR_INTAKE_SPEED = 0.5;
-	static final double MAX_SPINNER_SPEED = 0.8;
-	static final double MAX_BELT_SPEED = 0.8;
+	static final double HI_INTAKE_SPEED = 0.2;
+	static final double FLOOR_INTAKE_SPEED = 0.2;
+	static final double MAX_SPINNER_SPEED = 0.5;
+	static final double MAX_BELT_SPEED = 0.5;
 	
 	// Time to continue running shooter wheels after no more user input  
 	static final double SECONDS_TIMEOUT = 15.0;

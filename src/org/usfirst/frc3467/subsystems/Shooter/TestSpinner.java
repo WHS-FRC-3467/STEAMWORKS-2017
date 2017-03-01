@@ -8,9 +8,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TestSpinner extends CommandBase {
 	
+	double speed;
 
     public TestSpinner() {
 
+    	SmartDashboard.putNumber("Set Spinner Speed", .1);
     }
 
     // Called just before this Command runs the first time
@@ -19,8 +21,7 @@ public class TestSpinner extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double speed;
-    	speed = SmartDashboard.getNumber("Set Spinner Speed", .5);
+    	speed = SmartDashboard.getNumber("Set Spinner Speed", .1);
     	shooter.SpinnerRun(speed);
     }
 
