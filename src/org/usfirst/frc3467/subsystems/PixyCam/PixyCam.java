@@ -16,6 +16,7 @@ public class PixyCam extends Subsystem {
 
 	PixyCmu5 pixyCamera;
 	List<PixyCmu5.PixyFrame> pixyFrame;
+	boolean cameraPresent = false;
 	
 	public PixyCam() {
     	try
@@ -28,9 +29,12 @@ public class PixyCam extends Subsystem {
     		 */
     		pixyFrame = new LinkedList<PixyCmu5.PixyFrame>();
     	    pixyCamera = new PixyCmu5(168, .25);
+    	    cameraPresent = true;
+	        SmartDashboard.putString("Pixy Cam", "Running normally");
     		
     	} catch (RuntimeException ex ) {
 	        DriverStation.reportError("Error instantiating Pixy:  " + ex.getMessage(), true);
+	        SmartDashboard.putString("Pixy Cam", "NOT DETECTED");
 	    }
     	
 	}
@@ -47,7 +51,7 @@ public class PixyCam extends Subsystem {
     	double degFromCenterY = 0;
 
     	// If an object is detected in the frame
-		if(!pixyCamera.getCurrentframes().isEmpty())
+		if(cameraPresent && !pixyCamera.getCurrentframes().isEmpty())
 		{
 			SmartDashboard.putBoolean("Target Detected", true);
 			
@@ -95,7 +99,7 @@ public class PixyCam extends Subsystem {
     	double tapePosy = 0;
 
     	// If an object is detected in the frame
-		if(!pixyCamera.getCurrentframes().isEmpty())
+		if(cameraPresent && !pixyCamera.getCurrentframes().isEmpty())
 		{
 			SmartDashboard.putBoolean("Target Detected", true);
 			
