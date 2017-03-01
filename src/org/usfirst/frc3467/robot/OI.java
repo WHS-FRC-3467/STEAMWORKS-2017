@@ -171,8 +171,8 @@ public class OI {
 		SmartDashboard.putData("hopperExpand", new hopperExpand());
 		SmartDashboard.putData("pusherBarsRetract", new pusherRetract());
 		SmartDashboard.putData("pusherBarsExtend", new pusherExtend());
-		
-		SmartDashboard.putData("Test Shooter Belt", new TestBelt());
+
+    SmartDashboard.putData("Test Shooter Belt", new TestBelt());
 		SmartDashboard.putData("Test Shooter Spinner", new TestSpinner());
 		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
 		SmartDashboard.putData("Test Floor Intake", new TestFloorIntake());
