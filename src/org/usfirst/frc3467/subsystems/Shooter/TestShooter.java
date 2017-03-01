@@ -10,10 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TestShooter extends CommandBase {
 
-    double speed = 0.0;
+    double speed;
     		
 	public TestShooter() {
         requires(shooter);
+    	speed = SmartDashboard.getNumber("Set Shooter Speed", .1);
     }
 
     // Called just before this Command runs the first time
@@ -22,8 +23,7 @@ public class TestShooter extends CommandBase {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		double speed;
-    	speed = SmartDashboard.getNumber("Set Shooter Speed", .5);
+    	speed = SmartDashboard.getNumber("Set Shooter Speed", .1);
     	shooter.ShooterRun(speed);
     }
 
