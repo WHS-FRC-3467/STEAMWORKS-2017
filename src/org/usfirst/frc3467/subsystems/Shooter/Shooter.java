@@ -26,7 +26,7 @@ public class Shooter extends Subsystem {
     	
     	//Shooter Talon 1
     	shooterTalon1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooterTalon1.reverseSensor(false);
+		shooterTalon1.reverseSensor(true);
 		shooterTalon1.configEncoderCodesPerRev(2048 * 4);
 		
 		shooterTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
@@ -39,10 +39,11 @@ public class Shooter extends Subsystem {
 		shooterTalon1.setD(.5); //.5
 		shooterTalon1.setIZone(0); //0
 		shooterTalon1.changeControlMode(TalonControlMode.Speed);
+		//shooterTalon1.changeControlMode(TalonControlMode.PercentVbus);
 		
 		//Shooter Talon 2
 		shooterTalon2.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooterTalon2.reverseSensor(false);
+		shooterTalon2.reverseSensor(true);
 		shooterTalon2.configEncoderCodesPerRev(2048 * 4);
 	
 		shooterTalon2.configNominalOutputVoltage(+0.0f, -0.0f);
@@ -55,6 +56,7 @@ public class Shooter extends Subsystem {
 		shooterTalon2.setD(.5); //.5
 		shooterTalon2.setIZone(0); //0
 		shooterTalon2.changeControlMode(TalonControlMode.Speed);
+		//shooterTalon2.changeControlMode(TalonControlMode.PercentVbus);
     }
 
     public void initDefaultCommand() {
@@ -69,10 +71,26 @@ public class Shooter extends Subsystem {
     }
     
     public void ShooterRun(double input) {
-    	double target = input * 500;
+    	double target = input * 1000;
 		
-    	shooterTalon1.set(target);
+    	//System.out.println("Shooter Run: " + target + "  spd1: " + shooterTalon1.getSpeed() + "  spd2: " + shooterTalon2.getSpeed());
+    	
+    	if (target < 0.0) target = 0.0;
+       	System.out.println("Shooter Run: " + target + "  spd2: " + shooterTalon2.getSpeed());
+
+       	//shooterTalon1.set(target);
     	shooterTalon2.set(target);
+ 	
+    }
+    
+    public void ShooterStop() {
+    	
+		//shooterTalon1.changeControlMode(TalonControlMode.PercentVbus);
+		shooterTalon2.changeControlMode(TalonControlMode.PercentVbus);
+      	//shooterTalon1.set(0.0);
+    	shooterTalon2.set(0.0);
+		//shooterTalon1.changeControlMode(TalonControlMode.Speed);
+		shooterTalon2.changeControlMode(TalonControlMode.Speed);
     }
  }
 

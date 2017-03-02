@@ -1,6 +1,9 @@
 package org.usfirst.frc3467.subsystems.Shooter;
 
 import org.usfirst.frc3467.robot.CommandBase;
+import org.usfirst.frc3467.robot.OI;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -22,6 +25,8 @@ public class RunShooter extends CommandBase {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	velocity = OI.operatorPad.getLeftStickY();
+    	SmartDashboard.putNumber("Run Shooter Speed", velocity);
     	shooter.ShooterRun(velocity);
     }
 
@@ -32,7 +37,7 @@ public class RunShooter extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.ShooterRun(0);
+    	shooter.ShooterStop();
     }
 
     // Called when another command which requires one or more of the same

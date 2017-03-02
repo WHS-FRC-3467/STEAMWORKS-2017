@@ -47,10 +47,12 @@ import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionDeploy;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
 import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunBelt;
+import org.usfirst.frc3467.subsystems.Shooter.RunShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
 import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
+
 
 //import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.buttons.Button;
@@ -125,10 +127,10 @@ public class OI {
 		new DoubleButton(driverPad, Gamepad.yButton, Gamepad.bButton).whenActive(new AutoClimber());
 		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new AutoAim());
 
-		new DPadUp(driverPad).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
 		new DPadLeft(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Precision));
 		new DPadRight(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Arcade));
+		new DPadUp(driverPad).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 
 		
 		/*
@@ -172,6 +174,7 @@ public class OI {
 		SmartDashboard.putData("pusherBarsRetract", new pusherRetract());
 		SmartDashboard.putData("pusherBarsExtend", new pusherExtend());
 
+		SmartDashboard.putData("Run Shooter", new RunShooter(0.1));
     SmartDashboard.putData("Test Shooter Belt", new TestBelt());
 		SmartDashboard.putData("Test Shooter Spinner", new TestSpinner());
 		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
