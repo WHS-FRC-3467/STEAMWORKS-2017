@@ -14,11 +14,11 @@ public class OperateShooter extends CommandBase {
 
 	static final double HI_INTAKE_SPEED = 0.2;
 	static final double FLOOR_INTAKE_SPEED = 0.2;
-	static final double MAX_SPINNER_SPEED = 0.5;
-	static final double MAX_BELT_SPEED = 0.5;
+	static final double MAX_SPINNER_SPEED = 0.8;
+	static final double MAX_BELT_SPEED = 0.8;
 	
 	// Time to continue running shooter wheels after no more user input  
-	static final double SECONDS_TIMEOUT = 15.0;
+	static final double SECONDS_TIMEOUT = 5.0;
 	
     Timer timeOutTimer;
 	
@@ -108,7 +108,7 @@ public class OperateShooter extends CommandBase {
     	flr_intake.drive(0.0);
     	shooter.SpinnerRun(0.0);
     	shooter.BeltRun(0.0);
-    	shooter.ShooterRun(0.0);
+    	shooter.ShooterStop();
     	timeOutTimer.stop();
     }
 
@@ -117,7 +117,7 @@ public class OperateShooter extends CommandBase {
     protected void interrupted() {
     	
     	// This should never be called if interruptible is false
-    	// end();
+    	end();
     }
     
 }
