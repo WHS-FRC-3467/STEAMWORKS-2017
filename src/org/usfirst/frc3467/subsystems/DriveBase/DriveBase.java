@@ -80,10 +80,10 @@ public class DriveBase extends Subsystem {
 		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		cTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		
+		// Climber Latch
 		latchServo = new Servo(RobotMap.climberLatch_Servo);
 		
 		pdp = new PowerDistributionPanel();
-
 		
 		// Set default control Modes for Master CANTalons
 		// (This will change to Speed control once encoders are installed and calibrated)
@@ -93,15 +93,22 @@ public class DriveBase extends Subsystem {
 		cTalon1.changeControlMode(t_controlMode);
 		m_maxOutput = 1.0;
 		
+		// Setup Safety management for CANTalons
+		lTalon1.setExpiration(1.0);
+		rTalon1.setExpiration(1.0);
+		cTalon1.setExpiration(1.0);
+		
 		// Set up a RobotDrive object for normal driving
 		dBase = new RobotDrive(lTalon1, rTalon1);
 		
 		//RobotDrive Parameters
-		dBase.setSafetyEnabled(true);
+		dBase.setSafetyEnabled(false);  // Will turn this on once we actually start using it
 		dBase.setExpiration(1.0);
 		dBase.setSensitivity(0.5);
 		dBase.setMaxOutput(1.0);
 
+		// Start in Field-centric mode
+		setDriveMode(driveMode_FieldCentric);
 	}
 
     public void initDefaultCommand() {
@@ -114,6 +121,26 @@ public class DriveBase extends Subsystem {
      */
     public void setDriveMode(int dMode) {
     	current_driveMode = dMode;
+
+    	// Manage speed controller safety
+    	switch (current_driveMode) {
+			case driveMode_FieldCentric:
+			case driveMode_RobotCentric:
+			case driveMode_Precision:
+				lTalon1.setSafetyEnabled(true);
+				rTalon1.setSafetyEnabled(true);
+				cTalon1.setSafetyEnabled(true);
+				dBase.setSafetyEnabled(false);
+				break;
+				
+			case driveMode_Arcade:
+			case driveMode_Tank:
+				dBase.setSafetyEnabled(true);
+				lTalon1.setSafetyEnabled(false);
+				rTalon1.setSafetyEnabled(false);
+				cTalon1.setSafetyEnabled(false);
+				break;
+		}
     }
     
     public int getDriveMode() {
