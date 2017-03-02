@@ -7,8 +7,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveBot extends CommandBase {
 	
-	int _driveMode;
-	static double precision_scaleFactor = 0.1;
+	// Default to Field Centric
+	int _driveMode = DriveBase.driveMode_FieldCentric;
+
+	// Scale factor for reducing inputs during Precision Mode
+	static final double precision_scaleFactor = 0.1;
 	
     // square the inputs (while preserving the sign) to increase fine control
     // while permitting full power
@@ -19,11 +22,14 @@ public class DriveBot extends CommandBase {
 		this.setInterruptible(true);
 	
 		_driveMode = driveMode;
-		driveBase.setDriveMode(driveMode);
-		SmartDashboard.putString("Drive Mode", driveBase.getDriveModeName());
 	}
 	
 	protected void initialize() {
+
+		// Don't set drive mode in DriveBase until this command is actually underway
+		// Otherwise, all the instances of this command instantiated in OI will change the drive mode prematurely
+		driveBase.setDriveMode(_driveMode);
+		SmartDashboard.putString("Drive Mode", driveBase.getDriveModeName());
 	}
 
 	protected void execute() {
