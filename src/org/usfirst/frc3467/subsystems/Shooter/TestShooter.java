@@ -34,7 +34,7 @@ public class TestShooter extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.ShooterRun(0.0);
+    	shooter.ShooterStop();
     }
 
     // Called when another command which requires one or more of the same
