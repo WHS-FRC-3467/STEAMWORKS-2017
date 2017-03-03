@@ -14,7 +14,7 @@ public class OperateShooter extends CommandBase {
 
 	static final double HI_INTAKE_SPEED = 0.2;
 	static final double FLOOR_INTAKE_SPEED = 0.2;
-	static final double MAX_SPINNER_SPEED = 0.8;
+	static final double MAX_SPINNER_SPEED = 0.4;
 	static final double MAX_BELT_SPEED = 0.8;
 	
 	// Time to continue running shooter wheels after no more user input  
@@ -57,7 +57,7 @@ public class OperateShooter extends CommandBase {
     	hi_intake.HIntakeRun(HI_INTAKE_SPEED);
 
         // Run shooter wheels under Velocity Control
-    	double shooterVelocity = 1.0;
+    	double shooterVelocity = .5;
     	
     	try {
 			// Get distance to target

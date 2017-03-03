@@ -118,7 +118,7 @@ public class AutoAim extends CommandBase {
 	
 	private void searchForTarget() {
 		// Turn in place until target is found
-    	driveBase.driveRobotCentric(0.0, 0.0, 0.4);		
+    	driveBase.driveRobotCentric(0.0, 0.0, 0.4);
 	}
 	
 	protected boolean isFinished() {

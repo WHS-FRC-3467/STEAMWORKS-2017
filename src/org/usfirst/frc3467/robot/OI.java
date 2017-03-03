@@ -131,7 +131,7 @@ public class OI {
 		new DPadLeft(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Precision));
 		new DPadRight(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Arcade));
 		new DPadUp(driverPad).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
-
+		
 		
 		/*
 		 * 
