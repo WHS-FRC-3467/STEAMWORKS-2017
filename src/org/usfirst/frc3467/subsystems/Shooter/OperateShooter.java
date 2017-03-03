@@ -15,7 +15,7 @@ public class OperateShooter extends CommandBase {
 	static final double HI_INTAKE_SPEED = 0.2;
 	static final double FLOOR_INTAKE_SPEED = 0.2;
 	static final double MAX_SPINNER_SPEED = 0.4;
-	static final double MAX_BELT_SPEED = 0.8;
+	static final double MAX_BELT_SPEED = -0.6;
 	
 	// Time to continue running shooter wheels after no more user input  
 	static final double SECONDS_TIMEOUT = 5.0;
@@ -55,9 +55,10 @@ public class OperateShooter extends CommandBase {
 
     	// Run High intake in
     	hi_intake.HIntakeRun(HI_INTAKE_SPEED);
+    	shooter.BeltRun(MAX_BELT_SPEED);
 
         // Run shooter wheels under Velocity Control
-    	double shooterVelocity = .5;
+    	double shooterVelocity = .4;
     	
     	try {
 			// Get distance to target
@@ -83,7 +84,6 @@ public class OperateShooter extends CommandBase {
 
     		// Run conveyor and spinner at speed determined by Left Trigger movement (0.0 -> 1.0)
         	shooter.SpinnerRun(MAX_SPINNER_SPEED * leftTrigger);
-        	shooter.BeltRun(MAX_BELT_SPEED * leftTrigger);
 
         	// Tell the timer that we are still working
         	timeOutTimer.reset();
@@ -91,7 +91,6 @@ public class OperateShooter extends CommandBase {
     	} else {
 
     		shooter.SpinnerRun(0.0);
-        	shooter.BeltRun(0.0);
     		driveBase.tractionRetract();
     	}
 
