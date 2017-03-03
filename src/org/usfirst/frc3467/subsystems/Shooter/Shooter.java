@@ -71,25 +71,23 @@ public class Shooter extends Subsystem {
     }
     
     public void ShooterRun(double input) {
+    	
     	double target = input * 1000;
 		
     	//System.out.println("Shooter Run: " + target + "  spd1: " + shooterTalon1.getSpeed() + "  spd2: " + shooterTalon2.getSpeed());
     	
     	if (target < 0.0) target = 0.0;
        	System.out.println("Shooter Run: " + target + "  spd2: " + shooterTalon2.getSpeed());
-
-       	//shooterTalon1.set(target);
+       		
+       	shooterTalon1.set(target);
     	shooterTalon2.set(target);
  	
     }
     
     public void ShooterStop() {
-    	
-		//shooterTalon1.changeControlMode(TalonControlMode.PercentVbus);
-		shooterTalon2.changeControlMode(TalonControlMode.PercentVbus);
-      	//shooterTalon1.set(0.0);
-    	shooterTalon2.set(0.0);
-		//shooterTalon1.changeControlMode(TalonControlMode.Speed);
+      	shooterTalon1.set(0.0);
+      	shooterTalon2.set(0.0);
+		shooterTalon1.changeControlMode(TalonControlMode.Speed);
 		shooterTalon2.changeControlMode(TalonControlMode.Speed);
     }
  }
