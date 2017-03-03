@@ -56,7 +56,7 @@ public class Gyro extends Subsystem {
     }
     
     public void zeroGyro() {
-    	zeroed = getAngle();
+    	zeroed = this.getVector()[0];
     }
     
     public void reportGyroValues() {
