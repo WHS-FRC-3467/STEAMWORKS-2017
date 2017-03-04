@@ -15,7 +15,7 @@ public class DriveBot extends CommandBase {
 	
     // square the inputs (while preserving the sign) to increase fine control
     // while permitting full power
-	static final boolean SQUARE_INPUTS = false;
+	static final boolean SQUARE_INPUTS = true;
 	
 	double m_lastX = 0.0, m_lastY = 0.0, m_lastRot = 0.0;
 	
@@ -78,40 +78,23 @@ public class DriveBot extends CommandBase {
 	
 	private double getX() {
 
-		double x = adjustStick(oi.getDriveX(), m_lastX);
-		if (SQUARE_INPUTS)
-				x =  squareInput(x);
-		return (m_lastX = x); 
+		return (m_lastX = adjustStick(oi.getDriveX(), m_lastX)); 
 
 	}
 
 	private double getY() {
 
-		double y = adjustStick(oi.getDriveY(), m_lastY);
-		if (SQUARE_INPUTS)
-				y =  squareInput(y);
-		return (m_lastY = y); 
+		return (m_lastY = adjustStick(oi.getDriveY(), m_lastY)); 
 
 	}
 	
 	private double getRot() {
 
-		double rot = adjustStick(oi.getDriveRotation(), m_lastRot);
-		if (SQUARE_INPUTS)
-				rot =  squareInput(rot);
-		return (m_lastRot = rot); 
+		return (m_lastRot = adjustStick(oi.getDriveRotation(), m_lastRot)); 
 
 	}
 	
-	private double squareInput(double input) {
-		if (input >= 0.0) {
-	          return (input * input);
-        } else {
-	          return -(input * input);
-        }
-	}
-	
-		private double adjustStick(double input, double lastVal) {
+	private double adjustStick(double input, double lastVal) {
 		
 		double val = input;
 		double change;
@@ -128,10 +111,12 @@ public class DriveBot extends CommandBase {
          *  Square the inputs (while preserving the sign) to increase
 		 *  fine control while permitting full power
          */
-        if (val > 0.0)
-            val = (val * val);
-        else
-            val = -(val * val);
+		if (SQUARE_INPUTS) {
+	        if (val > 0.0)
+	            val = (val * val);
+	        else
+	            val = -(val * val);
+		}
         
 		/*
          *  Slew rate limiter - limit rate of change
@@ -145,8 +130,6 @@ public class DriveBot extends CommandBase {
 			change = -changeLimit;
 		
 		return (lastVal += change);
-		
-        //return val;
 		
 	}
 }
