@@ -1,14 +1,16 @@
-package org.usfirst.frc3467.subsystems.Gyro;
+package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.CommandBase;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ZeroGyro extends CommandBase {
-	
-    public ZeroGyro() {
-        requires(gyro);
+public class ResetEncoders extends CommandBase {
+
+    public ResetEncoders() {
+        requires(driveBase);
     }
 
     // Called just before this Command runs the first time
@@ -17,7 +19,7 @@ public class ZeroGyro extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//gyro.zeroGyro();
+    	driveBase.resetEncoders();
     }
 
     // Make this return true when this Command no longer needs to run execute()

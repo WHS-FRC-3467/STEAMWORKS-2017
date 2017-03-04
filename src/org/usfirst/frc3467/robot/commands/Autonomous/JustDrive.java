@@ -10,6 +10,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class JustDrive extends CommandGroup {
 
     public JustDrive() {
-    	addSequential(new DriveStraight(3000));
+    	addSequential(new DriveStraight(30000));
     }
 }
