@@ -15,7 +15,9 @@ public class DriveBot extends CommandBase {
 	
     // square the inputs (while preserving the sign) to increase fine control
     // while permitting full power
-	static final boolean SQUARE_INPUTS = true;
+	static final boolean SQUARE_INPUTS = false;
+	
+	double m_lastX = 0.0, m_lastY = 0.0, m_lastRot = 0.0;
 	
 	public DriveBot(int driveMode) {
 		requires(driveBase);
@@ -34,6 +36,8 @@ public class DriveBot extends CommandBase {
 
 	protected void execute() {
 
+		driveBase.reportEncoders();
+		
 		switch (_driveMode) {
 		
 		default:
@@ -73,27 +77,30 @@ public class DriveBot extends CommandBase {
 	}
 	
 	private double getX() {
-		if (SQUARE_INPUTS) {
-			return squareInput(oi.getDriveX());
-		} else {
-			return oi.getDriveX();
-		}
+
+		double x = adjustStick(oi.getDriveX(), m_lastX);
+		if (SQUARE_INPUTS)
+				x =  squareInput(x);
+		return (m_lastX = x); 
+
 	}
 
 	private double getY() {
-		if (SQUARE_INPUTS) {
-			return squareInput(oi.getDriveY());
-		} else {
-			return oi.getDriveX();
-		}
+
+		double y = adjustStick(oi.getDriveY(), m_lastY);
+		if (SQUARE_INPUTS)
+				y =  squareInput(y);
+		return (m_lastY = y); 
+
 	}
 	
 	private double getRot() {
-		if (SQUARE_INPUTS) {
-			return squareInput(oi.getDriveRotation());
-		} else {
-			return oi.getDriveX();
-		}
+
+		double rot = adjustStick(oi.getDriveRotation(), m_lastRot);
+		if (SQUARE_INPUTS)
+				rot =  squareInput(rot);
+		return (m_lastRot = rot); 
+
 	}
 	
 	private double squareInput(double input) {
@@ -102,5 +109,44 @@ public class DriveBot extends CommandBase {
         } else {
 	          return -(input * input);
         }
+	}
+	
+		private double adjustStick(double input, double lastVal) {
+		
+		double val = input;
+		double change;
+		final double changeLimit = 0.20;
+		
+		/*
+		 *  Deadband limit
+		 */
+		if (val > -0.08 && val < 0.08) {
+			return 0.0;
+		}
+
+        /*
+         *  Square the inputs (while preserving the sign) to increase
+		 *  fine control while permitting full power
+         */
+        if (val > 0.0)
+            val = (val * val);
+        else
+            val = -(val * val);
+        
+		/*
+         *  Slew rate limiter - limit rate of change
+         */
+        
+		change = val - lastVal;
+		
+		if (change > changeLimit)
+			change = changeLimit;
+		else if (change < -changeLimit)
+			change = -changeLimit;
+		
+		return (lastVal += change);
+		
+        //return val;
+		
 	}
 }

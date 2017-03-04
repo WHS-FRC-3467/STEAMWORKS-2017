@@ -80,6 +80,19 @@ public class DriveBase extends Subsystem {
 		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		cTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		
+		lTalon1.reverseSensor(true);
+		rTalon1.reverseSensor(true);
+		
+		// Ramp the acceleration
+		//lTalon1.setVoltageRampRate(6.0);
+		//rTalon1.setVoltageRampRate(6.0);
+		//cTalon1.setVoltageRampRate(6.0);
+		
+		// All drive Talons should coast
+		lTalon1.enableBrakeMode(true);
+		rTalon1.enableBrakeMode(true);
+		cTalon1.enableBrakeMode(true);
+		
 		// Climber Latch
 		latchServo = new Servo(RobotMap.climberLatch_Servo);
 		
@@ -267,18 +280,19 @@ public class DriveBase extends Subsystem {
 	 * @return Average of the encoder values from the left and right encoders
 	 */
 	public double getDistance() {
-		return ((lTalon1.getPosition()) + (rTalon1.getPosition() * -1.0))/2;
+		return ((lTalon1.getPosition()) + (rTalon1.getPosition()))/2;
 	}
 
 	public void reportEncoders() {
 		SmartDashboard.putNumber("Left Encoder", lTalon1.getPosition());
-		SmartDashboard.putNumber("Right Encoder", rTalon1.getPosition() * -1.0);			
+		SmartDashboard.putNumber("Right Encoder", rTalon1.getPosition());			
 		SmartDashboard.putNumber("Center Encoder", cTalon1.getPosition());			
 	}
 
 	public void resetEncoders() {
 		lTalon1.setPosition(0);
 		rTalon1.setPosition(0);
+		cTalon1.setPosition(0);
 	}
 	public CANTalon getMiddleTalon(){
 		return cTalon1;

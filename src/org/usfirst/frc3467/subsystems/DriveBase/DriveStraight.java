@@ -20,14 +20,14 @@ public class DriveStraight extends CommandBase {
 	private PIDController m_pid;
 	private double m_maxSpeed = 0.6;
 	private double m_distance = 0.0;
-	private boolean m_manualCurve = false;
+	private boolean m_manualCurve = true;
 	private double m_curveValue = 0.0;
 	private double m_pastDistance = 0.0;
 	private int m_count = 0;
 	
-	private double KP = 2.0;
+	private double KP = 1.0;
 	private double KI = 0.0;
-	private double KD = 1.0;
+	private double KD = 2.0;
 	
     public DriveStraight(double distance, double maxSpeed, double kp, double ki, double kd) {
         
@@ -95,7 +95,7 @@ public class DriveStraight extends CommandBase {
                 		// and curve the opposite way from the current yaw reading
                 		// (Divide yaw by 180 so as to normalize to -1.0 / + 1.0)
                 		//driveBase.drive(-d, -(ahrs.getGyroYaw()/240.));
-                		setCurve(-d);
+                		setCurve(d);
                 }});
 		
         m_pid.setAbsoluteTolerance(TOLERANCE);
