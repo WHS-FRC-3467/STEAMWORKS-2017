@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3467.subsystems.DriveBase.DriveMotionMagic;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveStraight;
 import org.usfirst.frc3467.subsystems.DriveBase.SidewaysDrive;
 import org.usfirst.frc3467.subsystems.FieldCamera.FieldCamera;
 import org.usfirst.frc3467.robot.CommandBase;
+import org.usfirst.frc3467.robot.commands.Autonomous.JustDrive;
 	
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -42,7 +44,8 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser<CommandBase>();
 		//autoChooser.addDefault("Default Auto", new ExampleCommand());
 		autoChooser.addDefault("Sideways", new SidewaysDrive(4.0));
-		autoChooser.addObject("Drive Straight", new DriveMotionMagic(200.0));
+		autoChooser.addObject("Drive Motion Magic", new DriveMotionMagic(20000.0));
+		autoChooser.addObject("Just Drive", new DriveStraight(30000, .4));
 		
 		SmartDashboard.putData("Autonomous Command Chooser", autoChooser);
 

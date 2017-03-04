@@ -1,3 +1,4 @@
+
 package org.usfirst.frc3467.subsystems.PixyCam;
 
 import java.util.Arrays;
@@ -106,7 +107,7 @@ public class PixyCmu5 implements PIDSource
     /**********************************************************
 	 *  Debug variables
 	 **********************************************************/
-    private static boolean flg_debug = false;
+    private static boolean flg_debug = true;
     
 	/**
 	 * PixyTask is the private scheduler within PixyCMU5 that 
@@ -315,8 +316,7 @@ public class PixyCmu5 implements PIDSource
     		}
     		
     		if( !( (((readBuffer[idx+3] << 8) | readBuffer[idx+2] ) & 0xFFFF)  == PIXY_START_WORD ))
-    		{
-    			// If this word wasn't found, cancel executing the rest of the loop iteration and move to the next byte
+    		{    			// If this word wasn't found, cancel executing the rest of the loop iteration and move to the next byte
     			continue;
     		}
     		

@@ -21,6 +21,7 @@ import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
 import org.usfirst.frc3467.subsystems.DriveBase.DropTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.LiftTractionPlates;
+import org.usfirst.frc3467.subsystems.DriveBase.ResetEncoders;
 import org.usfirst.frc3467.subsystems.FloorIntake.FloorIntakeRun;
 import org.usfirst.frc3467.subsystems.FloorIntake.TestFloorIntake;
 import org.usfirst.frc3467.subsystems.FloorIntake.ToggleFloorIntakeOperation;
@@ -52,6 +53,7 @@ import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
 import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
+
 
 
 //import edu.wpi.first.wpilibj.Joystick;
@@ -179,6 +181,7 @@ public class OI {
 		SmartDashboard.putData("Test Shooter Spinner", new TestSpinner());
 		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
 		SmartDashboard.putData("Test Floor Intake", new TestFloorIntake());
-		
+		SmartDashboard.putData("Zero Encoders", new ResetEncoders());
+	
 	}
 }
