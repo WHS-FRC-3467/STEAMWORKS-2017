@@ -215,7 +215,7 @@ public class DriveBase extends Subsystem {
 	
     public void driveRobotCentric(double x, double y, double z) {
     	
-    	final double xScale = 2;
+    	final double xScale = 1.5;
    
     	if (tractionFeetState == true && 
     		(x > 0.05 || y > 0.05 || z > 0.05 ||
