@@ -20,7 +20,9 @@ public class DriveBase extends Subsystem {
 	private Servo latchServo;
 	private PowerDistributionPanel pdp;
 
-	private static CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3, cTalon1, cTalon2;
+	private static CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3;
+	private static CANTalon cTalon1;
+	private static CANTalon cTalon2;
 	private static final double width = 1;
     
 	private static DriveBase dBInstance;
@@ -48,6 +50,11 @@ public class DriveBase extends Subsystem {
 	
 	public static DriveBase getInstance() {
 		return DriveBase.dBInstance;
+	}
+	
+	public void straightTime(double speed) {
+		rTalon1.set(-speed);
+		lTalon1.set(speed);
 	}
 	
 	public DriveBase() {

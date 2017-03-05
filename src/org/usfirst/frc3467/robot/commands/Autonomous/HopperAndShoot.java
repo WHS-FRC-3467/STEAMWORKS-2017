@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class HopperAndShoot extends CommandGroup {
 
     public HopperAndShoot() {
-    	addSequential(new SidewaysDrive(5));
+    	addSequential(new SidewaysDrive());
     	addSequential(new DriveStraight(2000));
         addSequential(new WaitCommand(3.0));
         addSequential(new DriveStraight(-2000));

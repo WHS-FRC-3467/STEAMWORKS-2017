@@ -1,18 +1,19 @@
-package org.usfirst.frc3467.subsystems.FloorIntake;
+package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ToggleFloorIntakeOperation extends CommandBase {
-	
-	public static boolean isIn = true;
+public class StraightDrive extends CommandBase {
 
-    public ToggleFloorIntakeOperation() {
-        requires(flr_intake);
+	double TIME;
+	
+    public StraightDrive() {
+        requires(driveBase);
+        //TIME = time;
     }
 
     // Called just before this Command runs the first time
@@ -21,29 +22,23 @@ public class ToggleFloorIntakeOperation extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	if (isIn == true) {
-    		pneumatics.floorIntakeExtend();
-    		isIn = false;
-    	}
-    	else {
-    		pneumatics.floorIntakeRetract();
-    		isIn = true;
-    	}
-    	SmartDashboard.putString("Floor Intake Position",  isIn ? "IN" : "OUT");
+    	driveBase.straightTime(1.25);
+    	setTimeout(5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	driveBase.straightTime(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

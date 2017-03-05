@@ -10,7 +10,7 @@ public class AutoAim extends CommandBase {
 	// Configurable parameters
 	public static final double DEFAULT_TARGET_DISTANCE = .8;   // Default desired distance from goal
 	public static final double ANGLE_PRECISION = 0.1;
-	public static final double DISTANCE_TOLERANCE = 0.07;
+	public static final double DISTANCE_TOLERANCE = 0.05;
 	public static final double Z_SCALE = 1.7;
 	
 	double targetDistance = 0.0;
@@ -44,8 +44,6 @@ public class AutoAim extends CommandBase {
     		pixyData = pixyCam.getBoilerLocationData();
     	} catch (NoTargetException ex) {
     		// No target found
-    		searchForTarget();
-    		return;
     	}
     	
     	// Name the returned data
