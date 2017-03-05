@@ -29,7 +29,7 @@ public class AutoClimber  extends CommandBase{
 		latch = driveBase.getLatchServo();
 	}
 	protected void execute(){
-		if(state == 0){
+		/*if(state == 0){
 			cTalon1.set(1);
 			if(firstRepeat){
 				latch.set(1);
@@ -63,7 +63,8 @@ public class AutoClimber  extends CommandBase{
 				cTalon1.setSetpoint(cTalon1.getPosition());
 				done = true;
 			}
-		}
+		} */
+		latch.set(0);
 	}
 	protected boolean isFinished(){
 		return done;

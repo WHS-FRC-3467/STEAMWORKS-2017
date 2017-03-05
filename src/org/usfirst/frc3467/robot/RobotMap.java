@@ -55,43 +55,43 @@ public class RobotMap {
 	
 	// SOLENOIDS - Module 1
 	
-	public static final int hopper_module = 1;
+	public static final int hopper_module = 2;
 	public static final int highintake_module = 1;
 	public static final int floorintake_module = 1;
 	public static final int traction_module = 1;
 	
 	// Hopper 
-	public static final int hopper_solenoid_contract = 0;
-	public static final int hopper_solenoid_expand = 1;
+	public static final int hopper_solenoid_contract = 3;
+	public static final int hopper_solenoid_expand = 4;
 
 	// High Intake
-	public static final int highintake_solenoid_retract = 2;
-	public static final int highintake_solenoid_extend = 3;
+	public static final int highintake_solenoid_retract = 6;
+	public static final int highintake_solenoid_extend = 1;
 
 	// Floor Intake
-	public static final int floorintake_solenoid_retract = 4;
-	public static final int floorintake_solenoid_extend = 5;
+	public static final int floorintake_solenoid_retract = 7;
+	public static final int floorintake_solenoid_extend = 2;
 	
 	// Traction
-	public static final int traction_solenoid_retract = 6;
-	public static final int traction_solenoid_deploy = 7;
+	public static final int traction_solenoid_retract = 4;
+	public static final int traction_solenoid_deploy = 3;
 
 	// SOLENOIDS - Module 2
 
-	public static final int gearcatch_module = 2;
+	public static final int gearcatch_module = 1;
 	public static final int gearclaw_module = 2;
 	public static final int pusher_module = 2;
 
 	// GearCatcher
-	public static final int gearcatch_solenoid__up = 0;
-	public static final int gearcatch_solenoid__down = 1;
+	public static final int gearcatch_solenoid__up = 5;
+	public static final int gearcatch_solenoid__down = 0;
 	
 	// GearClaw
 	public static final int gearclaw_solenoid__hold = 2;
-	public static final int gearclaw_solenoid__release = 3;
+	public static final int gearclaw_solenoid__release = 5;
 
 	// Pushers 
-	public static final int pusher_solenoid_retract = 4;
-	public static final int pusher_solenoid_extend = 5;
+	public static final int pusher_solenoid = 0;
+	//public static final int pusher_solenoid_extend = 5;
 	
 }
