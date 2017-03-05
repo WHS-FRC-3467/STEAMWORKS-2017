@@ -90,6 +90,7 @@ public class Shooter extends Subsystem {
     	
     	if (target < 0.0) target = 0.0;
        	System.out.println("Shooter Run: " + target + "  spd2: " + shooterTalon2.getSpeed());
+       	System.out.println("Speed: " + shooterTalon1.getSpeed() + " Speed2: " + shooterTalon2.getSpeed());
        		
        	shooterTalon1.set(target);
     	shooterTalon2.set(target);

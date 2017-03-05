@@ -1,18 +1,18 @@
-package org.usfirst.frc3467.subsystems.FloorIntake;
+package org.usfirst.frc3467.subsystems.Climber;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ToggleFloorIntakeOperation extends CommandBase {
-	
-	public static boolean isIn = true;
+public class ToggleLatchPosition extends CommandBase {
 
-    public ToggleFloorIntakeOperation() {
-        requires(flr_intake);
+	private static boolean latched = false;
+	
+    public ToggleLatchPosition() {
     }
 
     // Called just before this Command runs the first time
@@ -22,15 +22,15 @@ public class ToggleFloorIntakeOperation extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if (isIn == true) {
-    		pneumatics.floorIntakeExtend();
-    		isIn = false;
+    	if (latched == true) {
+    		driveBase.getLatchServo().set(0);
+    		latched = false;
     	}
     	else {
-    		pneumatics.floorIntakeRetract();
-    		isIn = true;
+    		driveBase.getLatchServo().set(1);
+    		latched = true;
     	}
-    	SmartDashboard.putString("Floor Intake Position",  isIn ? "IN" : "OUT");
+    	SmartDashboard.putString("Climber latch",  latched ? "NOT ACTUATED" : "ACTUATED");
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -80,7 +80,7 @@ public class OperateShooter extends CommandBase {
             //Activating the Left Trigger does the following:
         
     		// Drop traction plates
-    		driveBase.tractionExtend();
+    		//driveBase.tractionExtend();
 
     		// Run conveyor and spinner at speed determined by Left Trigger movement (0.0 -> 1.0)
         	shooter.SpinnerRun(MAX_SPINNER_SPEED);

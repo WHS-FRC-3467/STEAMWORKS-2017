@@ -16,6 +16,7 @@ import org.usfirst.frc3467.robot.control.triggers.DoubleButton;
 import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
 import org.usfirst.frc3467.subsystems.Climber.AutoClimber;
+import org.usfirst.frc3467.subsystems.Climber.ToggleLatchPosition;
 import org.usfirst.frc3467.subsystems.DriveBase.AutoAim;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
@@ -53,6 +54,7 @@ import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
 import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
+
 
 
 
@@ -126,7 +128,8 @@ public class OI {
 		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new ToggleGearClawState());
 
 		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new ZeroGyro());
-		new DoubleButton(driverPad, Gamepad.yButton, Gamepad.bButton).whenActive(new AutoClimber());
+		//new DoubleButton(driverPad, Gamepad.yButton, Gamepad.bButton).whenActive(new ToggleLatch);
+		new JoystickButton(driverPad, Gamepad.yButton).whenActive(new ToggleLatchPosition());
 		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new AutoAim());
 
 		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
