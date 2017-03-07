@@ -58,7 +58,7 @@ public class OperateShooter extends CommandBase {
     	shooter.BeltRun(MAX_BELT_SPEED);
 
         // Run shooter wheels under Velocity Control
-    	double shooterVelocity = .4;
+    	double shooterVelocity = .5;
     	
     	try {
 			// Get distance to target
@@ -80,10 +80,10 @@ public class OperateShooter extends CommandBase {
             //Activating the Left Trigger does the following:
         
     		// Drop traction plates
-    		driveBase.tractionExtend();
+    		//driveBase.tractionExtend();
 
     		// Run conveyor and spinner at speed determined by Left Trigger movement (0.0 -> 1.0)
-        	shooter.SpinnerRun(MAX_SPINNER_SPEED * leftTrigger);
+        	shooter.SpinnerRun(MAX_SPINNER_SPEED);
 
         	// Tell the timer that we are still working
         	timeOutTimer.reset();

@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoAim extends CommandBase {
 
 	// Configurable parameters
-	public static final double DEFAULT_TARGET_DISTANCE = 2.0;   // Default desired distance from goal
+	public static final double DEFAULT_TARGET_DISTANCE = .8;   // Default desired distance from goal
 	public static final double ANGLE_PRECISION = 0.1;
-	public static final double DISTANCE_TOLERANCE = 0.07;
+	public static final double DISTANCE_TOLERANCE = 0.05;
 	public static final double Z_SCALE = 1.7;
 	
 	double targetDistance = 0.0;
@@ -44,8 +44,6 @@ public class AutoAim extends CommandBase {
     		pixyData = pixyCam.getBoilerLocationData();
     	} catch (NoTargetException ex) {
     		// No target found
-    		searchForTarget();
-    		return;
     	}
     	
     	// Name the returned data
@@ -55,7 +53,7 @@ public class AutoAim extends CommandBase {
 
     	// Scale the distance based on the error (but clip it if it's too large)
     	double distanceScale = 0;
-    	distanceScale = Math.pow(Math.pow(Math.abs(distance-targetDistance), 3), 1.0/4);
+    	distanceScale = .5*Math.pow(Math.pow(Math.abs(distance-targetDistance), 3), 1.0/4);
     	if(distanceScale > .8){
     		distanceScale = .8;
     	}

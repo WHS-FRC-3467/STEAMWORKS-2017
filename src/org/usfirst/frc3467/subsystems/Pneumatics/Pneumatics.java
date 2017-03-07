@@ -10,6 +10,7 @@ import org.usfirst.frc3467.subsystems.Brownout.PowerConsumer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Pneumatics extends Subsystem implements PowerConsumer {
@@ -25,7 +26,7 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	public DoubleSolenoid gearCatch;
 	public DoubleSolenoid gearClaw;
 	public DoubleSolenoid hopperSides;
-	public DoubleSolenoid pusherBars;
+	public Solenoid pusherBars;
 	
 	// Pneumatics is a singleton
 	private static Pneumatics instance = new Pneumatics();
@@ -73,16 +74,15 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 		gearClaw = new DoubleSolenoid(RobotMap.gearclaw_module, RobotMap.gearclaw_solenoid__hold,
 									  RobotMap.gearclaw_solenoid__release);
 
-		pusherBars = new DoubleSolenoid(RobotMap.pusher_module, RobotMap.pusher_solenoid_retract,
-										RobotMap.pusher_solenoid_extend);
+		pusherBars = new Solenoid(RobotMap.pusher_module, RobotMap.pusher_solenoid);
 		
 		hopperSides.set(DoubleSolenoid.Value.kForward);
 		highIntake.set(DoubleSolenoid.Value.kForward);
 		floorIntake.set(DoubleSolenoid.Value.kForward);
-		tractionFeet.set(DoubleSolenoid.Value.kForward);
+		tractionFeet.set(DoubleSolenoid.Value.kReverse);
 		gearCatch.set(DoubleSolenoid.Value.kForward);
 		gearClaw.set(DoubleSolenoid.Value.kForward);
-		pusherBars.set(DoubleSolenoid.Value.kForward);
+		pusherBars.set(true);
 		
 	}
 	
@@ -91,10 +91,10 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	 */
 		
 	public void tractionFeetRetract() {
-		tractionFeet.set(DoubleSolenoid.Value.kForward);
+		tractionFeet.set(DoubleSolenoid.Value.kReverse);
 	}
 	public void tractionFeetDeploy() {
-		tractionFeet.set(DoubleSolenoid.Value.kReverse);
+		tractionFeet.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	public void floorIntakeRetract() {
@@ -133,10 +133,10 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	}
 
 	public void pusherBarsRetract() {
-		pusherBars.set(DoubleSolenoid.Value.kForward);
+		pusherBars.set(true);
 	}
 	public void pusherBarsExtend() {
-		pusherBars.set(DoubleSolenoid.Value.kReverse);
+		pusherBars.set(false);
 	}
 
 	

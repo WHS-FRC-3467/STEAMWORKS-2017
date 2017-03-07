@@ -10,9 +10,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3467.subsystems.DriveBase.DriveMotionMagic;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveStraight;
 import org.usfirst.frc3467.subsystems.DriveBase.SidewaysDrive;
+import org.usfirst.frc3467.subsystems.DriveBase.StraightDrive;
 import org.usfirst.frc3467.subsystems.FieldCamera.FieldCamera;
 import org.usfirst.frc3467.robot.CommandBase;
+import org.usfirst.frc3467.robot.commands.Autonomous.DoNothing;
+import org.usfirst.frc3467.robot.commands.Autonomous.JustDrive;
 	
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,14 +28,15 @@ import org.usfirst.frc3467.robot.CommandBase;
 public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
-	SendableChooser<CommandBase> autoChooser;
+	//Command JUSTDRIVE;
+
+	SendableChooser autoChooser;
 	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-
 		// Start the FieldCamera
 		new FieldCamera();
         
@@ -39,10 +44,14 @@ public class Robot extends IterativeRobot {
 		CommandBase.init();	
     	
     	// Add autonomous selector
-		autoChooser = new SendableChooser<CommandBase>();
+		
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("Go Straight", new StraightDrive());
 		//autoChooser.addDefault("Default Auto", new ExampleCommand());
-		autoChooser.addDefault("Sideways", new SidewaysDrive(4.0));
-		autoChooser.addObject("Drive Straight", new DriveMotionMagic(200.0));
+		//autoChooser.addDefault("Do Nothing", new DoNothing());
+		//autoChooser.addObject("Drive Motion Magic", new DriveMotionMagic(20000.0));
+		//autoChooser.addObject("Just Drive", new DriveStraight(35000, .4));
+		//autoChooser.addObject("Sideways", new SidewaysDrive(4.0));
 		
 		SmartDashboard.putData("Autonomous Command Chooser", autoChooser);
 
@@ -61,16 +70,16 @@ public class Robot extends IterativeRobot {
 		// Scheduler can continue to run while robot is disabled
 		Scheduler.getInstance().run();
 		
-		autonomousCommand = autoChooser.getSelected();
+		autonomousCommand = (Command)autoChooser.getSelected();
 		SmartDashboard.putString("Selected Autonomous Mode", autonomousCommand.toString());
 	}
 
     public void autonomousInit() {
 
     	// schedule the autonomous command
- 		autonomousCommand = (Command) autoChooser.getSelected();
+ 		autonomousCommand = (CommandBase) autoChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
-
+    
     	SmartDashboard.putString("Robot", "Autonomous Started");
     }
 

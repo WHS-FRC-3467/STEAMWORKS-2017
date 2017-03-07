@@ -16,11 +16,13 @@ import org.usfirst.frc3467.robot.control.triggers.DoubleButton;
 import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
 import org.usfirst.frc3467.subsystems.Climber.AutoClimber;
+import org.usfirst.frc3467.subsystems.Climber.ToggleLatchPosition;
 import org.usfirst.frc3467.subsystems.DriveBase.AutoAim;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
 import org.usfirst.frc3467.subsystems.DriveBase.DropTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.LiftTractionPlates;
+import org.usfirst.frc3467.subsystems.DriveBase.ResetEncoders;
 import org.usfirst.frc3467.subsystems.FloorIntake.FloorIntakeRun;
 import org.usfirst.frc3467.subsystems.FloorIntake.TestFloorIntake;
 import org.usfirst.frc3467.subsystems.FloorIntake.ToggleFloorIntakeOperation;
@@ -52,6 +54,8 @@ import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
 import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
+
+
 
 
 //import edu.wpi.first.wpilibj.Joystick;
@@ -124,7 +128,8 @@ public class OI {
 		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new ToggleGearClawState());
 
 		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new ZeroGyro());
-		new DoubleButton(driverPad, Gamepad.yButton, Gamepad.bButton).whenActive(new AutoClimber());
+		//new DoubleButton(driverPad, Gamepad.yButton, Gamepad.bButton).whenActive(new ToggleLatch);
+		new JoystickButton(driverPad, Gamepad.yButton).whenActive(new ToggleLatchPosition());
 		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new AutoAim());
 
 		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
@@ -179,6 +184,7 @@ public class OI {
 		SmartDashboard.putData("Test Shooter Spinner", new TestSpinner());
 		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
 		SmartDashboard.putData("Test Floor Intake", new TestFloorIntake());
-		
+		SmartDashboard.putData("Zero Encoders", new ResetEncoders());
+	
 	}
 }

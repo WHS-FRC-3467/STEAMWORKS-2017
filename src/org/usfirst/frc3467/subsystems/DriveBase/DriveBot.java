@@ -17,6 +17,8 @@ public class DriveBot extends CommandBase {
     // while permitting full power
 	static final boolean SQUARE_INPUTS = true;
 	
+	double m_lastX = 0.0, m_lastY = 0.0, m_lastRot = 0.0;
+	
 	public DriveBot(int driveMode) {
 		requires(driveBase);
 		this.setInterruptible(true);
@@ -34,6 +36,8 @@ public class DriveBot extends CommandBase {
 
 	protected void execute() {
 
+		driveBase.reportEncoders();
+		
 		switch (_driveMode) {
 		
 		default:
@@ -73,34 +77,59 @@ public class DriveBot extends CommandBase {
 	}
 	
 	private double getX() {
-		if (SQUARE_INPUTS) {
-			return squareInput(oi.getDriveX());
-		} else {
-			return oi.getDriveX();
-		}
+
+		return (m_lastX = adjustStick(oi.getDriveX(), m_lastX)); 
+
 	}
 
 	private double getY() {
-		if (SQUARE_INPUTS) {
-			return squareInput(oi.getDriveY());
-		} else {
-			return oi.getDriveX();
-		}
+
+		return (m_lastY = adjustStick(oi.getDriveY(), m_lastY)); 
+
 	}
 	
 	private double getRot() {
-		if (SQUARE_INPUTS) {
-			return squareInput(oi.getDriveRotation());
-		} else {
-			return oi.getDriveX();
-		}
+
+		return (m_lastRot = adjustStick(oi.getDriveRotation(), m_lastRot)); 
+
 	}
 	
-	private double squareInput(double input) {
-		if (input >= 0.0) {
-	          return (input * input);
-        } else {
-	          return -(input * input);
-        }
+	private double adjustStick(double input, double lastVal) {
+		
+		double val = input;
+		double change;
+		final double changeLimit = 0.20;
+		
+		/*
+		 *  Deadband limit
+		 */
+		if (val > -0.08 && val < 0.08) {
+			return 0.0;
+		}
+
+        /*
+         *  Square the inputs (while preserving the sign) to increase
+		 *  fine control while permitting full power
+         */
+		if (SQUARE_INPUTS) {
+	        if (val > 0.0)
+	            val = (val * val);
+	        else
+	            val = -(val * val);
+		}
+        
+		/*
+         *  Slew rate limiter - limit rate of change
+         */
+        
+		change = val - lastVal;
+		
+		if (change > changeLimit)
+			change = changeLimit;
+		else if (change < -changeLimit)
+			change = -changeLimit;
+		
+		return (lastVal += change);
+		
 	}
 }

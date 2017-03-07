@@ -67,7 +67,19 @@ public class Shooter extends Subsystem {
     }
     
     public void BeltRun(double speed) {
-    	beltTalon.set(speed);
+    	double target = speed*1000;
+    	if(target >= 0){
+    		if(beltTalon.getControlMode() == CANTalon.TalonControlMode.PercentVbus){
+    			beltTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
+    		}
+    		beltTalon.set(target);
+    	}
+    	else{
+    		if(beltTalon.getControlMode() == CANTalon.TalonControlMode.Speed){
+    			beltTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+    		}
+    		beltTalon.set(target);
+    	}
     }
     
     public void ShooterRun(double input) {
@@ -78,6 +90,7 @@ public class Shooter extends Subsystem {
     	
     	if (target < 0.0) target = 0.0;
        	System.out.println("Shooter Run: " + target + "  spd2: " + shooterTalon2.getSpeed());
+       	System.out.println("Speed: " + shooterTalon1.getSpeed() + " Speed2: " + shooterTalon2.getSpeed());
        		
        	shooterTalon1.set(target);
     	shooterTalon2.set(target);
