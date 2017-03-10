@@ -2,15 +2,35 @@ package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class AutoGear extends CommandBase{
 	int target;
 	int side = 0;
 	double targetAngle;
-	public AutoGear(int gear){
+	public static final double DEFAULT_TARGET_DISTANCE = 0.8;
+	double targetDistance = 0.0;
+	
+	
+	/*public AutoGear(int gear){
 		requires(driveBase);
 		requires(pixyCam);
 		requires(gyro);
 		target = gear;
+	}*/
+	
+	public AutoGear(){
+		this(DEFAULT_TARGET_DISTANCE);
+	}
+
+	public AutoGear(double defaultTargetDistance) {
+		requires(pixyCam);
+		requires(driveBase);
+		
+		targetDistance = defaultTargetDistance;
+		this.setInterruptible(true);
+		SmartDashboard.putString("Drive Base", "Auto Gear");
+		
 	}
 
 	protected void initialize(){
