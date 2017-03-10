@@ -32,8 +32,8 @@ public class RobotMap {
 	// Climber - Same as Center Drivebase Talon
 	
 	// Shooter - Contact Wheels
-	public static final int shooterWheel_Talon1 = 9;
-	public static final int shooterWheel_Talon2 = 10;
+	public static final int shooterWheel_Talon1 = 9; //top wheel
+	public static final int shooterWheel_Talon2 = 10; //bottom wheel
 	public static final int shooterConv_Talon3 = 11;
 	
 	//

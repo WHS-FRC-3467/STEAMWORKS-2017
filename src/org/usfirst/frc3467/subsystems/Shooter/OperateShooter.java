@@ -114,7 +114,6 @@ public class OperateShooter extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	
     	// This should never be called if interruptible is false
     	end();
     }
