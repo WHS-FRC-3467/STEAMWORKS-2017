@@ -48,7 +48,7 @@ public class AutoGear extends CommandBase{
 	}
 	
 	protected void interrupted(){
-		
+		end();
 	}
 	
 	protected boolean isFinished() {

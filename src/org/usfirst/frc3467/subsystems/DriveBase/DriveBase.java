@@ -5,7 +5,9 @@ import org.usfirst.frc3467.robot.RobotMap;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -29,6 +31,7 @@ public class DriveBase extends Subsystem {
 	private static RobotDrive dBase;
 	private TalonControlMode 	t_controlMode;
 	private double m_maxOutput = 1.0;
+	private int target = 1000;
 
 	public boolean tractionFeetState = false; // false = up; true = down
 	
@@ -84,8 +87,48 @@ public class DriveBase extends Subsystem {
 
 		// Set encoders as feedback devices
 		lTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		lTalon1.configEncoderCodesPerRev(2048 * 4);
+		
+		lTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
+		lTalon1.configPeakOutputVoltage(+12.0f, 0.0f);
+		lTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		lTalon1.setProfile(0);
+		lTalon1.setF(.035); //.035
+		lTalon1.setP(.04); //.04
+		lTalon1.setI(0); //0
+		lTalon1.setD(.5); //.5
+		lTalon1.setIZone(0); //0
+		lTalon1.changeControlMode(TalonControlMode.Speed);
+		
 		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		rTalon1.configEncoderCodesPerRev(2048 * 4);
+		
+		rTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
+		rTalon1.configPeakOutputVoltage(+12.0f, 0.0f);
+		rTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		rTalon1.setProfile(0);
+		rTalon1.setF(.035); //.035
+		rTalon1.setP(.04); //.04
+		rTalon1.setI(0); //0
+		rTalon1.setD(.5); //.5
+		rTalon1.setIZone(0); //0
+		rTalon1.changeControlMode(TalonControlMode.Speed);
+		
 		cTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		cTalon1.EnableCurrentLimit(true);
+		cTalon1.setCurrentLimit(30);
+		cTalon1.configEncoderCodesPerRev(2048 * 4);
+		
+		cTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
+		cTalon1.configPeakOutputVoltage(+12.0f, 0.0f);
+		cTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		cTalon1.setProfile(0);
+		cTalon1.setF(.035); //.035
+		cTalon1.setP(.04); //.04
+		cTalon1.setI(0); //0
+		cTalon1.setD(.5); //.5
+		cTalon1.setIZone(0); //0
+		cTalon1.changeControlMode(TalonControlMode.Speed);
 		
 		lTalon1.reverseSensor(true);
 		rTalon1.reverseSensor(true);
@@ -238,9 +281,9 @@ public class DriveBase extends Subsystem {
     	
     	center = center*xScale;
     	
-    	lTalon1.set(-left * m_maxOutput);
-    	rTalon1.set(right * m_maxOutput);
-    	cTalon1.set(center * m_maxOutput);
+    	lTalon1.set(-left * target * m_maxOutput);
+    	rTalon1.set(right * target *  m_maxOutput);
+    	cTalon1.set(center * target * m_maxOutput);
     }
     
     public void driveFieldCentric(double x, double y, double z, double angle) {
@@ -252,26 +295,25 @@ public class DriveBase extends Subsystem {
     	double xNet = x * Math.cos(radAngle) + y * Math.sin(radAngle);
     	
     	driveRobotCentric(xNet, yNet, z);
-    	
     }
    
 	// pass-thru to RobotDrive method (drive using one stick)
     public void driveArcade(double move, double rotate, boolean square) {
 
     	checkFeetBeforeRobotDrive(move, rotate);    	
-    	dBase.arcadeDrive(move, rotate, square);
+    	dBase.arcadeDrive(move * target, rotate, square);
     }
     
 	// pass-thru to RobotDrive method (drive using 2 sticks)
     public void driveTank(double leftStick, double rightStick, boolean square) {
     	checkFeetBeforeRobotDrive(leftStick, rightStick);    	
-    	dBase.tankDrive(leftStick, rightStick, square);
+    	dBase.tankDrive(leftStick * target, rightStick * target, square);
     }
     
 	// pass-thru to RobotDrive method (used in autonomous)
 	public void drive(double outputMagnitude, double curve) {
     	checkFeetBeforeRobotDrive(outputMagnitude, curve);    	
-		dBase.drive(outputMagnitude, curve);
+		dBase.drive(outputMagnitude * target, curve);
 	}
 
 	private void checkFeetBeforeRobotDrive(double x, double y) {
