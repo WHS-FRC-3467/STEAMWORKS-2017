@@ -18,7 +18,7 @@ public class OperateShooter extends CommandBase {
 	static final double MAX_BELT_SPEED = -0.6;
 	
 	// Time to continue running shooter wheels after no more user input  
-	static final double SECONDS_TIMEOUT = 5.0;
+	static final double SECONDS_TIMEOUT = 10.0;
 	
     Timer timeOutTimer;
 	
@@ -107,7 +107,8 @@ public class OperateShooter extends CommandBase {
     	flr_intake.drive(0.0);
     	shooter.SpinnerRun(0.0);
     	shooter.BeltRun(0.0);
-    	shooter.ShooterStop();
+    	shooter.ShooterStop(
+    			);
     	timeOutTimer.stop();
     }
 
