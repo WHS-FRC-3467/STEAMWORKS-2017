@@ -7,8 +7,10 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
+
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -67,8 +69,11 @@ public class Shooter extends Subsystem {
     }
     
     public void BeltRun(double speed) {
-    	double target = speed*1000;
-    	if(target >= 0){
+    	
+    	beltTalon.set(speed);
+       	SmartDashboard.putNumber("ShooterBelt:", beltTalon.getPosition());
+    	//double target = speed*1000;
+ /*   	if(target >= 0){
     		if(beltTalon.getControlMode() == CANTalon.TalonControlMode.PercentVbus){
     			beltTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
     		}
@@ -80,7 +85,8 @@ public class Shooter extends Subsystem {
     		}
     		beltTalon.set(target);
     	}
-    }
+   */
+    	}
     
     public void ShooterRun(double input) {
     	
@@ -90,17 +96,18 @@ public class Shooter extends Subsystem {
     	//System.out.println("Shooter Run: " + target + "  spd1: " + shooterTalon1.getSpeed() + "  spd2: " + shooterTalon2.getSpeed());
     	
     	if (target < 0.0) target = 0.0;
-       	System.out.println("Shooter Run: " + target + "  spd2: " + shooterTalon2.getSpeed());
-       	System.out.println("Speed: " + shooterTalon1.getSpeed() + " Speed2: " + shooterTalon2.getSpeed());
-       		
+       	SmartDashboard.putNumber("Shooter1:", shooterTalon1.getPosition());
+       	SmartDashboard.putNumber("Shooter2:", shooterTalon2.getPosition());
+       	SmartDashboard.putNumber("Shooter Target Speed:", target);
+       	
        	shooterTalon1.set(target);
     	shooterTalon2.set(target);
  	
     }
     
     public void ShooterStop() {
-      	shooterTalon1.set(1.0);
-      	shooterTalon2.set(1.0);
+      	shooterTalon1.set(0.0);
+      	shooterTalon2.set(0.0);
 		//shooterTalon1.changeControlMode(TalonControlMode.Speed);
 		//shooterTalon2.changeControlMode(TalonControlMode.Speed);
     }
