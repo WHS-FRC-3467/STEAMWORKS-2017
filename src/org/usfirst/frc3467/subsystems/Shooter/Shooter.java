@@ -46,7 +46,7 @@ public class Shooter extends Subsystem {
 		//Shooter Talon 2
 		shooterTalon2.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooterTalon2.reverseSensor(true);
-		shooterTalon2.configEncoderCodesPerRev(2048 * 4);
+		//shooterTalon2.configEncoderCodesPerRev(2048 * 4);
 	
 		shooterTalon2.configNominalOutputVoltage(+0.0f, -0.0f);
 		shooterTalon2.configPeakOutputVoltage(+12.0f, 0.0f);
@@ -59,6 +59,21 @@ public class Shooter extends Subsystem {
 		shooterTalon2.setIZone(0); //0
 		shooterTalon2.changeControlMode(TalonControlMode.Speed);
 		//shooterTalon2.changeControlMode(TalonControlMode.PercentVbus);
+		
+		beltTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		beltTalon.reverseSensor(true);
+		beltTalon.configEncoderCodesPerRev(2048 * 4);
+		
+		beltTalon.configNominalOutputVoltage(+0.0f, -0.0f);
+		beltTalon.configPeakOutputVoltage(+12.0f, -12.0f);
+		beltTalon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		beltTalon.setProfile(0);
+		beltTalon.setF(1.0); //.035
+		beltTalon.setP(.4); //.04
+		beltTalon.setI(0); //0
+		beltTalon.setD(0); //.5
+		beltTalon.setIZone(0); //0
+		beltTalon.changeControlMode(TalonControlMode.Speed);
     }
 
     public void initDefaultCommand() {
@@ -70,7 +85,7 @@ public class Shooter extends Subsystem {
     
     public void BeltRun(double speed) {
     	
-    	beltTalon.set(speed);
+    	beltTalon.set(speed * 1000.);
        	SmartDashboard.putNumber("ShooterBelt:", beltTalon.getPosition());
     	//double target = speed*1000;
  /*   	if(target >= 0){
