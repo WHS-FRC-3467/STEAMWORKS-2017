@@ -2,13 +2,9 @@ package org.usfirst.frc3467.subsystems.Climber;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
-import com.ctre.CANTalon;
-
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Servo;
-
 public class AutoClimber  extends CommandBase{
-	PowerDistributionPanel pdp;
+
+
 	int state = 0;
 	final double ANGLE_THRESHOLD = 45;
 	//2048 ticks per rev 44-34 rpm
@@ -17,17 +13,16 @@ public class AutoClimber  extends CommandBase{
 	final double CURRENT_THRESHOLD = 2;
 	boolean firstRepeat = true;
 	boolean done = false;
-	CANTalon cTalon1;
-	Servo latch;
+	
 	public AutoClimber(){
 		requires(driveBase);
 		requires(gyro);
 	}
+	
 	protected void initialize(){
-		cTalon1 = driveBase.getMiddleTalon();
-		pdp = driveBase.getPDP();
-		latch = driveBase.getLatchServo();
+
 	}
+	
 	protected void execute(){
 		/*if(state == 0){
 			cTalon1.set(1);
@@ -64,7 +59,7 @@ public class AutoClimber  extends CommandBase{
 				done = true;
 			}
 		} */
-		latch.set(0);
+		climber.setLatchServo(0);
 	}
 	protected boolean isFinished(){
 		return done;
