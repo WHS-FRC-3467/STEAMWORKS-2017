@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GearAuto extends CommandGroup {
+public class GearAutoFoward extends CommandGroup {
 
-    public GearAuto() {
+    public GearAutoFoward() {
     	addSequential(new ToggleHighIntakePosition());
     	addSequential(new ToggleGearCatcherPosition());
     	addSequential(new DriveStraight(3000));
