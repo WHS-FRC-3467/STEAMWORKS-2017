@@ -23,11 +23,11 @@ public class ToggleLatchPosition extends CommandBase {
     protected void execute() {
     	
     	if (latched == true) {
-    		driveBase.getLatchServo().set(0);
+    		climber.setLatchServo(0);
     		latched = false;
     	}
     	else {
-    		driveBase.getLatchServo().set(1);
+    		climber.setLatchServo(1);
     		latched = true;
     	}
     	SmartDashboard.putString("Climber latch",  latched ? "NOT ACTUATED" : "ACTUATED");
