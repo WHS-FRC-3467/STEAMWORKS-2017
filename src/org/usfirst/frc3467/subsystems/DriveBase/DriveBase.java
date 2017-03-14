@@ -300,7 +300,7 @@ public class DriveBase extends Subsystem {
 	// pass-thru to RobotDrive method (drive using one stick)
     public void driveArcade(double move, double rotate, boolean square) {
 
-    	checkFeetBeforeRobotDrive(move, rotate);    	
+    	checkFeetBeforeRobotDrive(move, rotate);
     	dBase.arcadeDrive(move * target, rotate, square);
     }
     

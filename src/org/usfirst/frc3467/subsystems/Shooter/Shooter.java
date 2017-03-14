@@ -7,8 +7,10 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
+
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -44,7 +46,7 @@ public class Shooter extends Subsystem {
 		//Shooter Talon 2
 		shooterTalon2.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooterTalon2.reverseSensor(true);
-		shooterTalon2.configEncoderCodesPerRev(2048 * 4);
+		//shooterTalon2.configEncoderCodesPerRev(2048 * 4);
 	
 		shooterTalon2.configNominalOutputVoltage(+0.0f, -0.0f);
 		shooterTalon2.configPeakOutputVoltage(+12.0f, 0.0f);
@@ -57,6 +59,21 @@ public class Shooter extends Subsystem {
 		shooterTalon2.setIZone(0); //0
 		shooterTalon2.changeControlMode(TalonControlMode.Speed);
 		//shooterTalon2.changeControlMode(TalonControlMode.PercentVbus);
+		
+		beltTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		beltTalon.reverseSensor(true);
+		beltTalon.configEncoderCodesPerRev(2048 * 4);
+		
+		beltTalon.configNominalOutputVoltage(+0.0f, -0.0f);
+		beltTalon.configPeakOutputVoltage(+12.0f, -12.0f);
+		beltTalon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		beltTalon.setProfile(0);
+		beltTalon.setF(1.0); //.035
+		beltTalon.setP(.4); //.04
+		beltTalon.setI(0); //0
+		beltTalon.setD(0); //.5
+		beltTalon.setIZone(0); //0
+		beltTalon.changeControlMode(TalonControlMode.Speed);
     }
 
     public void initDefaultCommand() {
@@ -67,8 +84,11 @@ public class Shooter extends Subsystem {
     }
     
     public void BeltRun(double speed) {
-    	double target = speed*1000;
-    	if(target >= 0){
+    	
+    	beltTalon.set(speed * 1000.);
+       	SmartDashboard.putNumber("ShooterBelt:", beltTalon.getPosition());
+    	//double target = speed*1000;
+ /*   	if(target >= 0){
     		if(beltTalon.getControlMode() == CANTalon.TalonControlMode.PercentVbus){
     			beltTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
     		}
@@ -80,7 +100,8 @@ public class Shooter extends Subsystem {
     		}
     		beltTalon.set(target);
     	}
-    }
+   */
+    	}
     
     public void ShooterRun(double input) {
     	
@@ -90,17 +111,18 @@ public class Shooter extends Subsystem {
     	//System.out.println("Shooter Run: " + target + "  spd1: " + shooterTalon1.getSpeed() + "  spd2: " + shooterTalon2.getSpeed());
     	
     	if (target < 0.0) target = 0.0;
-       	System.out.println("Shooter Run: " + target + "  spd2: " + shooterTalon2.getSpeed());
-       	System.out.println("Speed: " + shooterTalon1.getSpeed() + " Speed2: " + shooterTalon2.getSpeed());
-       		
+       	SmartDashboard.putNumber("Shooter1:", shooterTalon1.getPosition());
+       	SmartDashboard.putNumber("Shooter2:", shooterTalon2.getPosition());
+       	SmartDashboard.putNumber("Shooter Target Speed:", target);
+       	
        	shooterTalon1.set(target);
     	shooterTalon2.set(target);
  	
     }
     
     public void ShooterStop() {
-      	shooterTalon1.set(1.0);
-      	shooterTalon2.set(1.0);
+      	shooterTalon1.set(0.0);
+      	shooterTalon2.set(0.0);
 		//shooterTalon1.changeControlMode(TalonControlMode.Speed);
 		//shooterTalon2.changeControlMode(TalonControlMode.Speed);
     }
