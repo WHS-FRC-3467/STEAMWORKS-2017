@@ -1,9 +1,11 @@
 package org.usfirst.frc3467.subsystems.Climber;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3467.robot.RobotMap;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 
 import com.ctre.CANTalon;
 
@@ -18,13 +20,22 @@ public class Climber extends Subsystem {
 	public static final double kLower = -0.3;
 	public static final double kStop = 0;
 
+	private Servo latchServo;
+	CANTalon cTalon1;
+
 	//Roller class objects
 //	public CANTalon climbMotor;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public Climber(){
-//		climbMotor = new CANTalon(RobotMap.climbMotor);
+
+		// Climber Latch
+		latchServo = new Servo(RobotMap.climberLatch_Servo);
+		
+		// Climber motor
+		cTalon1 = DriveBase.getInstance().getMiddleTalon();
+
 	}
     public void initDefaultCommand() {
 
@@ -40,5 +51,11 @@ public class Climber extends Subsystem {
 //		climbMotor.set(speed);
 		
 	}
+	
+	public void setLatchServo(double value) {
+		latchServo.set(value);;
+	}
+	
+	
 }
 
