@@ -377,6 +377,11 @@ public class BNO055 {
 				BNO055_ADDRESS_A);
 	}
 
+	public void reInitialize(int newState, boolean newInitialized, boolean newSensorPresent){
+		state = newState;
+		initialized = newInitialized;
+		sensorPresent = newSensorPresent;
+	}
 
 	/**
 	 * Called periodically. Communicates with the sensor, and checks its state. 
