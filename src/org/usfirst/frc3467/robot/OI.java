@@ -25,6 +25,7 @@ import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
 import org.usfirst.frc3467.subsystems.DriveBase.DropTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.LiftTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.ResetEncoders;
+import org.usfirst.frc3467.subsystems.DriveBase.UpdatePIDFConstants;
 import org.usfirst.frc3467.subsystems.FloorIntake.FloorIntakeRun;
 import org.usfirst.frc3467.subsystems.FloorIntake.TestFloorIntake;
 import org.usfirst.frc3467.subsystems.FloorIntake.ToggleFloorIntakeOperation;
@@ -192,5 +193,7 @@ public class OI {
 		SmartDashboard.putData("Test Floor Intake", new TestFloorIntake());
 		SmartDashboard.putData("Zero Encoders", new ResetEncoders());
 		SmartDashboard.putData("Test Auto Climb", new AutoClimb());
+		SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());
+		
 	}
 }

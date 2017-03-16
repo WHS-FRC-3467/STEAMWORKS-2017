@@ -1,6 +1,7 @@
 
 package org.usfirst.frc3467.subsystems.DriveBase;
 
+import org.usfirst.frc3467.robot.PIDF_CANTalon;
 import org.usfirst.frc3467.robot.RobotMap;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 
@@ -19,9 +20,13 @@ public class DriveBase extends Subsystem {
 	// Speed controllers (H-Drive)
 	private CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3;
 	private CANTalon cTalon1, cTalon2;
-
+	private PIDF_CANTalon rightTalon, leftTalon, centerTalon;
+	
 	// Traction feet state variable
 	public boolean tractionFeetState = false; // false = up; true = down
+	
+	// PIDF Update flag
+	private boolean m_updatePIDF = false;
 	
 	/*
 	 * TalonControlModes: Voltage (PercentVBus) & Speed
@@ -64,6 +69,7 @@ public class DriveBase extends Subsystem {
 			"Tank"
 	};
 
+	// Default drive mode to Field-centric
 	private int current_driveInterfaceMode = driveMode_FieldCentric;
 	
 	// Static subsystem reference
@@ -112,6 +118,11 @@ public class DriveBase extends Subsystem {
 		// rTalon1.configEncoderCodesPerRev(2048 * 4);
 		// cTalon1.configEncoderCodesPerRev(2048 * 4);
 		
+		// Create PIDF_CANTalon wrappers for adjusting PIDF constants on SmartDash
+		leftTalon = new PIDF_CANTalon("Left Talon", lTalon1, 0.0, true, true);
+		rightTalon = new PIDF_CANTalon("Right Talon", rTalon1, 0.0, true, true);
+		centerTalon = new PIDF_CANTalon("Center Talon", cTalon1, 0.0, true, true);
+
 		/*
 		 * COnfigure Talons for Speed control
 		 */
@@ -119,32 +130,23 @@ public class DriveBase extends Subsystem {
 		lTalon1.configPeakOutputVoltage(+12.0f, -12.0f);
 		lTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
 		lTalon1.setProfile(0);
-		lTalon1.setF(OUTERPID_F);
-		lTalon1.setP(OUTERPID_P);
-		lTalon1.setI(OUTERPID_I);
-		lTalon1.setD(OUTERPID_D);
+		leftTalon.setPID(OUTERPID_P, OUTERPID_I, OUTERPID_D, OUTERPID_F);
 		
 		rTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
 		rTalon1.configPeakOutputVoltage(+12.0f, -12.0f);
 		rTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
 		rTalon1.setProfile(0);
-		rTalon1.setF(OUTERPID_F);
-		rTalon1.setP(OUTERPID_P);
-		rTalon1.setI(OUTERPID_I);
-		rTalon1.setD(OUTERPID_D);
+		rightTalon.setPID(OUTERPID_P, OUTERPID_I, OUTERPID_D, OUTERPID_F);
 		
 		cTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
 		cTalon1.configPeakOutputVoltage(+12.0f, -12.0f);
 		cTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
 		cTalon1.setProfile(0);
-		cTalon1.setF(CENTERPID_F);
-		cTalon1.setP(CENTERPID_P);
-		cTalon1.setI(CENTERPID_I);
-		cTalon1.setD(CENTERPID_D);
+		centerTalon.setPID(CENTERPID_P, CENTERPID_I, CENTERPID_D, CENTERPID_F);
 
-		// Limit current through the center wheel
-		cTalon1.EnableCurrentLimit(true);
-		cTalon1.setCurrentLimit(30);
+		// Limit current through the center wheel (?)
+		// cTalon1.EnableCurrentLimit(true);
+		// cTalon1.setCurrentLimit(30);
 
 		// Correct encoder counting directions
 		lTalon1.reverseSensor(true);
@@ -168,11 +170,12 @@ public class DriveBase extends Subsystem {
 		
 		// Start in Field-centric mode
 		setDriveInterfaceMode(driveMode_FieldCentric);
+
 	}
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new DriveBot(current_driveInterfaceMode));
+        setDefaultCommand(new DriveBot());
     }
     
     /*
@@ -271,6 +274,7 @@ public class DriveBase extends Subsystem {
     	lTalon1.set(-left * m_outerMaxOutput);
     	rTalon1.set(right * m_outerMaxOutput);
     	cTalon1.set(center * m_centerMaxOutput);
+    	refreshPIDF();
     }
     
     /*
@@ -316,7 +320,7 @@ public class DriveBase extends Subsystem {
 		}
 		lTalon1.set(limit(leftMotorSpeed) * m_outerMaxOutput);
 		rTalon1.set(-limit(rightMotorSpeed) * m_outerMaxOutput);
-		
+		refreshPIDF();
     }
     
     /*
@@ -327,6 +331,7 @@ public class DriveBase extends Subsystem {
     	checkFeetBeforeRobotDrive(leftStick, rightStick);    	
 		lTalon1.set(limit(leftStick) * m_outerMaxOutput);
 		rTalon1.set(-limit(rightStick) * m_outerMaxOutput);
+		refreshPIDF();
     }
     
     /*
@@ -353,32 +358,54 @@ public class DriveBase extends Subsystem {
 	public void drive(double outputMagnitude, double curve) {
 	
 		final double leftOutput;
-	    final double rightOutput;
+		final double rightOutput;
+		
+		if (curve < 0) {
+			double value = Math.log(-curve);
+			double ratio = (value - m_sensitivity) / (value + m_sensitivity);
+			if (ratio == 0) {
+				ratio = .0000000001;
+			}
+			leftOutput = outputMagnitude / ratio;
+			rightOutput = outputMagnitude;
 
-	    if (curve < 0) {
-	      double value = Math.log(-curve);
-	      double ratio = (value - m_sensitivity) / (value + m_sensitivity);
-	      if (ratio == 0) {
-	        ratio = .0000000001;
-	      }
-	      leftOutput = outputMagnitude / ratio;
-	      rightOutput = outputMagnitude;
-	    } else if (curve > 0) {
-	      double value = Math.log(curve);
-	      double ratio = (value - m_sensitivity) / (value + m_sensitivity);
-	      if (ratio == 0) {
-	        ratio = .0000000001;
-	      }
-	      leftOutput = outputMagnitude;
-	      rightOutput = outputMagnitude / ratio;
-	    } else {
-	      leftOutput = outputMagnitude;
-	      rightOutput = outputMagnitude;
-	    }
-		  lTalon1.set(limit(leftOutput) * m_outerMaxOutput);
-		  rTalon1.set(-limit(rightOutput) * m_outerMaxOutput);
-	  }
+		} else if (curve > 0) {
+			double value = Math.log(curve);
+			double ratio = (value - m_sensitivity) / (value + m_sensitivity);
+			if (ratio == 0) {
+				ratio = .0000000001;
+			}
+			leftOutput = outputMagnitude;
+			rightOutput = outputMagnitude / ratio;
 
+		} else {
+			leftOutput = outputMagnitude;
+			rightOutput = outputMagnitude;
+		}
+
+		lTalon1.set(limit(leftOutput) * m_outerMaxOutput);
+		rTalon1.set(-limit(rightOutput) * m_outerMaxOutput);
+		refreshPIDF();
+	}
+
+	/*
+	 * Refresh PIDF constants?
+	 */
+	public void flagPIDFUpdate() {
+		m_updatePIDF = true;
+	}
+	
+	private void refreshPIDF() {
+
+		if (m_updatePIDF == false) return;
+		
+		leftTalon.updatePIDF();
+		rightTalon.updatePIDF();
+		centerTalon.updatePIDF();
+		
+		m_updatePIDF = false;
+	}
+	
     /*
      *	Make sure traction feet are up before driving 
      */
