@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveBot extends CommandBase {
 	
-	// Default to Field Centric
-	int _driveMode = DriveBase.driveMode_FieldCentric;
+	// Start with undefined drive interface mode
+	int _driveMode = -1;
 
 	// Scale factor for reducing inputs during Precision Mode
 	static final double precision_scaleFactor = 0.1;
@@ -19,6 +19,13 @@ public class DriveBot extends CommandBase {
 	
 	double m_lastX = 0.0, m_lastY = 0.0, m_lastRot = 0.0;
 	
+	// Use this constructor if you want to use the current (or default) drive interface mode
+	public DriveBot() {
+		requires(driveBase);
+		this.setInterruptible(true);
+	}
+	
+	// Use this constructor if you want to CHANGE the drive interface mode
 	public DriveBot(int driveMode) {
 		requires(driveBase);
 		this.setInterruptible(true);
@@ -28,9 +35,11 @@ public class DriveBot extends CommandBase {
 	
 	protected void initialize() {
 
-		// Don't set drive mode in DriveBase until this command is actually underway
-		// Otherwise, all the instances of this command instantiated in OI will change the drive mode prematurely
-		driveBase.setDriveInterfaceMode(_driveMode);
+		if (_driveMode == -1)
+			_driveMode = driveBase.getDriveInterfaceMode();
+		else
+			driveBase.setDriveInterfaceMode(_driveMode);
+		
 		SmartDashboard.putString("Drive Mode", driveBase.getDriveInterfaceModeName());
 	}
 
