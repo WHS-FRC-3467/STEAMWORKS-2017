@@ -2,10 +2,8 @@
 package org.usfirst.frc3467.subsystems.Gyro;
 
 import java.text.DecimalFormat;
-
 import org.usfirst.frc3467.subsystems.Gyro.BNO055;
-
-import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,12 +16,13 @@ public class Gyro extends Subsystem {
 	private static BNO055 imu;
 	private static BNO055 gyro2;
 	public static double zeroed = 0;
+	public static DigitalOutput gyro1DIO;
 
 	public Gyro() {
     	imu = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER, Port.kOnboard, BNO055.BNO055_ADDRESS_A);
 
     	gyro2 = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER, Port.kOnboard, BNO055.BNO055_ADDRESS_B);
-    	
+    	gyro1DIO = new DigitalOutput(0);
 	}
 	
 	public void initDefaultCommand() {
@@ -61,6 +60,19 @@ public class Gyro extends Subsystem {
     
     public double[] getGyro2Vector() {
     	return gyro2.getVector();
+    }
+    
+    public void hardReset() {
+    	gyro1DIO.set(false); //may need delay
+    	gyro1DIO.set(true);
+    	imu.reInitialize(0, false, false);
+    	
+    }
+    
+    public boolean gyroSetup() {
+    	if(imu.isCalibrated())
+    		imu.getVector()[0] = gyro2.getVector()[0];
+    	return imu.isCalibrated();
     }
     
     public double getAngle() {
@@ -160,9 +172,11 @@ public class Gyro extends Subsystem {
 	}
     
 	public boolean compareGyros() {
-		boolean equals = true;
-		if (imu.getVector()[0] <= gyro2.getVector()[0] + 5 && imu.getVector() [0] >= gyro2.getVector() [0] - 5) {
-			equals = false;
+		boolean equals = false;
+		if(gyroSetup()){
+			if (imu.getVector()[0] <= gyro2.getVector()[0] + 5 && imu.getVector() [0] >= gyro2.getVector() [0] - 5) {
+				equals = false;
+			}
 		}
 		return equals;
 	}
