@@ -44,6 +44,8 @@ public class AutoAim extends CommandBase {
     		pixyData = pixyCam.getBoilerLocationData();
     	} catch (NoTargetException ex) {
     		// No target found
+    		// Need to do something to try to find target
+    		return;
     	}
     	
     	// Name the returned data
