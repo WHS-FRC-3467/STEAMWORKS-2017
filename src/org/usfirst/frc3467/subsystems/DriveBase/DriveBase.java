@@ -9,6 +9,9 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,21 +19,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //  DriveBase Subsystem
 //
 public class DriveBase extends Subsystem {
+	private Servo latchServo;
+	private PowerDistributionPanel pdp;
 
-	// Speed controllers (H-Drive)
-	private CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3;
+	private static CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3;
 	private CANTalon cTalon1, cTalon2;
 	private PIDF_CANTalon rightTalon, leftTalon, centerTalon;
-	
-	// Traction feet state variable
-	public boolean tractionFeetState = false; // false = up; true = down
-	
+	private static final double width = 1;
+    
+	private static DriveBase dBInstance;
+	private static RobotDrive dBase;
 	// PIDF Update flag
 	private boolean m_updatePIDF = false;
-	
-	/*
-	 * TalonControlModes: Voltage (PercentVBus) & Speed
-	 */
 	private TalonControlMode 	t_controlMode;
 
 	/* Speed mode PID constants */
@@ -48,13 +48,8 @@ public class DriveBase extends Subsystem {
 	private double m_outerMaxOutput = 1.0;
 	private double m_centerMaxOutput = 1.0;
 
-	// Field- and Robot-centric mode factor
-	private static final double robotWidth = 1;
-    
-	// drive() method turning sensitivity
-	double m_sensitivity = 0.5;
+	public boolean tractionFeetState = false; // false = up; true = down
 	
-	// Drive interface mode
 	public static final int driveMode_FieldCentric = 0;
 	public static final int driveMode_RobotCentric = 1;
 	public static final int driveMode_Arcade = 2;
@@ -70,16 +65,15 @@ public class DriveBase extends Subsystem {
 	};
 
 	// Default drive mode to Field-centric
-	private int current_driveInterfaceMode = driveMode_FieldCentric;
+	private int current_driveMode = driveMode_FieldCentric;
 	
-	// Static subsystem reference
-	private static DriveBase dBInstance;
-
 	public static DriveBase getInstance() {
-		if (dBInstance == null)
-			dBInstance = new DriveBase();
-		
 		return DriveBase.dBInstance;
+	}
+	
+	public void straightTime(double speed) {
+		rTalon1.set(-speed);
+		lTalon1.set(speed);
 	}
 	
 	public DriveBase() {
@@ -112,11 +106,6 @@ public class DriveBase extends Subsystem {
 		lTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		cTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-
-		// Don't need to do this if we use Native encoder units
-		// lTalon1.configEncoderCodesPerRev(2048 * 4);
-		// rTalon1.configEncoderCodesPerRev(2048 * 4);
-		// cTalon1.configEncoderCodesPerRev(2048 * 4);
 		
 		// Create PIDF_CANTalon wrappers for adjusting PIDF constants on SmartDash
 		leftTalon = new PIDF_CANTalon("Left Talon", lTalon1, 0.0, true, true);
@@ -157,6 +146,11 @@ public class DriveBase extends Subsystem {
 		rTalon1.enableBrakeMode(true);
 		cTalon1.enableBrakeMode(true);
 		
+		// Climber Latch
+		latchServo = new Servo(RobotMap.climberLatch_Servo);
+		
+		pdp = new PowerDistributionPanel();
+		
 		// Set default control Modes for Master CANTalons
 		this.setSpeedMode();
 		
@@ -168,29 +162,57 @@ public class DriveBase extends Subsystem {
 		rTalon1.setExpiration(0.5);
 		cTalon1.setExpiration(0.5);
 		
-		// Start in Field-centric mode
-		setDriveInterfaceMode(driveMode_FieldCentric);
+		// Set up a RobotDrive object for normal driving
+		dBase = new RobotDrive(lTalon1, rTalon1);
+		
+		//RobotDrive Parameters
+		dBase.setSafetyEnabled(false);  // Will turn this on once we actually start using it
+		dBase.setExpiration(1.0);
+		dBase.setSensitivity(0.5);
+		dBase.setMaxOutput(1.0);
 
+		// Start in Field-centric mode
+		setDriveMode(driveMode_FieldCentric);
 	}
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new DriveBot());
+        setDefaultCommand(new DriveBot(current_driveMode));
     }
     
     /*
-     * Drive interface mode support
+     * Drive mode support
      */
-    public void setDriveInterfaceMode(int dMode) {
-    	current_driveInterfaceMode = dMode;
+    public void setDriveMode(int dMode) {
+    	current_driveMode = dMode;
+
+    	// Manage speed controller safety
+    	switch (current_driveMode) {
+			case driveMode_FieldCentric:
+			case driveMode_RobotCentric:
+			case driveMode_Precision:
+				lTalon1.setSafetyEnabled(true);
+				rTalon1.setSafetyEnabled(true);
+				cTalon1.setSafetyEnabled(true);
+				dBase.setSafetyEnabled(false);
+				break;
+				
+			case driveMode_Arcade:
+			case driveMode_Tank:
+				dBase.setSafetyEnabled(true);
+				lTalon1.setSafetyEnabled(false);
+				rTalon1.setSafetyEnabled(false);
+				cTalon1.setSafetyEnabled(false);
+				break;
+		}
     }
     
-    public int getDriveInterfaceMode() {
-    	return current_driveInterfaceMode;
+    public int getDriveMode() {
+    	return current_driveMode;
     }
     
-    public String getDriveInterfaceModeName() {
-    	return driveModeNames[current_driveInterfaceMode];
+    public String getDriveModeName() {
+    	return driveModeNames[current_driveMode];
     }
     
     
@@ -207,6 +229,7 @@ public class DriveBase extends Subsystem {
 		}
 		m_outerMaxOutput = 1.0;
 		m_centerMaxOutput = 1.0;
+		dBase.setMaxOutput(m_outerMaxOutput);
 	}
     
 	/**
@@ -244,6 +267,7 @@ public class DriveBase extends Subsystem {
 	     */
 		m_outerMaxOutput = 6258.0;  // encoder counts per 0.1 seconds (native units)
 		m_centerMaxOutput = 2763.0;
+		dBase.setMaxOutput(m_outerMaxOutput);
 	}
 	
 	public TalonControlMode getControlMode() {
@@ -265,8 +289,8 @@ public class DriveBase extends Subsystem {
     	}
     	
     	z = z*-1;
-    	double left = (y + (robotWidth/2) * z);
-    	double right = y - (robotWidth/2) * z;
+    	double left = (y + (width/2) * z);
+    	double right = y - (width/2) * z;
     	double center = x;
     	
     	center = center*xScale;
@@ -289,102 +313,28 @@ public class DriveBase extends Subsystem {
     	double xNet = x * Math.cos(radAngle) + y * Math.sin(radAngle);
     	
     	driveRobotCentric(xNet, yNet, z);
+    	
     }
    
-    /*
-     *	Drive arcade style (one or two sticks - forward/back and rotate specified separately) 
-     */
-    public void driveArcade(double moveValue, double rotateValue) {
+	// pass-thru to RobotDrive method (drive using one stick)
+    public void driveArcade(double move, double rotate, boolean square) {
 
-    	checkFeetBeforeRobotDrive(moveValue, rotateValue);    	
-    	
-		double leftMotorSpeed;
-		double rightMotorSpeed;
-		
-		if (moveValue > 0.0) {
-			if (rotateValue > 0.0) {
-				leftMotorSpeed = moveValue - rotateValue;
-				rightMotorSpeed = Math.max(moveValue, rotateValue);
-			} else {
-				leftMotorSpeed = Math.max(moveValue, -rotateValue);
-				rightMotorSpeed = moveValue + rotateValue;
-			}
-		} else {
-			if (rotateValue > 0.0) {
-				leftMotorSpeed = -Math.max(-moveValue, rotateValue);
-				rightMotorSpeed = moveValue + rotateValue;
-			} else {
-				leftMotorSpeed = moveValue - rotateValue;
-				rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
-			}
-		}
-		lTalon1.set(limit(leftMotorSpeed) * m_outerMaxOutput);
-		rTalon1.set(-limit(rightMotorSpeed) * m_outerMaxOutput);
+    	checkFeetBeforeRobotDrive(move, rotate);    	
+    	dBase.arcadeDrive(move, rotate, square);
 		refreshPIDF();
     }
     
-    /*
-     *	Drive Tank-style (two sticks) 
-     */
-    public void driveTank(double leftStick, double rightStick) {
-    	
+	// pass-thru to RobotDrive method (drive using 2 sticks)
+    public void driveTank(double leftStick, double rightStick, boolean square) {
     	checkFeetBeforeRobotDrive(leftStick, rightStick);    	
-		lTalon1.set(limit(leftStick) * m_outerMaxOutput);
-		rTalon1.set(-limit(rightStick) * m_outerMaxOutput);
+    	dBase.tankDrive(leftStick, rightStick, square);
 		refreshPIDF();
     }
     
-    /*
-     *	Drive "by wire" - used in autonomous 
-     */
-	  /**
-	   * Drive the motors at "outputMagnitude" and "curve". Both outputMagnitude and curve are -1.0 to
-	   * +1.0 values, where 0.0 represents stopped and not turning. {@literal curve < 0 will turn left
-	   * and curve > 0} will turn right.
-	   *
-	   * <p>The algorithm for steering provides a constant turn radius for any normal speed range, both
-	   * forward and backward. Increasing sensitivity causes sharper turns for fixed values of curve.
-	   *
-	   * <p>This function will most likely be used in an autonomous routine.
-	   *
-	   * @param outputMagnitude The speed setting for the outside wheel in a turn, forward or backwards,
-	   *                        +1 to -1.
-	   * @param curve           The rate of turn, constant for different forward speeds. Set {@literal
-	   *                        curve < 0 for left turn or curve > 0 for right turn.} Set curve =
-	   *                        e^(-r/w) to get a turn radius r for wheelbase w of your robot.
-	   *                        Conversely, turn radius r = -ln(curve)*w for a given value of curve and
-	   *                        wheelbase w.
-	   */
+	// pass-thru to RobotDrive method (used in autonomous)
 	public void drive(double outputMagnitude, double curve) {
-	
-		final double leftOutput;
-		final double rightOutput;
-		
-		if (curve < 0) {
-			double value = Math.log(-curve);
-			double ratio = (value - m_sensitivity) / (value + m_sensitivity);
-			if (ratio == 0) {
-				ratio = .0000000001;
-			}
-			leftOutput = outputMagnitude / ratio;
-			rightOutput = outputMagnitude;
-
-		} else if (curve > 0) {
-			double value = Math.log(curve);
-			double ratio = (value - m_sensitivity) / (value + m_sensitivity);
-			if (ratio == 0) {
-				ratio = .0000000001;
-			}
-			leftOutput = outputMagnitude;
-			rightOutput = outputMagnitude / ratio;
-
-		} else {
-			leftOutput = outputMagnitude;
-			rightOutput = outputMagnitude;
-		}
-
-		lTalon1.set(limit(leftOutput) * m_outerMaxOutput);
-		rTalon1.set(-limit(rightOutput) * m_outerMaxOutput);
+    	checkFeetBeforeRobotDrive(outputMagnitude, curve);    	
+		dBase.drive(outputMagnitude, curve);
 		refreshPIDF();
 	}
 
@@ -437,32 +387,21 @@ public class DriveBase extends Subsystem {
 		rTalon1.setPosition(0);
 		cTalon1.setPosition(0);
 	}
-	
 	public CANTalon getMiddleTalon(){
 		return cTalon1;
 	}
-	
 	public CANTalon getRightTalon(){
 		return rTalon1;
 	}
-	
 	public CANTalon getLeftTalon(){
 		return lTalon1;
 	}
-
-	/**
-	 * Limit motor values to the -1.0 to +1.0 range.
-	 */
-	protected static double limit(double num) {
-		if (num > 1.0) {
-			return 1.0;
-	    }
-	    if (num < -1.0) {
-	    	return -1.0;
-	    }
-	    return num;
+	public PowerDistributionPanel getPDP(){
+		return pdp;
 	}
-
+	public Servo getLatchServo(){
+		return latchServo;
+	}
 
 	/*
 	 * Traction control
