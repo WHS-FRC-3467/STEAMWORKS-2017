@@ -31,10 +31,10 @@ public class Climber extends Subsystem {
 	public Climber(){
 
 		// Climber Latch
-		latchServo = new Servo(RobotMap.climberLatch_Servo);
+		//latchServo = new Servo(RobotMap.climberLatch_Servo);
 		
 		// Climber motor
-		cTalon1 = DriveBase.getInstance().getMiddleTalon();
+		//cTalon1 = DriveBase.getInstance().getMiddleTalon();
 
 	}
     public void initDefaultCommand() {

@@ -282,7 +282,7 @@ public class PixyCmu5 implements PIDSource
     			readBuffer_char += Integer.toString(readBuffer[idx] & 0xFF) + " ";
     		}
     		// Print the raw buffer to the console
-    		System.out.println(readBuffer_char);
+    		//System.out.println(readBuffer_char);
     	}
     	
     	/* 
@@ -301,7 +301,7 @@ public class PixyCmu5 implements PIDSource
     	 */
     	for(int idx = 0; idx < readBuffer.length - 18; idx++ ) 
     	{
-    		System.out.println(readBuffer.length);
+    		//System.out.println(readBuffer.length);
     		/*
     		 * The Pixy sends the data in Little Endian format [https://en.wikipedia.org/wiki/Endianness]
 	    	 *  with the data packed in 16 bit integers (4 hex digits each) [0xFF]. Little Endian format 
