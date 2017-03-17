@@ -265,8 +265,8 @@ public class DriveBase extends Subsystem {
 		 *
 		 *	If drive stick(s) max out too early, lower this value.
 	     */
-		m_outerMaxOutput = 1000.; //6258.0;  // encoder counts per 0.1 seconds (native units)
-		m_centerMaxOutput = 500. ;//2763.0;
+		m_outerMaxOutput = 3000.; //6258.0;  // encoder counts per 0.1 seconds (native units)
+		m_centerMaxOutput = 1500. ;//2763.0;
 		dBase.setMaxOutput(m_outerMaxOutput);
 	}
 	
