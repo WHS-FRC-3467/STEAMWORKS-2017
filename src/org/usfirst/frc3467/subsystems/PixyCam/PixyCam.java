@@ -48,7 +48,9 @@ public class PixyCam extends Subsystem {
     public void detectTarget() {
 
     	double degFromCenterX = 0;
+    	double degFromCenterX2 = 0;
     	double degFromCenterY = 0;
+    	double degFromCenterY2 = 0;
 
     	// If an object is detected in the frame
 		if(cameraPresent && !pixyCamera.getCurrentframes().isEmpty())
@@ -60,8 +62,12 @@ public class PixyCam extends Subsystem {
 				// Calculate the number of degrees from the center the current frame 
 				degFromCenterX = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(0));
 				degFromCenterY = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(0));
+				degFromCenterX2 = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(1));
+				degFromCenterY2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(1));
 				SmartDashboard.putString("AimX", Double.toString(degFromCenterX) + " degrees from target");
 				SmartDashboard.putString("AimY", Double.toString(degFromCenterY) + " degrees from target");
+				SmartDashboard.putString("AimX2", Double.toString(degFromCenterX2) + " degrees from target");
+				SmartDashboard.putString("AimY2", Double.toString(degFromCenterY2) + " degrees from target");
 			
 			} catch  (RuntimeException ex ){
 

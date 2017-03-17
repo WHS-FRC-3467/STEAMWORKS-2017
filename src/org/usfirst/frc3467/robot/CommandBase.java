@@ -53,12 +53,12 @@ public abstract class CommandBase extends Command {
 		subsystemList.addElement(pneumatics);		
 		brownout = Brownout.getInstance();
 		subsystemList.addElement(brownout);
+		driveBase = DriveBase.getInstance();
+		subsystemList.addElement(driveBase);
 
 		// Create new instances of subsystems
 		climber = new Climber();
 		subsystemList.addElement(climber);
-		driveBase = new DriveBase();
-		subsystemList.addElement(driveBase);
 		flr_intake = new FloorIntake();
 		subsystemList.addElement(flr_intake);
 		gearcatch = new GearCatcher();
