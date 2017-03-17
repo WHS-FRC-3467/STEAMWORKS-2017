@@ -34,15 +34,15 @@ public class DriveBase extends Subsystem {
 	private TalonControlMode 	t_controlMode;
 
 	/* Speed mode PID constants */
-	private double OUTERPID_P = 0.4;
+	private double OUTERPID_P = 0.1;
 	private double OUTERPID_I = 0.0;
 	private double OUTERPID_D = 0.0;
-	private double OUTERPID_F = 1.0;
+	private double OUTERPID_F = 0.5;
 	
-	private double CENTERPID_P = 0.4;
+	private double CENTERPID_P = 0.1;
 	private double CENTERPID_I = 0.0;
 	private double CENTERPID_D = 0.0;
-	private double CENTERPID_F = 1.0;
+	private double CENTERPID_F = 0.5;
 	
 	// Drive stick conversion factors (1.0 for Voltage Control)
 	private double m_outerMaxOutput = 1.0;
@@ -138,8 +138,8 @@ public class DriveBase extends Subsystem {
 		// cTalon1.setCurrentLimit(30);
 
 		// Correct encoder counting directions
-		lTalon1.reverseSensor(true);
-		rTalon1.reverseSensor(true);
+		//lTalon1.reverseSensor(true);
+		//rTalon1.reverseSensor(true);
 		
 		// All drive Talons should coast
 		lTalon1.enableBrakeMode(true);
@@ -150,9 +150,6 @@ public class DriveBase extends Subsystem {
 		latchServo = new Servo(RobotMap.climberLatch_Servo);
 		
 		pdp = new PowerDistributionPanel();
-		
-		// Set default control Modes for Master CANTalons
-		this.setSpeedMode();
 		
 		// Setup Safety management for CANTalons
 		lTalon1.setSafetyEnabled(true);
@@ -171,6 +168,9 @@ public class DriveBase extends Subsystem {
 		dBase.setSensitivity(0.5);
 		dBase.setMaxOutput(1.0);
 
+		// Set default control Modes for Master CANTalons
+		this.setSpeedMode();
+		
 		// Start in Field-centric mode
 		setDriveMode(driveMode_FieldCentric);
 	}
@@ -265,8 +265,8 @@ public class DriveBase extends Subsystem {
 		 *
 		 *	If drive stick(s) max out too early, lower this value.
 	     */
-		m_outerMaxOutput = 6258.0;  // encoder counts per 0.1 seconds (native units)
-		m_centerMaxOutput = 2763.0;
+		m_outerMaxOutput = 1000.; //6258.0;  // encoder counts per 0.1 seconds (native units)
+		m_centerMaxOutput = 500. ;//2763.0;
 		dBase.setMaxOutput(m_outerMaxOutput);
 	}
 	
