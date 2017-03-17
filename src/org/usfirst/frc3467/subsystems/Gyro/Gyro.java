@@ -76,10 +76,11 @@ public class Gyro extends Subsystem {
     }
     
     public double getAngle() {
-    	if (compareGyros()) 
+    	return imu.getVector()[0] - zeroed;
+    	/*if (compareGyros()) 
     		return imu.getVector()[0] - zeroed;
     	else 
-    		return gyro2.getVector()[0] - zeroed;
+    		return gyro2.getVector()[0] - zeroed;*/
     } 
     
     public void zeroGyro() {

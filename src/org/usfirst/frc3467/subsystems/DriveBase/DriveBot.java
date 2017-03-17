@@ -43,6 +43,7 @@ public class DriveBot extends CommandBase {
 		default:
 		case DriveBase.driveMode_FieldCentric:
 			driveBase.driveFieldCentric(getX(), getY(), getRot(), gyro.getAngle());
+			//SmartDashboard.putBoolean("Gear in: ", DriveBase.getStatus());
 			break;
 			
 		case DriveBase.driveMode_RobotCentric:
@@ -63,6 +64,8 @@ public class DriveBot extends CommandBase {
 			driveBase.driveTank(OI.driverPad.getLeftStickY(), OI.driverPad.getRightStickY());
 			break;
 		}
+		
+		
 	}
 
 	protected boolean isFinished() {
