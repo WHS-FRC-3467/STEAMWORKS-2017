@@ -30,8 +30,8 @@ public class DriveBot extends CommandBase {
 
 		// Don't set drive mode in DriveBase until this command is actually underway
 		// Otherwise, all the instances of this command instantiated in OI will change the drive mode prematurely
-		driveBase.setDriveMode(_driveMode);
-		SmartDashboard.putString("Drive Mode", driveBase.getDriveModeName());
+		driveBase.setDriveInterfaceMode(_driveMode);
+		SmartDashboard.putString("Drive Mode", driveBase.getDriveInterfaceModeName());
 	}
 
 	protected void execute() {
@@ -50,7 +50,7 @@ public class DriveBot extends CommandBase {
 			break;
 			
 		case DriveBase.driveMode_Arcade:
-			driveBase.driveArcade(getY(), getRot(), SQUARE_INPUTS);
+			driveBase.driveArcade(getY(), getRot());
 			break;
 			
 		case DriveBase.driveMode_Precision:
@@ -60,7 +60,7 @@ public class DriveBot extends CommandBase {
 			break;
 			
 		case DriveBase.driveMode_Tank:
-			driveBase.driveTank(OI.driverPad.getLeftStickY(), OI.driverPad.getRightStickY(), SQUARE_INPUTS);
+			driveBase.driveTank(OI.driverPad.getLeftStickY(), OI.driverPad.getRightStickY());
 			break;
 		}
 	}
