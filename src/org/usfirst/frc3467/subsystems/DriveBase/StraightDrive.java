@@ -13,17 +13,17 @@ public class StraightDrive extends CommandBase {
 	
     public StraightDrive() {
         requires(driveBase);
-        //TIME = time;
+    	setTimeout(2);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	driveBase.setVoltageMode();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	driveBase.straightTime(1.25);
-    	setTimeout(5);
+    	driveBase.driveTank(0.5, 0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,7 +33,8 @@ public class StraightDrive extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	driveBase.straightTime(0);
+    	driveBase.driveTank(0.5, 0.5);
+    	driveBase.setSpeedMode();
     }
 
     // Called when another command which requires one or more of the same
