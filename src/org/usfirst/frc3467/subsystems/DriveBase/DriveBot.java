@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveBot extends CommandBase {
 	
-	// Start with undefined drive interface mode
-	int _driveMode = -1;
+	// Default to Field Centric
+	int _driveMode = DriveBase.driveMode_FieldCentric;
 
 	// Scale factor for reducing inputs during Precision Mode
 	static final double precision_scaleFactor = 0.1;
@@ -19,13 +19,6 @@ public class DriveBot extends CommandBase {
 	
 	double m_lastX = 0.0, m_lastY = 0.0, m_lastRot = 0.0;
 	
-	// Use this constructor if you want to use the current (or default) drive interface mode
-	public DriveBot() {
-		requires(driveBase);
-		this.setInterruptible(true);
-	}
-	
-	// Use this constructor if you want to CHANGE the drive interface mode
 	public DriveBot(int driveMode) {
 		requires(driveBase);
 		this.setInterruptible(true);
@@ -35,12 +28,10 @@ public class DriveBot extends CommandBase {
 	
 	protected void initialize() {
 
-		if (_driveMode == -1)
-			_driveMode = driveBase.getDriveInterfaceMode();
-		else
-			driveBase.setDriveInterfaceMode(_driveMode);
-		
-		SmartDashboard.putString("Drive Mode", driveBase.getDriveInterfaceModeName());
+		// Don't set drive mode in DriveBase until this command is actually underway
+		// Otherwise, all the instances of this command instantiated in OI will change the drive mode prematurely
+		driveBase.setDriveMode(_driveMode);
+		SmartDashboard.putString("Drive Mode", driveBase.getDriveModeName());
 	}
 
 	protected void execute() {
@@ -59,7 +50,7 @@ public class DriveBot extends CommandBase {
 			break;
 			
 		case DriveBase.driveMode_Arcade:
-			driveBase.driveArcade(getY(), getRot());
+			driveBase.driveArcade(getY(), getRot(), SQUARE_INPUTS);
 			break;
 			
 		case DriveBase.driveMode_Precision:
@@ -69,7 +60,7 @@ public class DriveBot extends CommandBase {
 			break;
 			
 		case DriveBase.driveMode_Tank:
-			driveBase.driveTank(OI.driverPad.getLeftStickY(), OI.driverPad.getRightStickY());
+			driveBase.driveTank(OI.driverPad.getLeftStickY(), OI.driverPad.getRightStickY(), SQUARE_INPUTS);
 			break;
 		}
 	}
