@@ -8,6 +8,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,6 +20,7 @@ public class DriveBase extends Subsystem {
 	// Speed controllers (H-Drive)
 	private CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3;
 	private CANTalon cTalon1, cTalon2;
+	public static DigitalInput gear = new DigitalInput(1);
 
 	// Traction feet state variable
 	public boolean tractionFeetState = false; // false = up; true = down
@@ -190,6 +192,9 @@ public class DriveBase extends Subsystem {
     	return driveModeNames[current_driveInterfaceMode];
     }
     
+    public static boolean getStatus() {
+    	return gear.get();
+    }
     
 	/**
 	 * Set Talons to Voltage mode
