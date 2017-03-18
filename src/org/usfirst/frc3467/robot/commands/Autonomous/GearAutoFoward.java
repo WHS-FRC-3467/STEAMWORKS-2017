@@ -2,9 +2,6 @@ package org.usfirst.frc3467.robot.commands.Autonomous;
 
 import org.usfirst.frc3467.subsystems.DriveBase.DriveStraight;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
-import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
-import org.usfirst.frc3467.subsystems.HighIntake.ToggleHighIntakePosition;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -13,10 +10,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GearAutoFoward extends CommandGroup {
 
     public GearAutoFoward() {
-    	addSequential(new ToggleHighIntakePosition());
     	addSequential(new ToggleGearCatcherPosition());
     	addSequential(new DriveStraight(3000));
-    	addSequential(new ToggleGearClawState());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

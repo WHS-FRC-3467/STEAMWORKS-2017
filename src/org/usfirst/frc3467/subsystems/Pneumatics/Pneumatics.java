@@ -49,7 +49,7 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 
 		initSolenoids();
 		
-		scorpionCompressor.start();
+		//scorpionCompressor.start();
 		compressorActive = true;
 		
 		Brownout.getInstance().registerCallback(this);

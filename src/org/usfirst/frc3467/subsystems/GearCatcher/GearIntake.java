@@ -1,17 +1,16 @@
-package org.usfirst.frc3467.subsystems.HighIntake;
+package org.usfirst.frc3467.subsystems.GearCatcher;
 
 import org.usfirst.frc3467.robot.CommandBase;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class HighIntakeRun extends CommandBase {
+public class GearIntake extends CommandBase {
 
-	private double SPEED;
-	
-    public HighIntakeRun(double speed) {
-    	requires(hi_intake);
-        SPEED = speed;
+    public GearIntake() {
+        requires(gearcatch);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +19,14 @@ public class HighIntakeRun extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	hi_intake.HIntakeRun(SPEED);
+    	if(gearcatch.getCatcherState()== false){
+    		gearcatch.setCatcherState(true);
+    	}
+    	gearcatch.runGearIntake(.5);
+    	if(gearcatch.getState() == true){
+    		gearcatch.setCatcherState(false);
+    		end();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -30,6 +36,7 @@ public class HighIntakeRun extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+    	gearcatch.runGearIntake(0);
     }
 
     // Called when another command which requires one or more of the same

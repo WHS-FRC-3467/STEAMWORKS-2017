@@ -5,6 +5,6 @@ Remove unneeded Subsystems
 
 Clean up Autonomous drive code
 
-New Gamepad mapppings
+New Gamepad mappings
 
 

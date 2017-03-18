@@ -25,8 +25,6 @@ public class OperateShooter extends CommandBase {
 	public OperateShooter(){
 		
         requires(shooter);
-        requires(flr_intake);
-        requires(hi_intake);
 
         // Don't allow interruptions; command will have to timeout on its own
         // This will prevent extra Trigger activations from starting a new instance of this command
@@ -38,23 +36,11 @@ public class OperateShooter extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
 
-		// Actuate High intake out
-        hi_intake.hiIntakeExtend();
-
-        // Actuate Lower intake in
-        flr_intake.retract();
-
         timeOutTimer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-
-    	// Run Lower intake in
-    	flr_intake.drive(FLOOR_INTAKE_SPEED);
-
-    	// Run High intake in
-    	hi_intake.HIntakeRun(HI_INTAKE_SPEED);
     	shooter.BeltRun(MAX_BELT_SPEED);
 
         // Run shooter wheels under Velocity Control
@@ -103,8 +89,6 @@ public class OperateShooter extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	hi_intake.HIntakeRun(0.0);
-    	flr_intake.drive(0.0);
     	shooter.SpinnerRun(0.0);
     	shooter.BeltRun(0.0);
     	shooter.ShooterStop(
