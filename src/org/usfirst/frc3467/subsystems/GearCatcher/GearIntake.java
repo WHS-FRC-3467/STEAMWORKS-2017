@@ -22,7 +22,7 @@ public class GearIntake extends CommandBase {
     	if(gearcatch.getCatcherState()== false){
     		gearcatch.setCatcherState(true);
     	}
-    	gearcatch.runGearIntake(.5);
+    	gearcatch.runGearIntake(-.5);
     	if(gearcatch.getState() == true){
     		gearcatch.setCatcherState(false);
     		end();
