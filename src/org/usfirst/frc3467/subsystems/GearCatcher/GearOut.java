@@ -1,18 +1,15 @@
-package org.usfirst.frc3467.subsystems.FloorIntake;
+package org.usfirst.frc3467.subsystems.GearCatcher;
 
 import org.usfirst.frc3467.robot.CommandBase;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ToggleFloorIntakeOperation extends CommandBase {
-	
-	public static boolean isIn = true;
+public class GearOut extends CommandBase {
 
-    public ToggleFloorIntakeOperation() {
-        requires(flr_intake);
+    public GearOut() {
+    	requires(gearcatch);
+    	setTimeout(.2);
     }
 
     // Called just before this Command runs the first time
@@ -21,29 +18,27 @@ public class ToggleFloorIntakeOperation extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	if (isIn == true) {
-    		pneumatics.floorIntakeExtend();
-    		isIn = false;
+    	gearcatch.setCatcherState(true);
+    	if(isTimedOut()){
+    		gearcatch.runGearIntake(-.5);
+    		gearcatch.count(3000);
+    		end();
     	}
-    	else {
-    		pneumatics.floorIntakeRetract();
-    		isIn = true;
-    	}
-    	SmartDashboard.putString("Floor Intake Position",  isIn ? "IN" : "OUT");
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	gearcatch.runGearIntake(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

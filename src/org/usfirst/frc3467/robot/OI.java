@@ -26,16 +26,11 @@ import org.usfirst.frc3467.subsystems.DriveBase.DropTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.LiftTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.ResetEncoders;
 import org.usfirst.frc3467.subsystems.DriveBase.UpdatePIDFConstants;
-import org.usfirst.frc3467.subsystems.FloorIntake.FloorIntakeRun;
-import org.usfirst.frc3467.subsystems.FloorIntake.TestFloorIntake;
-import org.usfirst.frc3467.subsystems.FloorIntake.ToggleFloorIntakeOperation;
+import org.usfirst.frc3467.subsystems.GearCatcher.GearIntake;
+import org.usfirst.frc3467.subsystems.GearCatcher.GearOut;
+import org.usfirst.frc3467.subsystems.GearCatcher.TestGearIntake;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
-import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearClawState;
 import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
-import org.usfirst.frc3467.subsystems.HighIntake.HighIntakeRun;
-import org.usfirst.frc3467.subsystems.HighIntake.RunBothIntakes;
-import org.usfirst.frc3467.subsystems.HighIntake.ToggleHighIntakePosition;
-import org.usfirst.frc3467.subsystems.Hopper.ToggleHopper;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorRetract;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearDown;
@@ -129,8 +124,8 @@ public class OI {
 		
 		new GamepadLeftTrigger(driverPad).whenActive(new OperateShooter());
 		new GamepadRightTrigger(driverPad).whenActive(new ToggleGearCatcherPosition());
-		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new ToggleFloorIntakeOperation());
-		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new ToggleGearClawState());
+		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new GearIntake());
+		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new GearOut());
 
 		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new ZeroGyro());
 		//new DoubleButton(driverPad, Gamepad.yButton, Gamepad.bButton).whenActive(new ToggleLatch);
@@ -152,10 +147,10 @@ public class OI {
 		 */
 
 		//Changed how the toggles work, may need to change back, but I want to try to see if this works
-		new GamepadLeftTrigger(operatorPad).whenActive(new ToggleHopper());
-		new GamepadRightTrigger(operatorPad).whileActive(new RunBothIntakes(FLOOR_INTAKE_SPEED_NORMAL));
-		new JoystickButton(operatorPad, Gamepad.leftBumper).whileActive(new FloorIntakeRun(FLOOR_INTAKE_SPEED_BACKWARD));
-		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new ToggleFloorIntakeOperation());
+		//new GamepadLeftTrigger(operatorPad).whenActive(new ToggleHopper());
+		new GamepadRightTrigger(operatorPad).whileActive(new TestGearIntake());
+		//new JoystickButton(operatorPad, Gamepad.leftBumper).whileActive(new FloorIntakeRun(FLOOR_INTAKE_SPEED_BACKWARD));
+		//new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new ToggleFloorIntakeOperation());
 
 		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunSpinner(SPINNER_SPEED_NORMAL));
 		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunSpinner(SPINNER_SPEED_BACKWARD));
@@ -164,8 +159,8 @@ public class OI {
 
 		new DPadUp(operatorPad).whenActive(new LiftTractionPlates());
 		new DPadDown(operatorPad).whenActive(new DropTractionPlates());
-		new DPadLeft(operatorPad).whenActive(new ToggleHighIntakePosition());
-		new DPadRight(operatorPad).whileActive(new HighIntakeRun(HIGH_INTAKE_SPEED_NORMAL));
+		//new DPadLeft(operatorPad).whenActive(new ToggleHighIntakePosition());
+		//new DPadRight(operatorPad).whileActive(new HighIntakeRun(HIGH_INTAKE_SPEED_NORMAL));
 
 		
 		//
@@ -173,24 +168,11 @@ public class OI {
 		//
 		SmartDashboard.putData("tractionFeetRetract", new tractionRetract());
 		SmartDashboard.putData("tractionFeetDeploy", new tractionDeploy());
-		SmartDashboard.putData("floorIntakeRetract", new floorRetract());
-		SmartDashboard.putData("floorIntakeExtend", new floorExtend());
-		SmartDashboard.putData("highIntakeRetract", new highRetract());
-		SmartDashboard.putData("highIntakeExtend", new highExtend());
-		SmartDashboard.putData("gearCatchUp", new gearUp());
-		SmartDashboard.putData("gearCatchDown", new gearDown());
-		SmartDashboard.putData("gearClawHold", new gearHold());
-		SmartDashboard.putData("gearClawRelease", new gearRelease());
-		SmartDashboard.putData("hopperContract", new hopperContract());
-		SmartDashboard.putData("hopperExpand", new hopperExpand());
-		SmartDashboard.putData("pusherBarsRetract", new pusherRetract());
-		SmartDashboard.putData("pusherBarsExtend", new pusherExtend());
 
 		SmartDashboard.putData("Run Shooter", new RunShooter(0.1));
 		SmartDashboard.putData("Test Shooter Belt", new TestBelt());
 		SmartDashboard.putData("Test Shooter Spinner", new TestSpinner());
 		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
-		SmartDashboard.putData("Test Floor Intake", new TestFloorIntake());
 		SmartDashboard.putData("Zero Encoders", new ResetEncoders());
 		SmartDashboard.putData("Test Auto Climb", new AutoClimb());
 		SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());

@@ -1,16 +1,14 @@
-package org.usfirst.frc3467.subsystems.HighIntake;
+package org.usfirst.frc3467.subsystems.GearCatcher;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
 /**
  *
  */
-public class ToggleHighIntakePosition extends CommandBase {
+public class TestGearIntake extends CommandBase {
 
-	private static boolean ACTUATE = false;
-	
-    public ToggleHighIntakePosition() {
-    	requires(hi_intake);
+    public TestGearIntake() {
+        requires(gearcatch);
     }
 
     // Called just before this Command runs the first time
@@ -19,23 +17,17 @@ public class ToggleHighIntakePosition extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(ACTUATE){
-    		hi_intake.hiIntakeExtend();
-    		ACTUATE = true;
-    	}
-    	else {
-    		hi_intake.hiIntakeRetract();
-    		ACTUATE = false;
-    	}
+    	gearcatch.runGearIntake(.4);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	gearcatch.runGearIntake(0);
     }
 
     // Called when another command which requires one or more of the same

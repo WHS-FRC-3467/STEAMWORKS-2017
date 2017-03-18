@@ -1,5 +1,9 @@
 package org.usfirst.frc3467.subsystems.GearCatcher;
 
+import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -8,7 +12,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class GearCatcher extends Subsystem {
 
 	boolean catcherState = true; // true = up
-	boolean clawState = true; // true = closed
+	
+	private Victor gearIntake = new Victor(2);  //change later
+	private DigitalInput gearIn = new DigitalInput(1);
 	
     public void initDefaultCommand() {
     }
@@ -21,12 +27,19 @@ public class GearCatcher extends Subsystem {
     	catcherState = newState;
     }
 
-    public boolean getClawState() {
-    	return clawState;
+    public void runGearIntake(double speed)
+    {
+    	gearIntake.set(speed);
     }
     
-    public void setClawState(boolean newState) {
-    	clawState = newState;
+    public boolean getState()
+    {
+    	return gearIn.get();
+    }    
+    
+    public void count(int counts) {
+    	for (int i = 0; i < counts; i ++){
+    	}
     }
 }
 
