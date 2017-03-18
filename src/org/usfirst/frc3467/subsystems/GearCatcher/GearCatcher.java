@@ -36,10 +36,5 @@ public class GearCatcher extends Subsystem {
     {
     	return gearIn.get();
     }    
-    
-    public void count(int counts) {
-    	for (int i = 0; i < counts; i ++){
-    	}
-    }
 }
 

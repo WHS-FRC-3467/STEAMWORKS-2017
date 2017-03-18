@@ -20,9 +20,8 @@ public class GearOut extends CommandBase {
     protected void execute() {
     	gearcatch.setCatcherState(true);
     	if(isTimedOut()){
-    		gearcatch.runGearIntake(-.5);
-    		gearcatch.count(3000);
-    		end();
+    		if(super.timeSinceInitialized() <= .5)
+    			gearcatch.runGearIntake(.5);
     	}
     }
 
