@@ -1,5 +1,7 @@
 package org.usfirst.frc3467.subsystems.GearCatcher;
 
+import org.usfirst.frc3467.robot.RobotMap;
+
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -13,8 +15,8 @@ public class GearCatcher extends Subsystem {
 
 	boolean catcherState = true; // true = up
 	
-	private Victor gearIntake = new Victor(2);  //change later
-	private DigitalInput gearIn = new DigitalInput(1);
+	private Victor gearIntake = new Victor(RobotMap.gearIntake_Victor);
+	private DigitalInput gearIn = new DigitalInput(RobotMap.gearTransistor);
 	
     public void initDefaultCommand() {
     }
