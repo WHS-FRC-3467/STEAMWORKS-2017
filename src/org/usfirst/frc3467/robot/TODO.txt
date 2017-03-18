@@ -1,10 +1,21 @@
 Spec Climber code
 Implement Climber code
 
-Remove unneeded Subsystems
+Test gear catcher
 
+Test shooter speed control
+
+Test gyro
+Test robot with two gyros
+
+Vision tracking
+Test Vision
+
+Make autonomous commands 
 Clean up Autonomous drive code
+Test Auto
 
 New Gamepad mappings
+New port mappings (solenoids and gear motor)
 
 
