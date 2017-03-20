@@ -4,11 +4,9 @@ package org.usfirst.frc3467.subsystems.DriveBase;
 import org.usfirst.frc3467.robot.PIDF_CANTalon;
 import org.usfirst.frc3467.robot.RobotMap;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
-
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

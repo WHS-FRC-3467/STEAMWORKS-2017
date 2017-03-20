@@ -8,20 +8,22 @@ import org.usfirst.frc3467.robot.CommandBase;
 public class GearOut extends CommandBase {
 
     public GearOut() {
+    	requires(pneumatics);
     	requires(gearcatch);
-    	setTimeout(.2);
+    	setTimeout(1);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	gearcatch.catcherDown();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	gearcatch.setCatcherState(true);
     	if(isTimedOut()){
-    		if(super.timeSinceInitialized() <= .5)
-    			gearcatch.runGearIntake(.5);
+    		gearcatch.runGearIntake(-.3);
+    		if(super.timeSinceInitialized() <= 5)
+    			gearcatch.runGearIntake(0);
     	}
     }
 
