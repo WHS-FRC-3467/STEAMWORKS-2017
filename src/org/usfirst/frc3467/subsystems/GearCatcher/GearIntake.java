@@ -10,28 +10,27 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GearIntake extends CommandBase {
 
     public GearIntake() {
+    	requires(pneumatics);
         requires(gearcatch);
+        setTimeout(5);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	gearcatch.catcherDown();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(gearcatch.getCatcherState()== false){
-    		gearcatch.setCatcherState(true);
-    	}
-    	gearcatch.runGearIntake(-.5);
-    	if(gearcatch.getState() == true){
-    		gearcatch.setCatcherState(false);
-    		end();
+    	gearcatch.runGearIntake(.3);
+    	if(gearcatch.getState()){
+    		gearcatch.catcherUp();
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
