@@ -45,15 +45,16 @@ Y & B Buttons - Climb
 X Button - "Zero" the Gyro
 	- Save current setting as offset, and subtract from all subsequent readings.
 			
-LB(Left Bumper) GearIntake Down 		(whenActive)
-		Gear intake down; roller running in
+LB(Left Bumper) Gear Catcher Down 		(whenActive)
+		Gear Catcher down; roller running in
 		When beam break indicates gear in, pause momentarily and then lift gear and stop roller at time TBD
+		Possibly use current sensing to stop roller?
 	
-RB(Right Bumper) GearIntake Up			(whenActive)
-		Gear intake up; roller not running
+RB(Right Bumper) Gear Catcher Up			(whenActive)
+		Lift Gear Catcher up; turn off roller
 	
 RT(Right Trigger) Gear Hang 		(whenActive)
-		Gear intake - down slow and run out (timing TBD)
+		Gear Catcher - lower slowly (use air flow control) and run roller out (timing TBD)
 
 Start Button - Switch between Speed and Voltage drive mode
 	

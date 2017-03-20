@@ -1,15 +1,22 @@
 Spec Climber code
 Implement Climber code
 
+Finish Gear Catcher code
 Test gear catcher
+Implement current sensing on gear catcher? (use CANTalon or read PDP)
 
+Test shooter conveyor belt speed
 Test shooter speed control
 
-Test gyro
+Implement two-gyro code
+Test single gyro
 Test robot with two gyros
 
-Vision tracking
-Test Vision
+Vision tracking:
+Implement two Pixy setup
+Fix frame-processing algorithm
+Test Shooter Vision
+Test Gear Vision
 
 Make autonomous commands 
 Clean up Autonomous drive code
@@ -18,4 +25,4 @@ Test Auto
 New Gamepad mappings
 New port mappings (solenoids and gear motor)
 
-
+Confirm initial setting of traction feet (I think the code has them extended to start? Or else the variable names for the ports are backwards;-) (Mr. K)

@@ -87,9 +87,8 @@ public class OI {
 	//Method that binds certain commands to certain buttons
 	public void BindCommands() {
 		
-		final double FLOOR_INTAKE_SPEED_NORMAL = 0.2;
-		final double FLOOR_INTAKE_SPEED_BACKWARD = -0.2;
-		final double HIGH_INTAKE_SPEED_NORMAL = 0.2;
+		final double GEAR_INTAKE_SPEED_NORMAL = 0.2;
+		final double GEAR_INTAKE_SPEED_BACKWARD = -0.2;
 
 		final double SPINNER_SPEED_NORMAL = 0.3;
 		final double SPINNER_SPEED_BACKWARD = -0.3;
