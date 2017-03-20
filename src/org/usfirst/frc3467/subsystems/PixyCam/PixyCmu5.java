@@ -1,4 +1,3 @@
-
 package org.usfirst.frc3467.subsystems.PixyCam;
 
 import java.util.Arrays;
@@ -6,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TimerTask;
 
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -124,7 +124,6 @@ public class PixyCmu5 implements PIDSource
           }
           this.m_pixy = pixy;
         }
-
         @Override
         public void run() {
         	m_pixy.getFrames();
@@ -146,7 +145,7 @@ public class PixyCmu5 implements PIDSource
     	m_i2cbus = new I2C(I2C.Port.kMXP, getI2CAddress());
     	m_currentframes = new LinkedList<PixyFrame>();
     	m_zeroBuffer = new byte [DATA_SIZE];
-    	Arrays.fill(m_zeroBuffer, (byte)0);    	
+    	Arrays.fill(m_zeroBuffer, (byte)0);
     }
     
 	/**
@@ -282,7 +281,7 @@ public class PixyCmu5 implements PIDSource
     			readBuffer_char += Integer.toString(readBuffer[idx] & 0xFF) + " ";
     		}
     		// Print the raw buffer to the console
-    		//System.out.println(readBuffer_char);
+    		System.out.println(readBuffer_char);
     	}
     	
     	/* 
@@ -299,9 +298,10 @@ public class PixyCmu5 implements PIDSource
 	     * 10, 11   y              width of object
 	     * 12, 13   y              height of object
     	 */
-    	for(int idx = 0; idx < readBuffer.length - 18; idx++ ) 
+    	boolean frameFound = false;
+		int startIdx = 0;
+    	for (int idx = 0; idx < readBuffer.length - 18; idx++ ) 
     	{
-    		//System.out.println(readBuffer.length);
     		/*
     		 * The Pixy sends the data in Little Endian format [https://en.wikipedia.org/wiki/Endianness]
 	    	 *  with the data packed in 16 bit integers (4 hex digits each) [0xFF]. Little Endian format 
@@ -313,13 +313,22 @@ public class PixyCmu5 implements PIDSource
     		if( !( (((readBuffer[idx+1] << 8) | readBuffer[idx] ) & 0xFFFF) == PIXY_START_WORD  ))
     		{
     			// If this word wasn't found, cancel executing the rest of the loop iteration and move to the next byte
+    			System.out.println("Bad Word 1: " + Integer.toString(readBuffer[idx] & 0xFF) + " " + Integer.toString(readBuffer[idx+1] & 0xFF));
     			continue; 
     		}
-    		
-    		if( !( (((readBuffer[idx+3] << 8) | readBuffer[idx+2] ) & 0xFFFF)  == PIXY_START_WORD ))
-    		{    			// If this word wasn't found, cancel executing the rest of the loop iteration and move to the next byte
-    			continue;
+    		startIdx = idx + 2;
+  
+    		// Only get a double 0xAA55 at the beginning of the block
+    		if (!frameFound) {
+    	  		if( !( (((readBuffer[idx+3] << 8) | readBuffer[idx+2] ) & 0xFFFF)  == PIXY_START_WORD ))
+        		{
+        			// If this word wasn't found, cancel executing the rest of the loop iteration and move to the next byte
+        			System.out.println("Bad Word 2");
+        			continue;
+        		}
+    	  		startIdx = idx +4;
     		}
+    		frameFound = true;
     		
     		/* If we make it this far, we found two instances of 0xaa55 back-to-back which means that the next 14 bytes
     		 * make up the data for the frame. Create a new instance of the Frame class (which acts as a structure) and start 
@@ -333,7 +342,6 @@ public class PixyCmu5 implements PIDSource
     		 */
         	PixyFrame tempFrame = new PixyFrame();
     		
-    		int startIdx = idx+4;
     		tempFrame.checksum = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
     		tempFrame.signature = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
     		tempFrame.xCenter = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
@@ -342,7 +350,7 @@ public class PixyCmu5 implements PIDSource
     		tempFrame.height = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
     		tempFrame.area = tempFrame.height * tempFrame.width;
     		tempFrame.timestamp = m_lastupdate;
-    		idx = startIdx;
+    		idx = startIdx -1; // Subtract one because for loop will increment idx next time around
     		
     		// Concatenate the data in Frame into a string and print to the console
     		if(flg_debug)
@@ -587,6 +595,8 @@ public class PixyCmu5 implements PIDSource
     {
     	return frame.yCenter - PixyCmu5.PIXY_Y_CENTER;
     }
+    
+    
     /**
      * Returns the number of degrees along the horizontal axis the detected object is away from the center
      * $
@@ -597,10 +607,12 @@ public class PixyCmu5 implements PIDSource
     {
     	return xCenterDelta(frame)*PIXY_X_DEG_PER_PIXEL;
     }
+    
     public static double degreesYFromCenter(PixyFrame frame)
     {
     	return yCenterDelta(frame)*PIXY_Y_DEG_PER_PIXEL;
     }
+    
     
     /**************************************************************
      * 

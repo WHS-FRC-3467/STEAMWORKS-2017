@@ -11,7 +11,7 @@ public class TestBelt extends CommandBase {
 	double speed;
 
     public TestBelt() {
-
+        requires(shooter);
     	SmartDashboard.putNumber("Set Belt Speed", .1);
     }
 

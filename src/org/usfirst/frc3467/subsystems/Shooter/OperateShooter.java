@@ -12,10 +12,9 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class OperateShooter extends CommandBase {
 
-	static final double HI_INTAKE_SPEED = 0.2;
-	static final double FLOOR_INTAKE_SPEED = 0.2;
 	static final double MAX_SPINNER_SPEED = 0.4;
 	static final double MAX_BELT_SPEED = -0.6;
+	static final double DEFAULT_SHOOTER_SPEED = 0.5;
 	
 	// Time to continue running shooter wheels after no more user input  
 	static final double SECONDS_TIMEOUT = 10.0;
@@ -41,14 +40,13 @@ public class OperateShooter extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	shooter.BeltRun(MAX_BELT_SPEED);
 
         // Run shooter wheels under Velocity Control
-    	double shooterVelocity = .5;
+    	double shooterVelocity = DEFAULT_SHOOTER_SPEED;
     	
     	try {
 			// Get distance to target
-    		double distance = pixyCam.getBoilerDistance();
+    		double distance = pixyCamShooter.getBoilerDistance();
     		
         	// Convert distance to velocity
         	// shooterVelocity = fn(distance);
@@ -57,6 +55,7 @@ public class OperateShooter extends CommandBase {
     		// Can't get distance; keep ShooterVelocity at default value
     	}
      	
+    	shooter.BeltRun(MAX_BELT_SPEED);
     	shooter.ShooterRun(shooterVelocity);    	
 
         // Look for Left Trigger activation
@@ -68,8 +67,8 @@ public class OperateShooter extends CommandBase {
     		// Drop traction plates
     		//driveBase.tractionExtend();
 
-    		// Run conveyor and spinner at speed determined by Left Trigger movement (0.0 -> 1.0)
-        	shooter.SpinnerRun(MAX_SPINNER_SPEED);
+    		// Run spinner at speed determined by Left Trigger movement (0.0 -> 1.0)
+        	shooter.SpinnerRun(leftTrigger * MAX_SPINNER_SPEED);
 
         	// Tell the timer that we are still working
         	timeOutTimer.reset();
@@ -91,15 +90,13 @@ public class OperateShooter extends CommandBase {
     protected void end() {
     	shooter.SpinnerRun(0.0);
     	shooter.BeltRun(0.0);
-    	shooter.ShooterStop(
-    			);
+    	shooter.ShooterStop();
     	timeOutTimer.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	// This should never be called if interruptible is false
     	end();
     }
     

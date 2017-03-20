@@ -9,7 +9,7 @@ public class displayPixyData extends CommandBase {
 
     public displayPixyData() {
         // Use requires() here to declare subsystem dependencies
-        requires(pixyCam);
+        requires(pixyCamShooter);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +19,7 @@ public class displayPixyData extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 
-    	pixyCam.detectTarget();
+    	pixyCamShooter.detectTarget();
     }
 
     // Make this return true when this Command no longer needs to run execute()
