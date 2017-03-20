@@ -24,7 +24,7 @@ public class AutoGear extends CommandBase{
 	}
 
 	public AutoGear(double defaultTargetDistance) {
-		requires(pixyCam);
+		requires(pixyCamGear);
 		requires(driveBase);
 		
 		targetDistance = defaultTargetDistance;
@@ -49,8 +49,8 @@ public class AutoGear extends CommandBase{
 	}
 	
 	protected void execute(){
-		double distance = pixyCam.getBoilerLocationData()[0];
-		double angle = pixyCam.getBoilerLocationData()[1];
+		double distance = pixyCamGear.getBoilerLocationData()[0];
+		double angle = pixyCamGear.getBoilerLocationData()[1];
 		double sidewaysMove = 0;
 		if(side == 0){
 			double insideAngle1 = angle + 90 + gyro.getAngle();

@@ -25,7 +25,7 @@ public class AutoAim extends CommandBase {
 	
 	public AutoAim(double targDist) {
 		requires(driveBase);
-		requires(pixyCam);
+		requires(pixyCamShooter);
 
 		targetDistance = targDist;
 		
@@ -41,7 +41,7 @@ public class AutoAim extends CommandBase {
 
     	double [] pixyData = {0.0, 0.0, 0.0};
 		try {
-    		pixyData = pixyCam.getBoilerLocationData();
+    		pixyData = pixyCamShooter.getBoilerLocationData();
     	} catch (NoTargetException ex) {
     		// No target found
     		// Need to do something to try to find target

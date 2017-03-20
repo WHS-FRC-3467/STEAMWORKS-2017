@@ -9,7 +9,6 @@ import org.usfirst.frc3467.subsystems.Climber.Climber;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
 import org.usfirst.frc3467.subsystems.Gyro.Gyro;
-import org.usfirst.frc3467.subsystems.LIDAR.LIDAR;
 import org.usfirst.frc3467.subsystems.PixyCam.PixyCam;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 import org.usfirst.frc3467.subsystems.Shooter.Shooter;
@@ -23,15 +22,13 @@ public abstract class CommandBase extends Command {
 	public static DriveBase driveBase;
 	public static GearCatcher gearcatch;
 	public static Gyro gyro;
-	public static LIDAR lidar;
-	public static PixyCam pixyCam;
+	public static PixyCam pixyCamShooter;
+	public static PixyCam pixyCamGear;
 	public static Pneumatics pneumatics;
 	public static Shooter shooter;
-
 	
 	// Create vector with subsystems as elements for global subsystem commands
 	public static Vector <Subsystem> subsystemList;
-	
 	
 	public static void init() {
 
@@ -55,14 +52,14 @@ public abstract class CommandBase extends Command {
 		subsystemList.addElement(gearcatch);
 		gyro = new Gyro();
 		subsystemList.addElement(gyro);
-		//lidar = new LIDAR();
-		//subsystemList.addElement(lidar);
-		pixyCam = new PixyCam();
-		subsystemList.addElement(pixyCam);
 		shooter = new Shooter();
 		subsystemList.addElement(shooter);
+		pixyCamShooter = new PixyCam();
+		subsystemList.addElement(pixyCamShooter);
+		pixyCamGear = new PixyCam();
+		subsystemList.addElement(pixyCamGear);
 		
-		//Initial Commands
+		//Initialize Operator Interface Commands
 		oi = new OI();
 		oi.BindCommands();	
 	}

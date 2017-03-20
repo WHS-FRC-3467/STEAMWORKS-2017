@@ -9,9 +9,13 @@ package org.usfirst.frc3467.robot;
  */
 public class RobotMap {
 	
-	// Pneumatics
-	public static final int pneumatics_sensor_port = 1;
+	// Analog Ports 
+	public static final int pneumatics_sensor_port = 1;	//Pneumatics pressure sensor (not pressure switch!)
 
+	// Digital Ports
+	public static final int gearTransistor = 1; 	// Input for gear sensing transistor in gear pickup
+
+	
 	//
 	// CANTalons - CAN Control
 	//
@@ -34,7 +38,7 @@ public class RobotMap {
 	// Shooter - Contact Wheels
 	public static final int shooterWheel_Talon1 = 9; //top wheel
 	public static final int shooterWheel_Talon2 = 10; //bottom wheel
-	public static final int shooterConv_Talon3 = 11;
+	public static final int shooterConv_Talon3 = 11; // tower conveyor belt
 	
 	//
 	// VICTORS - PWM Control
@@ -49,20 +53,19 @@ public class RobotMap {
 	// SERVOS - PWM Control
 	//
 	public static final int climberLatch_Servo = 3;
-	public static final int gearTransistor = 1;
 	
 	// SOLENOIDS
+
+	// Traction
+	public static final int traction_solenoid_retract = 0;
+	public static final int traction_solenoid_deploy = 3;
 
 	// Floor Intake
 	public static final int gearintake_solenoid_retract = 1;
 	public static final int gearintake_solenoid_extend = 4;
 	
-	// Traction
-	public static final int traction_solenoid_retract = 0;
-	public static final int traction_solenoid_deploy = 3;
-
-	// Pushers 
-	public static final int pusher_solenoid = 0;
-	//public static final int pusher_solenoid_extend = 5;
+	// Extra 
+	public static final int extra_solenoid_retract = 2;
+	public static final int extra_solenoid_extend = 5;
 	
 }

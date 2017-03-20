@@ -28,23 +28,21 @@ import org.usfirst.frc3467.robot.commands.Autonomous.JustDrive;
 public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
-	//Command JUSTDRIVE;
-
 	SendableChooser autoChooser;
 	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() {
+	public void robotInit() {
+
 		// Start the FieldCamera
 		new FieldCamera();
         
 		// Initialize all subsystems
 		CommandBase.init();	
     	
-    	// Add autonomous selector
-		
+		// Add autonomous selector
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("Go Straight", new StraightDrive());
 		//autoChooser.addDefault("Default Auto", new ExampleCommand());
@@ -71,7 +69,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		autonomousCommand = (Command)autoChooser.getSelected();
-		SmartDashboard.putString("Selected Autonomous Mode", autonomousCommand.toString());
+		if (autonomousCommand != null)
+			SmartDashboard.putString("Selected Autonomous Cmd", autonomousCommand.toString());
 	}
 
     public void autonomousInit() {

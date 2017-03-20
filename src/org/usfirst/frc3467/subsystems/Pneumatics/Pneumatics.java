@@ -37,8 +37,7 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	 * the instance static member variable.
 	 */
 	protected Pneumatics() {
-		instance = this;
-		
+				
 		scorpionCompressor = new Compressor();
 		pressureSensor = new AnalogInput(RobotMap.pneumatics_sensor_port);
 
