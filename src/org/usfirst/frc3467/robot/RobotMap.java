@@ -39,11 +39,8 @@ public class RobotMap {
 	//
 	// VICTORS - PWM Control
 	//
-	// Floor Intake
-	public static final int floorIntake_Victor = 0;
-	
-	// High Intake
-	public static final int highIntake_Victor = 1;
+	// Gear Intake
+	public static final int gearIntake_Victor = 0;
 	
 	// Shooter - Spinner
 	public static final int shooterSpin_Victor = 2;
@@ -52,43 +49,17 @@ public class RobotMap {
 	// SERVOS - PWM Control
 	//
 	public static final int climberLatch_Servo = 3;
+	public static final int gearTransistor = 1;
 	
-	// SOLENOIDS - Module 1
-	
-	public static final int hopper_module = 2;
-	public static final int highintake_module = 1;
-	public static final int floorintake_module = 1;
-	public static final int traction_module = 1;
-	
-	// Hopper 
-	public static final int hopper_solenoid_contract = 3;
-	public static final int hopper_solenoid_expand = 4;
-
-	// High Intake
-	public static final int highintake_solenoid_retract = 6;
-	public static final int highintake_solenoid_extend = 1;
+	// SOLENOIDS
 
 	// Floor Intake
-	public static final int floorintake_solenoid_retract = 7;
-	public static final int floorintake_solenoid_extend = 2;
+	public static final int gearintake_solenoid_retract = 1;
+	public static final int gearintake_solenoid_extend = 4;
 	
 	// Traction
-	public static final int traction_solenoid_retract = 4;
+	public static final int traction_solenoid_retract = 0;
 	public static final int traction_solenoid_deploy = 3;
-
-	// SOLENOIDS - Module 2
-
-	public static final int gearcatch_module = 1;
-	public static final int gearclaw_module = 2;
-	public static final int pusher_module = 2;
-
-	// GearCatcher
-	public static final int gearcatch_solenoid__up = 5;
-	public static final int gearcatch_solenoid__down = 0;
-	
-	// GearClaw
-	public static final int gearclaw_solenoid__hold = 2;
-	public static final int gearclaw_solenoid__release = 5;
 
 	// Pushers 
 	public static final int pusher_solenoid = 0;

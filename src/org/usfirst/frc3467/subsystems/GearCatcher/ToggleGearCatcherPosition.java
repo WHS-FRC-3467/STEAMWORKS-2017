@@ -23,9 +23,9 @@ public class ToggleGearCatcherPosition extends CommandBase {
     	boolean isUp = gearcatch.getCatcherState();
     	
     	if (isUp == true)
-    		pneumatics.gearCatchDown();
+    		pneumatics.gearIntakeDown();
     	else
-    		pneumatics.gearCatchUp();
+    		pneumatics.gearIntakeUp();
 
     	gearcatch.setCatcherState(!isUp);
     	SmartDashboard.putString("Gear Catcher Position", isUp ? "UP" : "DOWN");

@@ -7,7 +7,10 @@ import org.usfirst.frc3467.robot.CommandBase;
  */
 public class Turn extends CommandBase {
 
-    public Turn() {
+	private int DEGREES;
+	
+    public Turn(int degrees) {
+    	DEGREES = degrees;
         requires(driveBase);
     }
 
@@ -17,7 +20,7 @@ public class Turn extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	driveBase.driveArcade(0, 90);
+    	driveBase.driveArcade(0, DEGREES);
     }
 
     // Make this return true when this Command no longer needs to run execute()

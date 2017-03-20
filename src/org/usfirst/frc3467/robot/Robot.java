@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
 		// Scheduler can continue to run while robot is disabled
 		Scheduler.getInstance().run();
 		
-		//autonomousCommand = (Command)autoChooser.getSelected();
+		autonomousCommand = (Command)autoChooser.getSelected();
 		SmartDashboard.putString("Selected Autonomous Mode", autonomousCommand.toString());
 	}
 

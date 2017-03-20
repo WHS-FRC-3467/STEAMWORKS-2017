@@ -31,18 +31,6 @@ import org.usfirst.frc3467.subsystems.GearCatcher.GearOut;
 import org.usfirst.frc3467.subsystems.GearCatcher.TestGearIntake;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorExtend;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.floorRetract;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearDown;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearHold;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearRelease;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.gearUp;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.highExtend;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.highRetract;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.hopperContract;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.hopperExpand;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.pusherExtend;
-import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.pusherRetract;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionDeploy;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
 import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
@@ -52,14 +40,6 @@ import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
 import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
-
-
-
-
-
-
-//import edu.wpi.first.wpilibj.Joystick;
-//import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
