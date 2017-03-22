@@ -141,7 +141,7 @@ public class DriveBase extends Subsystem {
 		//lTalon1.reverseSensor(true);
 		//rTalon1.reverseSensor(true);
 		
-		// All drive Talons should coast
+		// All drive Talons should brake
 		lTalon1.enableBrakeMode(true);
 		rTalon1.enableBrakeMode(true);
 		cTalon1.enableBrakeMode(true);

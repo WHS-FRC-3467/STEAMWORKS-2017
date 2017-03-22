@@ -23,7 +23,7 @@ public abstract class CommandBase extends Command {
 	public static GearCatcher gearcatch;
 	public static Gyro gyro;
 	public static PixyCam pixyCamShooter;
-	public static PixyCam pixyCamGear;
+	//public static PixyCam pixyCamGear;
 	public static Pneumatics pneumatics;
 	public static Shooter shooter;
 	
@@ -56,8 +56,8 @@ public abstract class CommandBase extends Command {
 		subsystemList.addElement(shooter);
 		pixyCamShooter = new PixyCam();
 		subsystemList.addElement(pixyCamShooter);
-		pixyCamGear = new PixyCam();
-		subsystemList.addElement(pixyCamGear);
+		//pixyCamGear = new PixyCam();
+		//subsystemList.addElement(pixyCamGear);
 		
 		//Initialize Operator Interface Commands
 		oi = new OI();

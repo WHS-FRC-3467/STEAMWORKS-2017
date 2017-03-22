@@ -15,6 +15,7 @@ public class TestShooter extends CommandBase {
 	public TestShooter() {
         requires(shooter);
     	SmartDashboard.putNumber("Set Shooter Speed", .1);
+    	SmartDashboard.putNumber("Set Belt Speed", -.3);
     }
 
     // Called just before this Command runs the first time
@@ -25,6 +26,8 @@ public class TestShooter extends CommandBase {
     protected void execute() {
     	speed = SmartDashboard.getNumber("Set Shooter Speed", .1);
     	shooter.ShooterRun(speed);
+    	speed = SmartDashboard.getNumber("Set Belt Speed", -.3);
+    	shooter.BeltRun(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,6 +38,7 @@ public class TestShooter extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
     	shooter.ShooterStop();
+    	shooter.BeltRun(0.0);
     }
 
     // Called when another command which requires one or more of the same

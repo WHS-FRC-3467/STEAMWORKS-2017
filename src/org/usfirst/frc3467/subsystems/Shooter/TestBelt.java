@@ -12,7 +12,7 @@ public class TestBelt extends CommandBase {
 
     public TestBelt() {
         requires(shooter);
-    	SmartDashboard.putNumber("Set Belt Speed", .1);
+    	SmartDashboard.putNumber("Set Belt Speed", -.3);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,7 @@ public class TestBelt extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-    	speed = SmartDashboard.getNumber("Set Belt Speed", .1);
+    	speed = SmartDashboard.getNumber("Set Belt Speed", -.3);
     	shooter.BeltRun(speed);
     }
 
