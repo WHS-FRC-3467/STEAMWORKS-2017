@@ -20,8 +20,8 @@ public class Gyro extends Subsystem {
 
 	public Gyro() {
     	imu = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER, Port.kOnboard, BNO055.BNO055_ADDRESS_A);
-
-    	//gyro2 = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER, Port.kOnboard, BNO055.BNO055_ADDRESS_B);
+    	gyro2 = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER, Port.kOnboard, BNO055.BNO055_ADDRESS_B);
+    	
     	gyro1DIO = new DigitalOutput(0);
 	}
 	
