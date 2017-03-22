@@ -44,7 +44,7 @@ public class RobotMap {
 	// VICTORS - PWM Control
 	//
 	// Gear Intake
-	public static final int gearIntake_Victor = 2; //change to 5
+	public static final int gearIntake_Victor = 5; //change to 5
 	
 	// Shooter - Spinner
 	public static final int shooterSpin_Victor = 6;
