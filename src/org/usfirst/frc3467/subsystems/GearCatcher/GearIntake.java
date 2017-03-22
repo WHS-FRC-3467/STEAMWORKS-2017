@@ -2,41 +2,41 @@ package org.usfirst.frc3467.subsystems.GearCatcher;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 /**
  *
  */
 public class GearIntake extends CommandBase {
 
+	boolean gearHeld = false;
+	
     public GearIntake() {
         requires(gearcatch);
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
+        // Make sure the catcher is down before we try to intake a gear
+    	gearcatch.catcherDown();
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    // Run gear intake as long as we aren't holding a gear
     protected void execute() {
-    	if(gearcatch.getCatcherState()== false){
-    		gearcatch.setCatcherState(true);
-    	}
-    	gearcatch.runGearIntake(-.5);
-    	if(gearcatch.getState() == true){
-    		gearcatch.setCatcherState(false);
-    		end();
+
+    	if(!gearcatch.isGearHeld()) {
+        	gearcatch.runGearIntake(gearcatch.GEAR_INTAKE_SPEED);
+    	} else {
+        	gearcatch.runGearIntake(0.0);
+    		gearHeld = true;
     	}
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    // Finish once we are holding a gear
     protected boolean isFinished() {
-        return false;
+        return gearHeld;
     }
 
-    // Called once after isFinished returns true
+    // Stow gear catcher (and hopefully a gear!)
     protected void end() {
-    	gearcatch.runGearIntake(0);
+    	gearcatch.catcherUp();
     }
 
     // Called when another command which requires one or more of the same

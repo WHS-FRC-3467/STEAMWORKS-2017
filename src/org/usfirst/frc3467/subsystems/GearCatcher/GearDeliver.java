@@ -3,31 +3,31 @@ package org.usfirst.frc3467.subsystems.GearCatcher;
 import org.usfirst.frc3467.robot.CommandBase;
 
 /**
- *
+ * GearDelivery - assumes that bot has already driven the gear onto the spring 
  */
-public class GearOut extends CommandBase {
+public class GearDeliver extends CommandBase {
 
-    public GearOut() {
+    public GearDeliver() {
     	requires(gearcatch);
-    	setTimeout(.2);
+    	setTimeout(2.0);
     }
 
-    // Called just before this Command runs the first time
+    // Start by dropping the catcher down
     protected void initialize() {
+    	gearcatch.catcherDown();
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    // After 1/2 second, begin rolling gear out
     protected void execute() {
-    	gearcatch.setCatcherState(true);
-    	if(isTimedOut()){
-    		if(super.timeSinceInitialized() <= .5)
-    			gearcatch.runGearIntake(.5);
+
+		if(super.timeSinceInitialized() >= .5) {
+			gearcatch.runGearIntake(gearcatch.GEAR_OUTPUT_SPEED);
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
