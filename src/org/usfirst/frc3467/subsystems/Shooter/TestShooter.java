@@ -14,8 +14,8 @@ public class TestShooter extends CommandBase {
     		
 	public TestShooter() {
         requires(shooter);
-    	SmartDashboard.putNumber("Set Shooter Speed", .1);
-    	SmartDashboard.putNumber("Set Belt Speed", -.3);
+    	SmartDashboard.putNumber("Set Shooter Speed", Shooter.SHOOTER_SPEED_DEFAULT);
+    	SmartDashboard.putNumber("Set Belt Speed", Shooter.BELT_SPEED_DEFAULT);
     }
 
     // Called just before this Command runs the first time
@@ -24,9 +24,9 @@ public class TestShooter extends CommandBase {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	speed = SmartDashboard.getNumber("Set Shooter Speed", .1);
+    	speed = SmartDashboard.getNumber("Set Shooter Speed", Shooter.SHOOTER_SPEED_DEFAULT);
     	shooter.ShooterRun(speed);
-    	speed = SmartDashboard.getNumber("Set Belt Speed", -.3);
+    	speed = SmartDashboard.getNumber("Set Belt Speed", Shooter.BELT_SPEED_DEFAULT);
     	shooter.BeltRun(speed);
     }
 

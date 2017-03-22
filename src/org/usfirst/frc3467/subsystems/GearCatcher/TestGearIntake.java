@@ -7,8 +7,12 @@ import org.usfirst.frc3467.robot.CommandBase;
  */
 public class TestGearIntake extends CommandBase {
 
-    public TestGearIntake() {
+	double speed = gearcatch.GEAR_INTAKE_SPEED;
+	
+    public TestGearIntake(boolean intake) {
         requires(gearcatch);
+        if (!intake)
+        	speed = gearcatch.GEAR_OUTPUT_SPEED;
     }
 
     // Called just before this Command runs the first time
@@ -17,7 +21,7 @@ public class TestGearIntake extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	gearcatch.runGearIntake(.4);
+    	gearcatch.runGearIntake(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
