@@ -27,7 +27,7 @@ import org.usfirst.frc3467.subsystems.DriveBase.LiftTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.ResetEncoders;
 import org.usfirst.frc3467.subsystems.DriveBase.UpdatePIDFConstants;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearIntake;
-import org.usfirst.frc3467.subsystems.GearCatcher.GearOut;
+import org.usfirst.frc3467.subsystems.GearCatcher.GearDeliver;
 import org.usfirst.frc3467.subsystems.GearCatcher.TestGearIntake;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
@@ -37,6 +37,7 @@ import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunBelt;
 import org.usfirst.frc3467.subsystems.Shooter.RunShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
+import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
 import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
@@ -87,14 +88,6 @@ public class OI {
 	//Method that binds certain commands to certain buttons
 	public void BindCommands() {
 		
-		final double GEAR_INTAKE_SPEED_NORMAL = 0.2;
-		final double GEAR_INTAKE_SPEED_BACKWARD = -0.2;
-
-		final double SPINNER_SPEED_NORMAL = 0.3;
-		final double SPINNER_SPEED_BACKWARD = -0.3;
-		final double BELT_SPEED_NORMAL = 0.3;
-		final double BELT_SPEED_BACKWARD = -0.3;
-		
 		/*
 		 *
 		 * Driver GamePad
@@ -104,7 +97,7 @@ public class OI {
 		new GamepadLeftTrigger(driverPad).whenActive(new OperateShooter());
 		new GamepadRightTrigger(driverPad).whenActive(new ToggleGearCatcherPosition());
 		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new GearIntake());
-		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new GearOut());
+		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new GearDeliver());
 
 		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new ZeroGyro());
 		//new DoubleButton(driverPad, Gamepad.yButton, Gamepad.bButton).whenActive(new ToggleLatch);
@@ -126,15 +119,15 @@ public class OI {
 		 */
 
 		//Changed how the toggles work, may need to change back, but I want to try to see if this works
-		//new GamepadLeftTrigger(operatorPad).whenActive(new ToggleHopper());
-		new GamepadRightTrigger(operatorPad).whileActive(new TestGearIntake());
+		new GamepadLeftTrigger(operatorPad).whileActive(new TestGearIntake(true));
+		new GamepadRightTrigger(operatorPad).whileActive(new TestGearIntake(false));
 		//new JoystickButton(operatorPad, Gamepad.leftBumper).whileActive(new FloorIntakeRun(FLOOR_INTAKE_SPEED_BACKWARD));
 		//new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new ToggleFloorIntakeOperation());
 
-		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunSpinner(SPINNER_SPEED_NORMAL));
-		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunSpinner(SPINNER_SPEED_BACKWARD));
-		new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunBelt(BELT_SPEED_NORMAL));
-		new JoystickButton(operatorPad, Gamepad.aButton).whileActive(new RunBelt(BELT_SPEED_BACKWARD));
+		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunSpinner(Shooter.SPINNER_SPEED_DEFAULT));
+		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunSpinner(-1 * Shooter.SPINNER_SPEED_DEFAULT));
+		new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunBelt(Shooter.BELT_SPEED_DEFAULT));
+		new JoystickButton(operatorPad, Gamepad.aButton).whileActive(new RunBelt(-1 * Shooter.BELT_SPEED_DEFAULT));
 
 		new DPadUp(operatorPad).whenActive(new LiftTractionPlates());
 		new DPadDown(operatorPad).whenActive(new DropTractionPlates());

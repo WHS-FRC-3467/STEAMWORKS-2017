@@ -12,10 +12,6 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class OperateShooter extends CommandBase {
 
-	static final double MAX_SPINNER_SPEED = 0.4;
-	static final double MAX_BELT_SPEED = -0.6;
-	static final double DEFAULT_SHOOTER_SPEED = 0.5;
-	
 	// Time to continue running shooter wheels after no more user input  
 	static final double SECONDS_TIMEOUT = 10.0;
 	
@@ -42,7 +38,7 @@ public class OperateShooter extends CommandBase {
     protected void execute() {
 
         // Run shooter wheels under Velocity Control
-    	double shooterVelocity = DEFAULT_SHOOTER_SPEED;
+    	double shooterVelocity = Shooter.SHOOTER_SPEED_DEFAULT;
     	
     	try {
 			// Get distance to target
@@ -55,7 +51,7 @@ public class OperateShooter extends CommandBase {
     		// Can't get distance; keep ShooterVelocity at default value
     	}
      	
-    	shooter.BeltRun(MAX_BELT_SPEED);
+    	shooter.BeltRun(Shooter.BELT_SPEED_DEFAULT);
     	shooter.ShooterRun(shooterVelocity);    	
 
         // Look for Left Trigger activation
@@ -68,7 +64,7 @@ public class OperateShooter extends CommandBase {
     		//driveBase.tractionExtend();
 
     		// Run spinner at speed determined by Left Trigger movement (0.0 -> 1.0)
-        	shooter.SpinnerRun(leftTrigger * MAX_SPINNER_SPEED);
+        	shooter.SpinnerRun(leftTrigger * Shooter.SPINNER_SPEED_DEFAULT);
 
         	// Tell the timer that we are still working
         	timeOutTimer.reset();
