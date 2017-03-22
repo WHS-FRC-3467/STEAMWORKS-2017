@@ -44,10 +44,10 @@ public class RobotMap {
 	// VICTORS - PWM Control
 	//
 	// Gear Intake
-	public static final int gearIntake_Victor = 0;
+	public static final int gearIntake_Victor = 2; //change to 5
 	
 	// Shooter - Spinner
-	public static final int shooterSpin_Victor = 2;
+	public static final int shooterSpin_Victor = 6;
 	
 	//
 	// SERVOS - PWM Control
@@ -57,8 +57,8 @@ public class RobotMap {
 	// SOLENOIDS
 
 	// Traction
-	public static final int traction_solenoid_retract = 0;
-	public static final int traction_solenoid_deploy = 3;
+	public static final int traction_solenoid_retract = 2;
+	public static final int traction_solenoid_deploy = 5;
 
 	// Floor Intake
 	public static final int gearintake_solenoid_retract = 1;

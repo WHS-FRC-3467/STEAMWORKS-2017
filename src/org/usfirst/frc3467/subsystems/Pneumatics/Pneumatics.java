@@ -56,7 +56,7 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 		tractionFeet = new DoubleSolenoid(RobotMap.traction_solenoid_retract,
 										  RobotMap.traction_solenoid_deploy);
 
-		gearIntake.set(DoubleSolenoid.Value.kForward);
+		gearIntake.set(DoubleSolenoid.Value.kReverse);
 		tractionFeet.set(DoubleSolenoid.Value.kReverse);
 		
 	}
