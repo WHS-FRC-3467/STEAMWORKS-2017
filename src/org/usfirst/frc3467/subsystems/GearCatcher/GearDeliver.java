@@ -12,16 +12,16 @@ public class GearDeliver extends CommandBase {
     	setTimeout(2.0);
     }
 
-    // Start by dropping the catcher down
+    // Start by rolling the gear out
     protected void initialize() {
-    	gearcatch.catcherDown();
+		gearcatch.runGearIntake(gearcatch.GEAR_OUTPUT_SPEED);
     }
 
-    // After 1/2 second, begin rolling gear out
+    // After 1/2 second, begin lowering the gear
     protected void execute() {
 
 		if(super.timeSinceInitialized() >= .5) {
-			gearcatch.runGearIntake(gearcatch.GEAR_OUTPUT_SPEED);
+		   	gearcatch.catcherDown();
     	}
     }
 

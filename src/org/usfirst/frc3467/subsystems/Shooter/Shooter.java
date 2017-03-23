@@ -19,7 +19,7 @@ public class Shooter extends Subsystem {
     
 	public final static double SPINNER_SPEED_DEFAULT = 0.6;
 	public final static double BELT_SPEED_DEFAULT = -0.4;
-	public final static double SHOOTER_SPEED_DEFAULT = 0.7;
+	public final static double SHOOTER_SPEED_DEFAULT = 4.0;
 
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
@@ -27,7 +27,7 @@ public class Shooter extends Subsystem {
     private Victor spinnerMotor;
 
     private static final double BELT_SPEED_FACTOR = 5000.0;
-	private static final double SHOOTER_SPEED_FACTOR = 7000.0;
+	private static final double SHOOTER_SPEED_FACTOR = 10000.0;
 	
 	private double shooterF, shooterP, shooterI, shooterD;
 	private double beltF, beltP, beltI, beltD;
@@ -39,10 +39,10 @@ public class Shooter extends Subsystem {
     	shooterTalon2 = new CANTalon(RobotMap.shooterWheel_Talon2);
     	spinnerMotor = new Victor(RobotMap.shooterSpin_Victor);
     	
-    	shooterF = 0.5;
-    	shooterP = 0.08;
+    	shooterF = 0.012;
+    	shooterP = 0.4;
     	shooterI = 0.0;
-    	shooterD = 0.5;
+    	shooterD = 0.0;
     	SmartDashboard.putNumber("Shooter F", shooterF);
 	   	SmartDashboard.putNumber("Shooter P", shooterP);
     	SmartDashboard.putNumber("Shooter I", shooterI);
