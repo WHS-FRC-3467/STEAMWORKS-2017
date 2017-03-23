@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class GearCatcher extends Subsystem {
 
-	public final double GEAR_INTAKE_SPEED = 0.2;
-	public final double GEAR_OUTPUT_SPEED = -0.2;
+	public final double GEAR_INTAKE_SPEED = 0.6;
+	public final double GEAR_OUTPUT_SPEED = -0.4;
 
 	private boolean catcherState = true; // true = up
 	
@@ -36,24 +36,27 @@ public class GearCatcher extends Subsystem {
     
     public boolean isGearHeld()
     {
-    	SmartDashboard.putBoolean("Gear in? :", gearIn.get());
-    	return gearIn.get();
+    	boolean gearGot = gearIn.get();
+    	SmartDashboard.putBoolean("Gear in? :", gearGot);
+    	return gearGot;
     }   
     
 	public void catcherUp() {
 		
-		if (this.catcherState == false)
+//		if (this.catcherState == false) {
 			Pneumatics.getInstance().gearIntakeUp();
-	   	this.catcherState = true;
-    	SmartDashboard.putString("Gear Catcher Position", "UP");
+//		}
+		this.catcherState = true;
+    	SmartDashboard.putString("Gear Catcher Position", this.catcherState ? "UP" : "DOWN");
 	}
 
 	public void catcherDown() {
 
-		if (this.catcherState == true)
+//		if (this.catcherState == true) {
 			Pneumatics.getInstance().gearIntakeDown();
-	   	this.catcherState = false;
-    	SmartDashboard.putString("Gear Catcher Position", "DOWN");
+//		}
+		this.catcherState = false;
+    	SmartDashboard.putString("Gear Catcher Position", this.catcherState ? "UP" : "DOWN");
 	}
 	
 	public void toggleGearCatcherPosition() {

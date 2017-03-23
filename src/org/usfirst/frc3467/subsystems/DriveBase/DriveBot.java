@@ -79,27 +79,26 @@ public class DriveBot extends CommandBase {
 	
 	private double getX() {
 
-		return (m_lastX = adjustStick(oi.getDriveX(), m_lastX)); 
+		return (m_lastX = adjustStick(oi.getDriveX(), m_lastX, 0.20)); 
 
 	}
 
 	private double getY() {
 
-		return (m_lastY = adjustStick(oi.getDriveY(), m_lastY)); 
+		return (m_lastY = adjustStick(oi.getDriveY(), m_lastY, 0.20)); 
 
 	}
 	
 	private double getRot() {
 
-		return (m_lastRot = adjustStick(oi.getDriveRotation(), m_lastRot)); 
+		return (m_lastRot = adjustStick(oi.getDriveRotation(), m_lastRot, 0.10)); 
 
 	}
 	
-	private double adjustStick(double input, double lastVal) {
+	private double adjustStick(double input, double lastVal, double changeLimit) {
 		
 		double val = input;
 		double change;
-		final double changeLimit = 0.20;
 		
 		/*
 		 *  Deadband limit

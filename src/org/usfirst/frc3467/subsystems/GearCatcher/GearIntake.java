@@ -16,6 +16,7 @@ public class GearIntake extends CommandBase {
     protected void initialize() {
         // Make sure the catcher is down before we try to intake a gear
     	gearcatch.catcherDown();
+    	gearHeld = false;
     }
 
     // Run gear intake as long as we aren't holding a gear
@@ -37,6 +38,7 @@ public class GearIntake extends CommandBase {
     // Stow gear catcher (and hopefully a gear!)
     protected void end() {
     	gearcatch.catcherUp();
+    	gearcatch.runGearIntake(0.0);
     }
 
     // Called when another command which requires one or more of the same
