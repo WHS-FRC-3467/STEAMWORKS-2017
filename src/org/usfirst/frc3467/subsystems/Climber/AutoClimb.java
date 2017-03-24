@@ -1,12 +1,8 @@
 package org.usfirst.frc3467.subsystems.Climber;
 
 import org.usfirst.frc3467.robot.CommandBase;
-import org.usfirst.frc3467.subsystems.DriveBase.SidewaysDrive;
-
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
-
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
@@ -19,7 +15,6 @@ public class AutoClimb extends CommandBase {
    	
     public AutoClimb() {
     	requires(driveBase);
-        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
