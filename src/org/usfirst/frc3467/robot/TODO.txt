@@ -1,12 +1,63 @@
+======================================================
+Software Systems Check
+
+/*
+Initial State:
+*/
+	Gear Pickup: Stowed and off
+	Traction Feet: Retracted
+	Intake Ramp: Stowed
+	Shooter/Belt/Spinner: All off
+	Wheels: Stopped
+	Climber: Rachet Unlatched
+
+/*
+Action Tests:
+*/
+Wheels:
+	Driver Joysticks drive test
+	Check traction pads (all four corners)
+	
+	Driver DPad Down: Robot Centric (default)
+	Driver DPad Up: Field Centric
+	Driver DPad Left: Precision Mode (Robot centric @ 25% of normal)
+	Driver DPad Right: Arcade Mode (no center wheel)
+
+Gear Pickup:
+	Toggle Up/Down with Driver Right Trigger
+	Intake / Release while Operator Left/Right Bumper Held
+	Auto Pickup with Driver Left Bumper (same on Operator)
+	Auto Deliver with Driver Right Bumper (same on Operator)
+	
+Traction Feet: 
+	Deploy with Operator DPad Down;
+	Retract with Operator DPad Up;
+	Any joystick movement (X, Y, or Z) should cause retraction
+
+Intake Ramp:
+	Release using Operator DPad Right
+	
+Shooter / Belt / Spinner:
+	Start Shooter & Belt using Driver Left Trigger
+		- Left Trigger controls Spinner
+		-Timeout after 10 seconds
+		-Halt using Operator DPad Left
+		- Operator X & B run Spinner FWD & BACK (Shooter keeps running)
+		- Operator A & B run Belt UP & DOWN ( Shooter stops)
+		- Smartdash buttons also control all three and shows tuning and speed data
+
+Climber:
+	Toggle Rachet using Driver Y button 		
+	
+======================================================
+TODO TODO TODO
+
 Spec Climber code
 Implement Climber code
 
-Finish Gear Catcher code
-Test gear catcher
-Implement current sensing on gear catcher? (use CANTalon or read PDP)
+Gear hold check command (default for GearCatcher)
 
-Test shooter conveyor belt speed
-Test shooter speed control
+Test shooter conveyor belt speed & control
 
 Implement two-gyro code
 Test single gyro
@@ -15,14 +66,11 @@ Test robot with two gyros
 Vision tracking:
 Implement two Pixy setup
 Fix frame-processing algorithm
+Implement Gear Vision tracking
 Test Shooter Vision
 Test Gear Vision
 
-Make autonomous commands 
-Clean up Autonomous drive code
-Test Auto
+Make autonomous Shooter command 
 
 New Gamepad mappings
-New port mappings (solenoids and gear motor)
 
-Confirm initial setting of traction feet (I think the code has them extended to start? Or else the variable names for the ports are backwards;-) (Mr. K)

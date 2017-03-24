@@ -17,6 +17,8 @@ import org.usfirst.frc3467.subsystems.FieldCamera.FieldCamera;
 import org.usfirst.frc3467.robot.CommandBase;
 import org.usfirst.frc3467.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc3467.robot.commands.Autonomous.JustDrive;
+import org.usfirst.frc3467.robot.commands.Autonomous.GearAutoForward;
+
 	
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -44,9 +46,9 @@ public class Robot extends IterativeRobot {
     	
 		// Add autonomous selector
 		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Go Straight", new StraightDrive());
-		//autoChooser.addDefault("Default Auto", new ExampleCommand());
-		//autoChooser.addDefault("Do Nothing", new DoNothing());
+		autoChooser.addDefault("GearAutoForward", new GearAutoForward());
+		autoChooser.addObject("Go Straight", new JustDrive());
+		autoChooser.addObject("Do Nothing", new DoNothing());
 		//autoChooser.addObject("Drive Motion Magic", new DriveMotionMagic(20000.0));
 		//autoChooser.addObject("Just Drive", new DriveStraight(35000, .4));
 		//autoChooser.addObject("Sideways", new SidewaysDrive(4.0));
@@ -76,7 +78,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
 
     	// schedule the autonomous command
- 		autonomousCommand = (CommandBase) autoChooser.getSelected();
+ 		//autonomousCommand = autoChooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
     
     	SmartDashboard.putString("Robot", "Autonomous Started");

@@ -10,7 +10,7 @@ public class RunSpinner extends CommandBase {
 	private double SPEED;
 	
     public RunSpinner(double speed) {
-        requires(shooter);
+//       requires(shooter);   // Allow this to run while shooter is running
         SPEED = speed;
     }
 
