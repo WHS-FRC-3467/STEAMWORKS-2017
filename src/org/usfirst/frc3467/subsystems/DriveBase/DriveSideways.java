@@ -5,11 +5,14 @@ import org.usfirst.frc3467.robot.CommandBase;
 /**
  *
  */
-public class SidewaysDrive extends CommandBase {
+public class DriveSideways extends CommandBase {
 
-    public SidewaysDrive() {
+	double m_speed = 0.0;
+	
+    public DriveSideways(double time, double speed) {
         requires(driveBase);
-        setTimeout(5);
+        m_speed = speed;
+        setTimeout(time);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +22,7 @@ public class SidewaysDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	driveBase.driveFieldCentric(.6, 0, 0, 0);
+    	driveBase.driveFieldCentric(m_speed, 0.0, 0.0, 0.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -29,7 +32,7 @@ public class SidewaysDrive extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	driveBase.driveFieldCentric(0, 0, 0, 0);
+    	driveBase.driveFieldCentric(0.0, 0.0, 0.0, 0.0);
     }
 
     // Called when another command which requires one or more of the same

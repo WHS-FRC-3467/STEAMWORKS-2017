@@ -22,6 +22,10 @@ Wheels:
 	Driver DPad Up: Field Centric
 	Driver DPad Left: Precision Mode (Robot centric @ 25% of normal)
 	Driver DPad Right: Arcade Mode (no center wheel)
+	
+	Encoder Checks:
+		While driving forward: Left side increases, Right side decreases
+		While strafing: Going Left decreases count, going Right increases
 
 Gear Pickup:
 	Toggle Up/Down with Driver Right Trigger

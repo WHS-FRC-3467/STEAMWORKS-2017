@@ -10,7 +10,6 @@ import org.usfirst.frc3467.subsystems.Brownout.PowerConsumer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Pneumatics extends Subsystem implements PowerConsumer {

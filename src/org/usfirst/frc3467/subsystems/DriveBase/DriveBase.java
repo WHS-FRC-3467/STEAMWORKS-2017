@@ -7,7 +7,6 @@ import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -343,6 +342,7 @@ public class DriveBase extends Subsystem {
 	   *                        e^(-r/w) to get a turn radius r for wheelbase w of your robot.
 	   *                        Conversely, turn radius r = -ln(curve)*w for a given value of curve and
 	   *                        wheelbase w.
+	   *                        
 	   */
 	public void drive(double outputMagnitude, double curve) {
 	
