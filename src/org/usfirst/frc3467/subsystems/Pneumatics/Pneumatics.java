@@ -22,6 +22,7 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	// Solenoids
 	public DoubleSolenoid tractionFeet;
 	public DoubleSolenoid gearIntake;
+	public DoubleSolenoid intakeRamp;
 	
 	// Pneumatics is a singleton
 	private static Pneumatics instance = new Pneumatics();
@@ -53,23 +54,26 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 		gearIntake = new DoubleSolenoid(RobotMap.gearintake_solenoid_retract,
 										 RobotMap.gearintake_solenoid_extend);
 
-		tractionFeet = new DoubleSolenoid(RobotMap.traction_solenoid_retract,
-										  RobotMap.traction_solenoid_deploy);
+		tractionFeet = new DoubleSolenoid(RobotMap.traction_solenoid_deploy,
+										 RobotMap.traction_solenoid_retract);
+
+		intakeRamp = new DoubleSolenoid(RobotMap.intakeRamp_solenoid_retract,
+			  							RobotMap.intakeRamp_solenoid_extend);
 
 		gearIntake.set(DoubleSolenoid.Value.kForward);
 		tractionFeet.set(DoubleSolenoid.Value.kReverse);
-		
+		intakeRamp.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	/*
 	 * Custom Pneumatics Helper methods
 	 */
 		
-	public void tractionFeetRetract() {
-		tractionFeet.set(DoubleSolenoid.Value.kReverse);
-	}
 	public void tractionFeetDeploy() {
 		tractionFeet.set(DoubleSolenoid.Value.kForward);
+	}
+	public void tractionFeetRetract() {
+		tractionFeet.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public void gearIntakeUp() {
@@ -79,6 +83,12 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 		gearIntake.set(DoubleSolenoid.Value.kReverse);
 	}
 	
+	public void intakeRampRelease() {
+		intakeRamp.set(DoubleSolenoid.Value.kForward);
+	}
+	public void intakeRampHold() {
+		intakeRamp.set(DoubleSolenoid.Value.kReverse);
+	}
 	/*
 	 * Standard Pneumatics methods	
 	 */

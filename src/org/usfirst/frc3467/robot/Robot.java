@@ -47,9 +47,8 @@ public class Robot extends IterativeRobot {
 		// Add autonomous selector
 		autoChooser = new SendableChooser();
 		autoChooser.addDefault("GearAutoForward", new GearAutoForward());
-		autoChooser.addObject("Go Straight", new StraightDrive());
-		//autoChooser.addDefault("Default Auto", new ExampleCommand());
-		//autoChooser.addDefault("Do Nothing", new DoNothing());
+		autoChooser.addObject("Go Straight", new JustDrive());
+		autoChooser.addObject("Do Nothing", new DoNothing());
 		//autoChooser.addObject("Drive Motion Magic", new DriveMotionMagic(20000.0));
 		//autoChooser.addObject("Just Drive", new DriveStraight(35000, .4));
 		//autoChooser.addObject("Sideways", new SidewaysDrive(4.0));

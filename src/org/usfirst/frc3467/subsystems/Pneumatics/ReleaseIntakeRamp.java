@@ -1,40 +1,32 @@
-package org.usfirst.frc3467.subsystems.Shooter;
+package org.usfirst.frc3467.subsystems.Pneumatics;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class TestBelt extends CommandBase {
+public class ReleaseIntakeRamp extends CommandBase {
+
+	public ReleaseIntakeRamp() {
+	}
 	
-	double speed;
-
-    public TestBelt() {
-        requires(shooter);
-     	SmartDashboard.putNumber("Set Belt Speed", Shooter.BELT_SPEED_DEFAULT);
-    }
-
     // Called just before this Command runs the first time
     protected void initialize() {
     }
-
+    
     // Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-	   	speed = SmartDashboard.getNumber("Set Belt Speed", Shooter.BELT_SPEED_DEFAULT);
-    	shooter.BeltRun(speed);
+    protected void execute() {
+    	Pneumatics.getInstance().intakeRampRelease();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.BeltRun(0.0);
-    	
     }
 
     // Called when another command which requires one or more of the same
