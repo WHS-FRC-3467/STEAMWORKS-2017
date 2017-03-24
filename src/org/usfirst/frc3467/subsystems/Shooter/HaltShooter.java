@@ -20,6 +20,7 @@ public class HaltShooter extends CommandBase {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+   		driveBase.tractionRetract();
     	shooter.ShooterStop();
         shooter.BeltRun(0.0);
         shooter.SpinnerRun(0.0);

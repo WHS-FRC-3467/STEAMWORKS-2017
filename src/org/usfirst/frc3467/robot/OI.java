@@ -1,18 +1,10 @@
 package org.usfirst.frc3467.robot;
 
-/*
-import org.usfirst.frc3467.robot.triggers.DPadDown;
-import org.usfirst.frc3467.robot.triggers.DPadUp;
-import org.usfirst.frc3467.robot.triggers.GamepadLeftTrigger;
-import org.usfirst.frc3467.robot.triggers.GamepadRightTrigger;
-import org.usfirst.frc3467.subsystems.Example.ExampleCommand;
-*/
 import org.usfirst.frc3467.robot.control.Gamepad;
 import org.usfirst.frc3467.robot.control.triggers.DPadDown;
 import org.usfirst.frc3467.robot.control.triggers.DPadLeft;
 import org.usfirst.frc3467.robot.control.triggers.DPadRight;
 import org.usfirst.frc3467.robot.control.triggers.DPadUp;
-import org.usfirst.frc3467.robot.control.triggers.DoubleButton;
 import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
 import org.usfirst.frc3467.subsystems.Climber.AutoClimb;
@@ -31,8 +23,10 @@ import org.usfirst.frc3467.subsystems.GearCatcher.GearDeliver;
 import org.usfirst.frc3467.subsystems.GearCatcher.TestGearIntake;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
+import org.usfirst.frc3467.subsystems.Pneumatics.ReleaseIntakeRamp;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionDeploy;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
+import org.usfirst.frc3467.subsystems.Shooter.HaltShooter;
 import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunBelt;
 import org.usfirst.frc3467.subsystems.Shooter.RunShooter;
@@ -41,6 +35,7 @@ import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
 import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
+
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -100,11 +95,10 @@ public class OI {
 		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new GearDeliver());
 
 		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new ZeroGyro());
-		//new DoubleButton(driverPad, Gamepad.yButton, Gamepad.bButton).whenActive(new ToggleLatch);
 		new JoystickButton(driverPad, Gamepad.yButton).whenActive(new ToggleLatchPosition());
 		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new AutoAim());
-		new JoystickButton(driverPad, Gamepad.bButton).whenActive(new AutoClimb());
-		new JoystickButton(driverPad, Gamepad.startButton).whenActive(new AutoGear());
+		//new JoystickButton(driverPad, Gamepad.bButton).whenActive(new AutoClimb());
+		//new JoystickButton(driverPad, Gamepad.startButton).whenActive(new AutoGear());
 
 		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
 		new DPadLeft(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Precision));
@@ -118,11 +112,10 @@ public class OI {
 		 * 
 		 */
 
-		//Changed how the toggles work, may need to change back, but I want to try to see if this works
 		new GamepadLeftTrigger(operatorPad).whileActive(new TestGearIntake(true));
 		new GamepadRightTrigger(operatorPad).whileActive(new TestGearIntake(false));
-		//new JoystickButton(operatorPad, Gamepad.leftBumper).whileActive(new FloorIntakeRun(FLOOR_INTAKE_SPEED_BACKWARD));
-		//new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new ToggleFloorIntakeOperation());
+		new JoystickButton(operatorPad, Gamepad.leftBumper).whenActive(new GearIntake());
+		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new GearDeliver());
 
 		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunSpinner(Shooter.SPINNER_SPEED_DEFAULT));
 		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunSpinner(-1 * Shooter.SPINNER_SPEED_DEFAULT));
@@ -131,8 +124,8 @@ public class OI {
 
 		new DPadUp(operatorPad).whenActive(new LiftTractionPlates());
 		new DPadDown(operatorPad).whenActive(new DropTractionPlates());
-		//new DPadLeft(operatorPad).whenActive(new ToggleHighIntakePosition());
-		//new DPadRight(operatorPad).whileActive(new HighIntakeRun(HIGH_INTAKE_SPEED_NORMAL));
+		new DPadLeft(operatorPad).whenActive(new HaltShooter());
+		new DPadRight(operatorPad).whenActive(new ReleaseIntakeRamp());
 
 		
 		//

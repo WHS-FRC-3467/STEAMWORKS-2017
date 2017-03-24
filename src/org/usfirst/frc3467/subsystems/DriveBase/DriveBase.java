@@ -68,8 +68,8 @@ public class DriveBase extends Subsystem {
 			"Tank"
 	};
 
-	// Default drive mode to Field-centric
-	private int current_driveInterfaceMode = driveMode_FieldCentric;
+	// Default drive mode to Robot-centric
+	private int current_driveInterfaceMode = driveMode_RobotCentric;
 	
 	// Static subsystem reference
 	private static DriveBase dBInstance = new DriveBase();
@@ -157,8 +157,8 @@ public class DriveBase extends Subsystem {
 		rTalon1.setExpiration(0.5);
 		cTalon1.setExpiration(0.5);
 		
-		// Start in Field-centric mode
-		setDriveInterfaceMode(driveMode_FieldCentric);
+		// Start in Robot-centric mode
+		setDriveInterfaceMode(driveMode_RobotCentric);
 
 	}
 

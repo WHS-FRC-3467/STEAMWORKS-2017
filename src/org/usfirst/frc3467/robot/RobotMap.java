@@ -58,15 +58,15 @@ public class RobotMap {
 	// SOLENOIDS
 
 	// Traction
-	public static final int traction_solenoid_retract = 0;
-	public static final int traction_solenoid_deploy = 5;
+	public static final int traction_solenoid_deploy = 0;
+	public static final int traction_solenoid_retract = 5;
 
 	// Floor Intake
 	public static final int gearintake_solenoid_retract = 1;
 	public static final int gearintake_solenoid_extend = 4;
 	
 	// Extra 
-	public static final int extra_solenoid_retract = 2;
-	public static final int extra_solenoid_extend = 3;
+	public static final int intakeRamp_solenoid_retract = 2;
+	public static final int intakeRamp_solenoid_extend = 3;
 	
 }
