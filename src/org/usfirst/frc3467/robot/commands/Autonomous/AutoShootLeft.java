@@ -1,13 +1,8 @@
 package org.usfirst.frc3467.robot.commands.Autonomous;
 
-import edu.wpi.first.wpilibj.command.WaitCommand;
-
-import org.usfirst.frc3467.subsystems.DriveBase.AutoAim;
-import org.usfirst.frc3467.subsystems.DriveBase.DriveStraight;
-import org.usfirst.frc3467.subsystems.DriveBase.SidewaysDrive;
-import org.usfirst.frc3467.subsystems.DriveBase.Turn;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveSideways;
+import org.usfirst.frc3467.subsystems.Pneumatics.ReleaseIntakeRamp;
 import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
-import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -17,15 +12,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoShootLeft extends CommandGroup {
 
     public AutoShootLeft() {
-    	addSequential(new DriveStraight(2000));
-//        addSequential(new WaitCommand(3.0));
-//        addSequential(new DriveStraight(-2000));
-    	addSequential(new Turn(-120));
-    	addSequential(new AutoAim());
-    	addParallel(new OperateShooter());
-    	addParallel(new RunSpinner(0.6));
-    	addSequential(new Turn(120));
-    	addSequential(new DriveStraight(2001));
-        //addSequential(new AutoAimShooter());
+    	addParallel(new ReleaseIntakeRamp());
+    	addSequential(new OperateShooter(true));
+    	addSequential(new DriveSideways(3.0, 0.5));
     }
 }

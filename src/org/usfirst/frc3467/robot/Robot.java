@@ -9,12 +9,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc3467.subsystems.DriveBase.DriveMotionMagic;
-import org.usfirst.frc3467.subsystems.DriveBase.DriveStraight;
-import org.usfirst.frc3467.subsystems.DriveBase.SidewaysDrive;
-import org.usfirst.frc3467.subsystems.DriveBase.StraightDrive;
 import org.usfirst.frc3467.subsystems.FieldCamera.FieldCamera;
 import org.usfirst.frc3467.robot.CommandBase;
+import org.usfirst.frc3467.robot.commands.Autonomous.AutoShootLeft;
+import org.usfirst.frc3467.robot.commands.Autonomous.AutoShootRight;
 import org.usfirst.frc3467.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc3467.robot.commands.Autonomous.JustDrive;
 import org.usfirst.frc3467.robot.commands.Autonomous.GearAutoForward;
@@ -49,9 +47,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addDefault("GearAutoForward", new GearAutoForward());
 		autoChooser.addObject("Go Straight", new JustDrive());
 		autoChooser.addObject("Do Nothing", new DoNothing());
-		//autoChooser.addObject("Drive Motion Magic", new DriveMotionMagic(20000.0));
-		//autoChooser.addObject("Just Drive", new DriveStraight(35000, .4));
-		//autoChooser.addObject("Sideways", new SidewaysDrive(4.0));
+		autoChooser.addObject("Shoot Left (BLUE)", new AutoShootLeft());
+		autoChooser.addObject("Shoot Right (RED)", new AutoShootRight());
 		
 		SmartDashboard.putData("Autonomous Command Chooser", autoChooser);
 
