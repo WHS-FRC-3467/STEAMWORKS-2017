@@ -18,7 +18,7 @@ public class DriveStraight extends CommandBase {
 	private static final double TOLERANCE = 50;
 	
 	private PIDController m_pid;
-	private double m_maxSpeed = 0.6;
+	private double m_maxSpeed = 0.3;
 	private double m_distance = 0.0;
 	private boolean m_manualCurve = true;
 	private double m_curveValue = 0.0;

@@ -244,6 +244,7 @@ public class DriveBase extends Subsystem {
 	public void driveRobotCentric(double x, double y, double z) {
     	
     	final double xScale = 1.5;
+    	final double zScale = .5;
    
     	if (tractionFeetState == true && 
     		(x > 0.05 || y > 0.05 || z > 0.05 ||
@@ -252,7 +253,7 @@ public class DriveBase extends Subsystem {
     		liftFeetBeforeDriving();
     	}
     	
-    	z = z*-1;
+    	z = z*-1*zScale;
     	double left = (y + (robotWidth/2) * z);
     	double right = y - (robotWidth/2) * z;
     	double center = x;
