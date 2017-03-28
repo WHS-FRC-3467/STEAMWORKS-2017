@@ -2,6 +2,8 @@ package org.usfirst.frc3467.subsystems.Gyro;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
+import edu.wpi.first.wpilibj.command.Command;
+
 /**
  *
  */
@@ -17,7 +19,7 @@ public class ZeroGyro extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//gyro.zeroGyro();
+    	gyro.zeroGyro();
     }
 
     // Make this return true when this Command no longer needs to run execute()

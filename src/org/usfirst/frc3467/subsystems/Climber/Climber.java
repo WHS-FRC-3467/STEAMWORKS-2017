@@ -28,12 +28,13 @@ public class Climber extends Subsystem {
 		
 		// Climber motor
 		climbMotor = DriveBase.getInstance().getMiddleTalon();
+		
+		setLatchServo(1);  //1 = off
 
 	}
 	
     public void initDefaultCommand() {
-
-    	this.setDefaultCommand(new ClimberDrive());
+		// No default command!
     }
 
     public void driveClimber (double speed) {

@@ -4,6 +4,7 @@ package org.usfirst.frc3467.subsystems.DriveBase;
 import org.usfirst.frc3467.robot.PIDF_CANTalon;
 import org.usfirst.frc3467.robot.RobotMap;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
@@ -229,7 +230,7 @@ public class DriveBase extends Subsystem {
 		 *
 		 *	If drive stick(s) max out too early, lower this value.
 	     */
-		m_outerMaxOutput = 3000.; //6258.0;  // encoder counts per 0.1 seconds (native units)
+		m_outerMaxOutput = 4500. ; //6258.0;  // encoder counts per 0.1 seconds (native units)
 		m_centerMaxOutput = 1500. ;//2763.0;
 	}
 	
@@ -243,7 +244,7 @@ public class DriveBase extends Subsystem {
 	public void driveRobotCentric(double x, double y, double z) {
     	
     	final double xScale = 1.5;
-    	final double zScale = .5;
+    	final double zScale = .75;
    
     	if (tractionFeetState == true && 
     		(x > 0.05 || y > 0.05 || z > 0.05 ||
@@ -414,7 +415,7 @@ public class DriveBase extends Subsystem {
 	 * @return Average of the encoder values from the left and right encoders
 	 */
 	public double getDistance() {
-		return ((lTalon1.getPosition()) + (rTalon1.getPosition()))/2;
+		return ((lTalon1.getPosition()) + ((-1.0)*rTalon1.getPosition()))/2;
 	}
 
 	public void reportEncoders() {

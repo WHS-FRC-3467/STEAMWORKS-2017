@@ -7,20 +7,25 @@ public class ClimberDrive extends CommandBase {
 
 	public ClimberDrive(){
 		requires(climber);
+		requires(driveBase);
 	}
 	
 	protected void initialize() {
-
+		climber.setLatchServo(0);
+		driveBase.setVoltageMode();
+		driveBase.getMiddleTalon().EnableCurrentLimit(true);
+		driveBase.getMiddleTalon().setCurrentLimit(50);
+		driveBase.tractionExtend();
 	}
 
 	protected void execute() {
-
+	
 		double speed = 0;
 		
-		speed = OI.operatorPad.getLeftStickY();
+		speed = -1*OI.driverPad.getRightStickY();
 		
 		//deadband
-		if (speed > -0.08 && speed < 0.08) speed = 0.0;
+		if (speed > -0.2 && speed < 0.2) speed = 0.0;
        
 		// Square the inputs (while preserving the sign) to increase
 		// fine control while permitting full power
@@ -38,6 +43,8 @@ public class ClimberDrive extends CommandBase {
 
 	protected void end() {
 		climber.driveClimber(0);
+		driveBase.setSpeedMode();
+		driveBase.tractionRetract();
 	}
 
 	protected void interrupted() {

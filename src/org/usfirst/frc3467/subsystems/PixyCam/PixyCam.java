@@ -146,5 +146,34 @@ public class PixyCam extends Subsystem {
     	calculateBoilerDistance();
     	return distanceAndAngles[0];
     }
+    
+    protected void calculateGearStuff() throws NoTargetException {
+    	double tapePosx = 0;
+    	double tapePosy = 0;
+    	double tapePosx2 = 0;
+    	double tapePosy2 = 0;
+
+    	// If an object is detected in the frame
+		if(cameraPresent && !pixyCamera.getCurrentframes().isEmpty())
+		{
+			SmartDashboard.putBoolean("Target Detected", true);
+			
+			try
+			{
+	    		tapePosy = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(0));
+	    		tapePosx = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(0));
+	    		tapePosy2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(1));
+	    		tapePosx2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(1));
+			} catch (RuntimeException ex ) { }
+
+		} else {
+			SmartDashboard.putBoolean("Target Detected", false);
+			throw new NoTargetException("No Gear Target Found");
+		}
+		
+		
+		
+    }
+    
 }
 
