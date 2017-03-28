@@ -11,10 +11,11 @@ public class DriveBot extends CommandBase {
 
 	// Scale factor for reducing inputs during Precision Mode
 	static final double precision_scaleFactor = 0.25;
+	static final double precision_scaleFactor2 = 0.3;
 	
     // square the inputs (while preserving the sign) to increase fine control
     // while permitting full power
-	static final boolean SQUARE_INPUTS = true;
+	static final boolean SQUARE_INPUTS = false;
 	
 	double m_lastX = 0.0, m_lastY = 0.0, m_lastRot = 0.0;
 	
@@ -35,6 +36,9 @@ public class DriveBot extends CommandBase {
 
 	protected void execute() {
 
+		// Make sure climber latch is unlatched before driving
+		climber.setLatchServo(1);
+
 		driveBase.reportEncoders();
 		
 		switch (_driveMode) {
@@ -53,9 +57,9 @@ public class DriveBot extends CommandBase {
 			break;
 			
 		case DriveBase.driveMode_Precision:
-			driveBase.driveRobotCentric(getX() * precision_scaleFactor,
+			driveBase.driveRobotCentric(getX() * precision_scaleFactor2,
 					getY() * precision_scaleFactor,
-					getRot() * precision_scaleFactor);
+					getRot() * precision_scaleFactor2);
 			break;
 			
 		case DriveBase.driveMode_Tank:

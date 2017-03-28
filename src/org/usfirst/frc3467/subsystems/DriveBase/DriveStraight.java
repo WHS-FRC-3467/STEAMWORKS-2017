@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
  */
 public class DriveStraight extends CommandBase {
 
-	private static final double TOLERANCE = 50;
+	private static final double TOLERANCE = 5000;
 	
 	private PIDController m_pid;
 	private double m_maxSpeed = 0.3;
@@ -131,6 +131,7 @@ public class DriveStraight extends CommandBase {
         gyro.zeroGyro();
     	m_pid.reset();
         m_pid.enable();
+        m_count = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -148,7 +149,7 @@ public class DriveStraight extends CommandBase {
     protected boolean isFinished() {
     	double error = m_pid.getError();
     	
-    	if (m_count >= 50) {
+    	if (m_count >= 100) {
     		return true;
     	}
     	else {

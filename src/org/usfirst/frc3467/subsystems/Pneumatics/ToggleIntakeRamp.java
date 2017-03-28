@@ -6,9 +6,9 @@ import org.usfirst.frc3467.robot.CommandBase;
 /**
  *
  */
-public class ReleaseIntakeRamp extends CommandBase {
+public class ToggleIntakeRamp extends CommandBase {
 
-	public ReleaseIntakeRamp() {
+	public ToggleIntakeRamp() {
 	}
 	
     // Called just before this Command runs the first time
@@ -17,7 +17,7 @@ public class ReleaseIntakeRamp extends CommandBase {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Pneumatics.getInstance().intakeRampRelease();
+    	Pneumatics.getInstance().toggleIntakeRamp();
     }
 
     // Make this return true when this Command no longer needs to run execute()

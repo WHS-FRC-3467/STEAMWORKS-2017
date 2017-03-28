@@ -9,6 +9,7 @@ import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
 import org.usfirst.frc3467.subsystems.Climber.AutoClimb;
 import org.usfirst.frc3467.subsystems.Climber.AutoClimber;
+import org.usfirst.frc3467.subsystems.Climber.ClimberDrive;
 import org.usfirst.frc3467.subsystems.Climber.ToggleLatchPosition;
 import org.usfirst.frc3467.subsystems.DriveBase.AutoAim;
 import org.usfirst.frc3467.subsystems.DriveBase.AutoGear;
@@ -23,7 +24,7 @@ import org.usfirst.frc3467.subsystems.GearCatcher.GearDeliver;
 import org.usfirst.frc3467.subsystems.GearCatcher.TestGearIntake;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
-import org.usfirst.frc3467.subsystems.Pneumatics.ReleaseIntakeRamp;
+import org.usfirst.frc3467.subsystems.Pneumatics.ToggleIntakeRamp;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionDeploy;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
 import org.usfirst.frc3467.subsystems.Shooter.HaltShooter;
@@ -94,16 +95,17 @@ public class OI {
 		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new GearIntake());
 		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new GearDeliver());
 
-		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new ZeroGyro());
-		new JoystickButton(driverPad, Gamepad.yButton).whenActive(new ToggleLatchPosition());
-		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new AutoAim());
-		//new JoystickButton(driverPad, Gamepad.bButton).whenActive(new AutoClimb());
+		new JoystickButton(driverPad, Gamepad.startButton).whenActive(new ZeroGyro());
+		new JoystickButton(driverPad, Gamepad.yButton).whenActive(new ClimberDrive());
+		new JoystickButton(driverPad, Gamepad.bButton).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
+		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new DriveBot(DriveBase.driveMode_Precision));
+		//new JoystickButton(driverPad, Gamepad.xButton).whenActive(new AutoAim());
 		//new JoystickButton(driverPad, Gamepad.startButton).whenActive(new AutoGear());
 
 		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
-		new DPadLeft(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Precision));
+		//new DPadLeft(driverPad).whenActive(new AutoAim()));
 		new DPadRight(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Arcade));
-		new DPadUp(driverPad).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
+		//new DPadUp(driverPad).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 		
 		
 		/*
@@ -125,7 +127,7 @@ public class OI {
 		new DPadUp(operatorPad).whenActive(new LiftTractionPlates());
 		new DPadDown(operatorPad).whenActive(new DropTractionPlates());
 		new DPadLeft(operatorPad).whenActive(new HaltShooter());
-		new DPadRight(operatorPad).whenActive(new ReleaseIntakeRamp());
+		new DPadRight(operatorPad).whenActive(new ToggleIntakeRamp());
 
 		
 		//

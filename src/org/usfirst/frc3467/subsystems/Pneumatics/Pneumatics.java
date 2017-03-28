@@ -17,6 +17,7 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	private Compressor scorpionCompressor;
 	private AnalogInput pressureSensor;
 	private boolean compressorActive = true;
+	private static boolean  intakePistonState = true;
 	
 	// Solenoids
 	public DoubleSolenoid tractionFeet;
@@ -88,6 +89,18 @@ public class Pneumatics extends Subsystem implements PowerConsumer {
 	public void intakeRampHold() {
 		intakeRamp.set(DoubleSolenoid.Value.kReverse);
 	}
+	
+	public void toggleIntakeRamp() {
+		if (intakePistonState) {
+			intakeRamp.set(DoubleSolenoid.Value.kForward);
+			intakePistonState = false;
+		}
+		else {
+			intakeRamp.set(DoubleSolenoid.Value.kReverse);
+			intakePistonState = true;
+		}
+	}
+	
 	/*
 	 * Standard Pneumatics methods	
 	 */

@@ -2,16 +2,16 @@ package org.usfirst.frc3467.robot.commands.Autonomous;
 
 import org.usfirst.frc3467.subsystems.DriveBase.DriveStraight;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearDeliver;
-import org.usfirst.frc3467.subsystems.Pneumatics.ReleaseIntakeRamp;
+import org.usfirst.frc3467.subsystems.Pneumatics.ToggleIntakeRamp;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class GearAutoForward extends CommandGroup {
 
     public GearAutoForward() {
-    	addParallel(new ReleaseIntakeRamp());
-    	addSequential(new DriveStraight(78000));
+    	addParallel(new ToggleIntakeRamp());
+    	addSequential(new DriveStraight(101400));
     	addSequential(new GearDeliver());
-    	addSequential(new DriveStraight(-2500));
+    	addSequential(new DriveStraight(-50000));
     }
 }
