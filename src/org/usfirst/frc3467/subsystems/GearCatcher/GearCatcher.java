@@ -43,20 +43,16 @@ public class GearCatcher extends Subsystem {
     
 	public void catcherUp() {
 		
-//		if (this.catcherState == false) {
-			Pneumatics.getInstance().gearIntakeUp();
-//		}
+		Pneumatics.getInstance().gearIntakeUp();
 		this.catcherState = true;
-    	SmartDashboard.putString("Gear Catcher Position", this.catcherState ? "UP" : "DOWN");
+    	SmartDashboard.putString("Gear Catcher Position", "UP");
 	}
 
 	public void catcherDown() {
 
-//		if (this.catcherState == true) {
-			Pneumatics.getInstance().gearIntakeDown();
-//		}
+		Pneumatics.getInstance().gearIntakeDown();
 		this.catcherState = false;
-    	SmartDashboard.putString("Gear Catcher Position", this.catcherState ? "UP" : "DOWN");
+    	SmartDashboard.putString("Gear Catcher Position", "DOWN");
 	}
 	
 	public void toggleGearCatcherPosition() {

@@ -7,8 +7,6 @@ import org.usfirst.frc3467.robot.control.triggers.DPadRight;
 import org.usfirst.frc3467.robot.control.triggers.DPadUp;
 import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
-import org.usfirst.frc3467.subsystems.Climber.AutoClimb;
-import org.usfirst.frc3467.subsystems.Climber.AutoClimber;
 import org.usfirst.frc3467.subsystems.Climber.ClimberDrive;
 import org.usfirst.frc3467.subsystems.Climber.ToggleLatchPosition;
 import org.usfirst.frc3467.subsystems.DriveBase.AutoAim;
@@ -141,7 +139,6 @@ public class OI {
 		SmartDashboard.putData("Test Shooter Spinner", new TestSpinner());
 		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
 		SmartDashboard.putData("Zero Encoders", new ResetEncoders());
-		SmartDashboard.putData("Test Auto Climb", new AutoClimb());
 		SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());
 		
 	}

@@ -1,6 +1,7 @@
 package org.usfirst.frc3467.subsystems.Climber;
 
 import org.usfirst.frc3467.robot.CommandBase;
+import org.usfirst.frc3467.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,11 +23,11 @@ public class ToggleLatchPosition extends CommandBase {
     protected void execute() {
     	
     	if (latched == true) {
-    		climber.setLatchServo(0);
+    		climber.setLatchServo(RobotMap.climberLatch_DISENGAGED);
     		latched = false;
     	}
     	else {
-    		climber.setLatchServo(1);
+    		climber.setLatchServo(RobotMap.climberLatch_ENGAGED);
     		latched = true;
     	}
     	SmartDashboard.putString("Climber latch",  latched ? "NOT ACTUATED" : "ACTUATED");

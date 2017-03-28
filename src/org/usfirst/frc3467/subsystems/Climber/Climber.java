@@ -29,7 +29,7 @@ public class Climber extends Subsystem {
 		// Climber motor
 		climbMotor = DriveBase.getInstance().getMiddleTalon();
 		
-		setLatchServo(1);  //1 = off
+		setLatchServo(RobotMap.climberLatch_DISENGAGED);
 
 	}
 	

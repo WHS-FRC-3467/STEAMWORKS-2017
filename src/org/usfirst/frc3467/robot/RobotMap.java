@@ -55,6 +55,9 @@ public class RobotMap {
 	//
 	public static final int climberLatch_Servo = 3;
 	
+	public static final int climberLatch_ENGAGED = 0;
+	public static final int climberLatch_DISENGAGED = 1;
+	
 	// SOLENOIDS
 
 	// Traction

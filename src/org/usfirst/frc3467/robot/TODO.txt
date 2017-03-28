@@ -56,11 +56,6 @@ Climber:
 ======================================================
 TODO TODO TODO
 
-Spec Climber code
-Implement Climber code
-
-Gear hold check command (default for GearCatcher)
-
 Test shooter conveyor belt speed & control
 
 Implement two-gyro code
@@ -76,5 +71,5 @@ Test Gear Vision
 
 Make autonomous Shooter command 
 
-New Gamepad mappings
+
 

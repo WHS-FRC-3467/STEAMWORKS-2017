@@ -2,6 +2,8 @@ package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.CommandBase;
 import org.usfirst.frc3467.robot.OI;
+import org.usfirst.frc3467.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveBot extends CommandBase {
@@ -37,7 +39,7 @@ public class DriveBot extends CommandBase {
 	protected void execute() {
 
 		// Make sure climber latch is unlatched before driving
-		climber.setLatchServo(1);
+		climber.setLatchServo(RobotMap.climberLatch_DISENGAGED);
 
 		driveBase.reportEncoders();
 		
