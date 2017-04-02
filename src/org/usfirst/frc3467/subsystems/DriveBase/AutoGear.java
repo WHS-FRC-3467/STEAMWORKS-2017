@@ -1,7 +1,7 @@
 package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.CommandBase;
-
+import org.usfirst.frc3467.subsystems.PixyCam.NoTargetException;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoGear extends CommandBase{
@@ -10,6 +10,7 @@ public class AutoGear extends CommandBase{
 	double targetAngle;
 	public static final double DEFAULT_TARGET_DISTANCE = 0.8;
 	double targetDistance = 0.0;
+	boolean posReached = false;
 	
 	
 	/*public AutoGear(int gear){
@@ -27,40 +28,44 @@ public class AutoGear extends CommandBase{
 		requires(pixyCamShooter);
 		requires(driveBase);
 		
-		targetDistance = defaultTargetDistance;
 		this.setInterruptible(true);
 		SmartDashboard.putString("Drive Base", "Auto Gear");
 		
 	}
 
 	protected void initialize(){
-		if(target == 0){
-			targetAngle = 60;
-			side = 0;
-		}
-		else if(target == 1){
-			targetAngle = 0;
-			side = 1;
-		}
-		else if(target == 2){
-			targetAngle  = -60;
-			side = 1;
-		}
+		
 	}
 	
 	protected void execute(){
-		double distance = pixyCamShooter.getBoilerLocationData()[0];
-		double angle = pixyCamShooter.getBoilerLocationData()[1];
-		double sidewaysMove = 0;
-		if(side == 0){
-			double insideAngle1 = angle + 90 + gyro.getAngle();
-			double longSide = Math.sqrt(distance*distance + 8*8 - 2*distance*8*Math.cos(insideAngle1));
-			double farAngle = Math.sin(insideAngle1)/longSide;
-			sidewaysMove = Math.acos(0);
+		double[] gearData = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		try{
+			gearData = pixyCamShooter.getPegLocationData();
+		}catch(NoTargetException ex){
+			return;
 		}
-		else{
-			
+		double tapePosx = gearData[0];
+		double tapePosx2 = gearData[1];
+		double height1 = gearData[2];
+		double height2 = gearData[3];
+		double width1 = gearData[4];
+		double width2 = gearData[5];
+		double area1 = gearData[6];
+		double area2 = gearData[7];
+		double center = 0;
+		double tapeEnd1 = 0;
+		double tapeEnd2 = 0;
+		
+		if(tapePosx < 0 && tapePosx2 > 0){
+			tapeEnd1 = tapePosx-width1/2;
+			tapeEnd2 = tapePosx2+width2/2;
+		}else if(tapePosx > 0 && tapePosx2 < 0){
+			tapeEnd1 = tapePosx+width1/2;
+			tapeEnd2 = tapePosx2-width2;
 		}
+		
+		
+		
 	}
 	
 	protected void end(){
@@ -73,7 +78,7 @@ public class AutoGear extends CommandBase{
 	
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return false;
+		return posReached;
 	}
 
 }

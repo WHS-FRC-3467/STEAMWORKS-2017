@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3467.subsystems.PixyCam.PixyCmu5;
+import org.usfirst.frc3467.subsystems.PixyCam.PixyCmu5.PixyFrame;
 
 /**
  *
@@ -92,6 +93,7 @@ public class PixyCam extends Subsystem {
     
     // Array of data calculated from values returned from Pixy
     double[] distanceAndAngles = {0.0, 0.0, 0.0};  // distance, AngleX, AngleY
+    double[] gearData = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}; //tapePosx, tapePosx2, height1, height2, width1, width2, area1, area2
     
     /**
      * Calculate the current X & Y Angles and the distance from boiler
@@ -132,10 +134,10 @@ public class PixyCam extends Subsystem {
      * @throws NoTargetException
      */
     public double[] getBoilerLocationData() throws NoTargetException {
-     
     	calculateBoilerDistance();
     	return distanceAndAngles;
     }
+    
     
     /**
      * Helper routine to return current distance
@@ -149,10 +151,16 @@ public class PixyCam extends Subsystem {
     
     protected void calculateGearStuff() throws NoTargetException {
     	double tapePosx = 0;
-    	double tapePosy = 0;
     	double tapePosx2 = 0;
-    	double tapePosy2 = 0;
-
+    	PixyFrame tape1 = pixyFrame.get(0);
+    	PixyFrame tape2 = pixyFrame.get(1);
+    	double height1 = 0;
+    	double height2 = 0;
+    	double width1 = 0;
+    	double width2 = 0;
+    	double area1 = 0;
+    	double area2 = 0;
+    	
     	// If an object is detected in the frame
 		if(cameraPresent && !pixyCamera.getCurrentframes().isEmpty())
 		{
@@ -160,19 +168,35 @@ public class PixyCam extends Subsystem {
 			
 			try
 			{
-	    		tapePosy = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(0));
 	    		tapePosx = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(0));
-	    		tapePosy2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(1));
 	    		tapePosx2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(1));
+	    		height1 = tape1.height;
+	        	height2 = tape2.height;
+	        	width1 = tape1.width;
+	        	width2 = tape2.width;
+	        	area1 = height1*width1;
+	        	area2 = height2*width2;
+	    		
 			} catch (RuntimeException ex ) { }
 
 		} else {
 			SmartDashboard.putBoolean("Target Detected", false);
 			throw new NoTargetException("No Gear Target Found");
 		}
+		gearData[0] = tapePosx;
+		gearData[1] = tapePosx2;
+		gearData[2] = height1;
+		gearData[3] = height2;
+		gearData[4] = width1;
+		gearData[5] = width2;
+		gearData[6] = area1;
+		gearData[7] = area2;
 		
-		
-		
+    }
+    
+    public double[] getPegLocationData() throws NoTargetException {
+		calculateGearStuff();
+    	return gearData;
     }
     
 }
