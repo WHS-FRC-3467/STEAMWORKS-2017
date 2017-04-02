@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //
 public class DriveBase extends Subsystem {
 
+	
 	// Speed controllers (H-Drive)
 	private CANTalon rTalon1, rTalon2, rTalon3, lTalon1, lTalon2, lTalon3;
 	private CANTalon cTalon1, cTalon2;
@@ -48,8 +49,12 @@ public class DriveBase extends Subsystem {
 	private double m_centerMaxOutput = 1.0;
 
 	// Field- and Robot-centric mode factor
-	private static final double robotWidth = 1;
+	private static final double robotWidth = 2;
     
+	// Scaling
+	//form: Max x Accel, Max y Accel, Max z Accel, Max x Vel, Max y Vel, Max z Vel, Loop Period, Robot width
+	private DriveMath hScale = new DriveMath(3, 4, 8, 16, 16, 3, .05, robotWidth);
+	
 	// drive() method turning sensitivity
 	double m_sensitivity = 0.5;
 	
@@ -70,6 +75,8 @@ public class DriveBase extends Subsystem {
 
 	// Default drive mode to Robot-centric
 	private int current_driveInterfaceMode = driveMode_RobotCentric;
+	
+	private DriveMath driveMath;
 	
 	// Static subsystem reference
 	private static DriveBase dBInstance = new DriveBase();
@@ -159,6 +166,11 @@ public class DriveBase extends Subsystem {
 		
 		// Start in Robot-centric mode
 		setDriveInterfaceMode(driveMode_RobotCentric);
+		
+		//DriveMath
+		 //form: Max x Accel, Max y Accel, Max z Accel, Max x Vel, Max y Vel, Max z Vel, Loop Period, Robot width
+		//driveMath = new DriveMath(9.0, 12.0, 1.0, 16.0, 16.0, 1.0, .05, 2.0);
+		setScaleConstants();
 
 	}
 
@@ -238,33 +250,46 @@ public class DriveBase extends Subsystem {
 		return t_controlMode;
 	}
 	
+	private void setScaleConstants(){
+		   hScale.enableLinearScale();
+		   hScale.setScaleFactor(.6);
+		   hScale.setRotationFactor(.1);
+		   
+		   hScale.setNetAccel(4);
+		   
+		   hScale.setStepScaleRange(.3);
+		   hScale.setStepScaleFactor(.75);
+		  // hScale.enableStepScale();
+		   hScale.disableStepScale();
+		  }
+	
     /*
      *	Drive robot-centric 
      */
 	public void driveRobotCentric(double x, double y, double z) {
-    	
-    	final double xScale = 1.5;
-    	final double zScale = .75;
-   
-    	if (tractionFeetState == true && 
-    		(x > 0.05 || y > 0.05 || z > 0.05 ||
-    		x < -0.05 || y < -0.05 || z < -0.05	))
-    	{
-    		liftFeetBeforeDriving();
-    	}
-    	
-    	z = z*-1*zScale;
-    	double left = (y + (robotWidth/2) * z);
-    	double right = y - (robotWidth/2) * z;
-    	double center = x;
-    	
-    	center = center*xScale;
-    	
-    	lTalon1.set(-1.0 * (left * m_outerMaxOutput));
-    	rTalon1.set(right * m_outerMaxOutput);
-    	cTalon1.set(center * m_centerMaxOutput);
-    	refreshPIDF();
-    }
+	     
+	     hScale.set(x, y, z);
+	     
+	     if (tractionFeetState == true && 
+	      (x > 0.05 || y > 0.05 || z > 0.05 ||
+	      x < -0.05 || y < -0.05 || z < -0.05 ))
+	     {
+	      liftFeetBeforeDriving();
+	     }
+	     
+	     x = hScale.getXVal();
+	     y = hScale.getYVal();
+	     z = hScale.getZVal();
+	     
+	     z = z*-1;
+	     double left = (y + (robotWidth*hScale.yEncFt/2) * z);
+	     double right = y - (robotWidth*hScale.yEncFt/2) * z;
+	     
+	     lTalon1.set(-1.0 * left);
+	     rTalon1.set(right);
+	     cTalon1.set(x);
+	     refreshPIDF();
+	    }
     
     /*
      *	Drive field-centric 
@@ -285,7 +310,7 @@ public class DriveBase extends Subsystem {
      */
     public void driveArcade(double moveValue, double rotateValue) {
 
-    	checkFeetBeforeRobotDrive(moveValue, rotateValue);    	
+    	checkFeetBeforeRobotDrive(moveValue, rotateValue);
     	
 		double leftMotorSpeed;
 		double rightMotorSpeed;
