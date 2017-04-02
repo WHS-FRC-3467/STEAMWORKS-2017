@@ -15,7 +15,10 @@ public class DriveBot extends CommandBase {
 	static final double precision_scaleFactor = 0.25;
 	static final double precision_scaleFactor2 = 0.3;
 	
-    // square the inputs (while preserving the sign) to increase fine control
+	// Don't adjust the sticks
+	static final boolean NO_STICK_ADJUSTMENT = true;
+	
+	// square the inputs (while preserving the sign) to increase fine control
     // while permitting full power
 	static final boolean SQUARE_INPUTS = false;
 	
@@ -109,10 +112,13 @@ public class DriveBot extends CommandBase {
 		/*
 		 *  Deadband limit
 		 */
-		if (val > -0.08 && val < 0.08) {
+		if (val > -0.03 && val < 0.03) {
 			return 0.0;
 		}
 
+		if (NO_STICK_ADJUSTMENT == true) {
+			return input;
+		}
         /*
          *  Square the inputs (while preserving the sign) to increase
 		 *  fine control while permitting full power
