@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoShootRight extends CommandGroup {
 
     public AutoShootRight() {
-    	addParallel(new ToggleIntakeRamp());
     	addSequential(new OperateShooter());
     	addSequential(new DriveSideways(3.0, -0.5));
   }

@@ -55,6 +55,7 @@ public class Shooter extends Subsystem {
 		shooterTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
 		shooterTalon1.configPeakOutputVoltage(+12.0f, 0.0f);
 		shooterTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		shooterTalon1.SetVelocityMeasurementWindow(1);
 		shooterTalon1.setProfile(0);
     	shooterTalon1.setF(shooterF);
     	shooterTalon1.setP(shooterP);
@@ -71,6 +72,7 @@ public class Shooter extends Subsystem {
 		shooterTalon2.configNominalOutputVoltage(+0.0f, -0.0f);
 		shooterTalon2.configPeakOutputVoltage(+12.0f, 0.0f);
 		shooterTalon2.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		shooterTalon2.SetVelocityMeasurementWindow(1);
 		shooterTalon2.setProfile(0);
     	shooterTalon1.setF(shooterF);
     	shooterTalon1.setP(shooterP);
@@ -95,6 +97,7 @@ public class Shooter extends Subsystem {
 		beltTalon.configNominalOutputVoltage(+0.0f, -0.0f);
 		beltTalon.configPeakOutputVoltage(+12.0f, -12.0f);
 		beltTalon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		beltTalon.SetVelocityMeasurementWindow(2);
 		beltTalon.setProfile(0);
 		beltTalon.setF(beltF);
 		beltTalon.setP(beltP);
