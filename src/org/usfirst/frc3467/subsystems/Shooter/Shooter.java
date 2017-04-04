@@ -17,9 +17,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shooter extends Subsystem {
     
-	public final static double SPINNER_SPEED_DEFAULT = 0.4;
+	public final static double SPINNER_SPEED_DEFAULT = 0.3;
 	public final static double BELT_SPEED_DEFAULT = -0.4;
-	public final static double SHOOTER_SPEED_DEFAULT = 3.7;
+	public final static double SHOOTER_SPEED_DEFAULT = 3.5;
 
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
@@ -55,7 +55,7 @@ public class Shooter extends Subsystem {
 		shooterTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
 		shooterTalon1.configPeakOutputVoltage(+12.0f, 0.0f);
 		shooterTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
-		shooterTalon1.SetVelocityMeasurementWindow(1);
+		shooterTalon1.SetVelocityMeasurementWindow(2);
 		shooterTalon1.setProfile(0);
     	shooterTalon1.setF(shooterF);
     	shooterTalon1.setP(shooterP);
@@ -72,7 +72,7 @@ public class Shooter extends Subsystem {
 		shooterTalon2.configNominalOutputVoltage(+0.0f, -0.0f);
 		shooterTalon2.configPeakOutputVoltage(+12.0f, 0.0f);
 		shooterTalon2.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
-		shooterTalon2.SetVelocityMeasurementWindow(1);
+		shooterTalon2.SetVelocityMeasurementWindow(2);
 		shooterTalon2.setProfile(0);
     	shooterTalon1.setF(shooterF);
     	shooterTalon1.setP(shooterP);
@@ -82,10 +82,10 @@ public class Shooter extends Subsystem {
 		shooterTalon2.changeControlMode(TalonControlMode.Speed);
 		//shooterTalon2.changeControlMode(TalonControlMode.PercentVbus);
 
-    	beltF = 0.5;
-    	beltP = 0.07;
+    	beltF = 0.4;
+    	beltP = 0.01;
     	beltI = 0.0;
-    	beltD = 0.5;
+    	beltD = 0.0;
     	SmartDashboard.putNumber("Belt F", beltF);
     	SmartDashboard.putNumber("Belt P", beltP);
     	SmartDashboard.putNumber("Belt I", beltI);
