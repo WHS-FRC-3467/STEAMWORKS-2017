@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TimerTask;
 
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -100,9 +99,8 @@ public class PixyCmu5 implements PIDSource
     /**********************************************************
 	 *  I2C
 	 **********************************************************/
-    public static final int PIXY_I2C_DEFAULT_ADDR = 0xa8; //0xa8;
     private I2C m_i2cbus;
-    private int m_i2caddress = PIXY_I2C_DEFAULT_ADDR;
+    private int m_i2caddress;
     
     /**********************************************************
 	 *  Debug variables
@@ -137,44 +135,20 @@ public class PixyCmu5 implements PIDSource
      **************************************************************/
 	
 	/**
-     * The constructor for the PixyCMU5 class. Initializes the I2C bus at the default address
-     * $
-     */
-    public PixyCmu5()
-    {
-    	m_i2cbus = new I2C(I2C.Port.kMXP, getI2CAddress());
-    	m_currentframes = new LinkedList<PixyFrame>();
-    	m_zeroBuffer = new byte [DATA_SIZE];
-    	Arrays.fill(m_zeroBuffer, (byte)0);
-    }
-    
-	/**
-     * The constructors for the PixyCMU5 class. Initializes the I2C bus at the specified address
+     * The constructor for the PixyCMU5 class.
+     * 	- Initializes the I2C bus at the specified address on the specified port
+     *  - Starts a separate thread to read data at the given frequency
      * $
      * @param i2c_address_in - The I2C address to connect to
+     * @param i2c_port - The roboRio I2C port to connect to
      * @param period - The period in seconds to perform I2C reads
      */
-    public PixyCmu5(int i2c_address_in)
-    {
-    	setI2CAddress(i2c_address_in);
-    	m_i2cbus = new I2C(I2C.Port.kMXP, getI2CAddress());
-    	m_currentframes = new LinkedList<PixyFrame>();
-    	m_zeroBuffer = new byte [DATA_SIZE];
-    	Arrays.fill(m_zeroBuffer, (byte)0);
-    }
-    
-    /**
-     * The constructors for the class. Initialize any data and the bus
-     * $
-     * @param i2c_address_in - The I2C address to connect to
-     * @param period - The period in seconds to perform I2C reads
-     */
-    public PixyCmu5(int i2c_address_in, double period)
+    public PixyCmu5(int i2c_address_in, I2C.Port i2c_port, double period)
     {
     	// Set I2C address and period
     	this.setI2CAddress(i2c_address_in);
     	this.setPeriod(period);
-    	m_i2cbus = new I2C(I2C.Port.kMXP, getI2CAddress());
+    	m_i2cbus = new I2C(i2c_port, getI2CAddress());
     	m_currentframes = new LinkedList<PixyFrame>();
     	m_zeroBuffer = new byte [DATA_SIZE];
     	Arrays.fill(m_zeroBuffer, (byte)0);
@@ -230,9 +204,9 @@ public class PixyCmu5 implements PIDSource
     /**
      * Performs an I2C read at the specified address and decodes any data received.
      * $
-     * @return linked list of PixyFrame objects for any detected objects
+     * @return void; m_currentframes will contain linked list of PixyFrame objects for any detected objects
      */
-    public List<PixyFrame> getFrames()
+    public void getFrames()
     {
     	// Initialize the local linked list for the results
     	List<PixyFrame> frames = new LinkedList<PixyFrame>();
@@ -240,7 +214,7 @@ public class PixyCmu5 implements PIDSource
     	// Read lock code
     	if(this.getIsReading())
     	{
-    		return frames;
+    		return;
     	}
     	this.setIsReading(true);
     	
@@ -267,7 +241,7 @@ public class PixyCmu5 implements PIDSource
         		}
         	}
         	this.setIsReading(false);
-    		return frames;
+    		return;
     	}
     	
     	if(flg_debug)
@@ -313,17 +287,19 @@ public class PixyCmu5 implements PIDSource
     		if( !( (((readBuffer[idx+1] << 8) | readBuffer[idx] ) & 0xFFFF) == PIXY_START_WORD  ))
     		{
     			// If this word wasn't found, cancel executing the rest of the loop iteration and move to the next byte
-    			System.out.println("Bad Word 1: " + Integer.toString(readBuffer[idx] & 0xFF) + " " + Integer.toString(readBuffer[idx+1] & 0xFF));
+    	    	if(flg_debug)
+    	    		System.out.println("Bad Word 1: " + Integer.toString(readBuffer[idx] & 0xFF) + " " + Integer.toString(readBuffer[idx+1] & 0xFF));
     			continue; 
     		}
     		startIdx = idx + 2;
   
-    		// Only get a double 0xAA55 at the beginning of the block
+    		// Only get a double 0xAA55 at the beginning of the frame
     		if (!frameFound) {
     	  		if( !( (((readBuffer[idx+3] << 8) | readBuffer[idx+2] ) & 0xFFFF)  == PIXY_START_WORD ))
         		{
         			// If this word wasn't found, cancel executing the rest of the loop iteration and move to the next byte
-        			System.out.println("Bad Word 2");
+    	  	    	if(flg_debug)
+    	  	    		System.out.println("Bad Word 2");
         			continue;
         		}
     	  		startIdx = idx +4;
@@ -370,16 +346,17 @@ public class PixyCmu5 implements PIDSource
     	// Add synchronization block to assign frame output to class
     	synchronized (this)
     	{
-    		if(m_currentframes != null)
-    		{	
-    			m_lastupdate = Timer.getFPGATimestamp();
-	    		m_currentframes.clear();
-	    		m_currentframes = frames;
+    		if (frameFound == true) {
+        		if(m_currentframes != null)
+        		{	
+        			m_lastupdate = Timer.getFPGATimestamp();
+    	    		m_currentframes.clear();
+    	    		m_currentframes = frames;
+        		}
     		}
     	}
 
     	this.setIsReading(false);
-    	return frames;
     }
     
     
