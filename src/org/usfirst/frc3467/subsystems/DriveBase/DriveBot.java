@@ -12,8 +12,9 @@ public class DriveBot extends CommandBase {
 	int _driveMode = DriveBase.driveMode_FieldCentric;
 
 	// Scale factor for reducing inputs during Precision Mode
-	static final double precision_scaleFactor = 0.25;
-	static final double precision_scaleFactor2 = 0.3;
+	static final double precision_scaleFactor = 0.15;
+	static final double precision_scaleFactor2 = 0.2;
+	static final double precision_turningFactor = .6;
 	
 	// Don't adjust the sticks
 	static final boolean NO_STICK_ADJUSTMENT = true;
@@ -64,7 +65,7 @@ public class DriveBot extends CommandBase {
 		case DriveBase.driveMode_Precision:
 			driveBase.driveRobotCentric(getX() * precision_scaleFactor2,
 					getY() * precision_scaleFactor,
-					getRot() * precision_scaleFactor2);
+					getRot() * precision_turningFactor);
 			break;
 			
 		case DriveBase.driveMode_Tank:

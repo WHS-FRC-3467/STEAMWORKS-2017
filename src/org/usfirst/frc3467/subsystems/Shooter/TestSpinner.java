@@ -11,7 +11,7 @@ public class TestSpinner extends CommandBase {
 	double speed;
 
     public TestSpinner() {
-        requires(shooter);
+  //      requires(shooter);
     	SmartDashboard.putNumber("Set Spinner Speed", .1);
     }
 
