@@ -1,11 +1,8 @@
 package org.usfirst.frc3467.subsystems.DriveBase;
 
 import java.lang.Math;
-
 class DriveMath{
  
-  private  double xAccelMax;
-  private  double yAccelMax;
   private  double zAccelMax;
   private  double aNetMax;
   private  double xVelMax;
@@ -28,7 +25,6 @@ class DriveMath{
   
   private  double stepScaleRange;
   private  boolean setStepScale;
-  private double stepScaleFactor;
   
   private  double linearScaleFactor;
   private  boolean runLinearScale;
@@ -41,11 +37,9 @@ class DriveMath{
   
   //constructors
   //form: Max x Accel, Max y Accel, Max z Accel, Max x Vel, Max y Vel, Max z Vel, Loop Period, Robot width
-  public DriveMath(double xAc, double yAc, double zAc, double xV, double yV, double zV, double lT, double wd)
+  public DriveMath(double zAc, double xV, double yV, double zV, double lT, double wd)
   {
     
-    xAccelMax = xAc;
-    yAccelMax = yAc;
     zAccelMax = zAc;
     
     xLast = 0;
@@ -59,32 +53,30 @@ class DriveMath{
     yVelMax = yV;
     zVelMax = zV;
     
-    aNetMax = 1;
-    
     setStepScale = false;
     
     robotWidth = wd;
+    
+    aNetMax = 1;
   }
   
   public DriveMath()
   {
-    xAccelMax = 0;
-    yAccelMax = 0;
     
     xLast = 0;
     yLast = 0;
     
-    loopT = .001;
+    loopT = .05;
     tAbs = 0;
     
     xVelMax = 0;
     yVelMax = 0;
     
-    aNetMax = 1;
-    
     setStepScale = false;
     
     robotWidth = 1;
+    aNetMax = 1;
+    
   }
   
   //Linear Scaling Code
@@ -125,13 +117,11 @@ class DriveMath{
   }
   
   public  void enableStepScale(){
-    if(!setStepScale)
-      setStepScale = true;
+    setStepScale = true;
   }
   
   public  void disableStepScale(){
-    if(setStepScale)
-      setStepScale = false;
+    setStepScale = false;
   }
   
   private  void stepScale(){
@@ -139,16 +129,31 @@ class DriveMath{
     if(setStepScale){
       double ratio = xTgt/yTgt;
       
-      if(Math.sqrt(Math.pow(xTgt/linearScaleFactor,2)+Math.pow(yTgt/linearScaleFactor,2))>stepScaleRange){
-         yTgt = stepScaleFactor*yTgt/linearScaleFactor;
-         xTgt = stepScaleFactor*xTgt/linearScaleFactor;
+      if(Math.abs(xTgt)>stepScaleRange && Math.abs(yTgt)>stepScaleRange){
+        if(xTgt>=yTgt && xTgt >0){
+          xTgt = xVelMax;
+          yTgt = xTgt/ratio;
+          //System.out.println("Case1");
+        }
+        else if(xTgt<=yTgt && xTgt<0){
+          xTgt = -1*xVelMax;
+          yTgt = xTgt/ratio;
+          //System.out.println("Case2 "+ratio+" "+xTgt+" "+yTgt);
+        }
+        else if(yTgt<xTgt && yTgt<0){
+          yTgt = -1*yVelMax;
+          xTgt = yTgt*ratio;
+          //System.out.println("Case3");
+        } 
+        else {
+          yTgt = yVelMax;
+          xTgt = yTgt*ratio;
+          //System.out.println("Case4");
+        }
       }
     }
   }
   
-  public void setStepScaleFactor(double n){
-	  stepScaleFactor = n;
-  }
   
   //main scaling method
   public  void set(double xTarget, double yTarget, double zTarget)
@@ -159,30 +164,20 @@ class DriveMath{
     zTgt = zTarget;
     
     linearScale();
-    stepScale();
-    
-    double xAccelTgt = accelCalc(xTgt - xLast);
-    int xAccelSign = (int)(xAccelTgt/Math.abs(xAccelTgt));
+    //stepScale();
     
     double ratio = xTgt/yTgt;
+    if(yTgt == 0)
+      ratio = 0;
     
-    //acceleration limiting
-    if(xAccelTgt > xAccelMax || xAccelTgt*-1 >xAccelMax)
-    {
-      xTgt = xLast+xAccelSign*xAccelMax*loopT;
-      yTgt = xTgt/ratio;
+    //Acceleration limiting
+    double aNet = Math.sqrt(Math.pow(accelCalc(xTgt-xLast),2)+Math.pow(accelCalc(yTgt-yLast),2));
+    
+    if(aNet*aNet>aNetMax*aNetMax){
+      xTgt = xLast+(accelCalc(xTgt-xLast)*aNetMax/aNet)*loopT;
+      yTgt = yLast+(accelCalc(yTgt-yLast)*aNetMax/aNet)*loopT;
     }
     
-    double yAccelTgt = accelCalc(yTgt - yLast);
-    int yAccelSign = (int)(yAccelTgt/Math.abs(yAccelTgt));
-    
-    if(yAccelTgt > yAccelMax || yAccelMax*-1 > yAccelMax)
-    {
-      yTgt = yLast+yAccelSign*yAccelMax*loopT;
-      xTgt = yTgt*ratio;
-    }
-    
-    //System.out.println("Case1 "+ratio+" "+xTgt+" "+yTgt);
     //rotation scale
     zTgt = zTgt*rotationScaleFactor;
     
@@ -207,11 +202,16 @@ class DriveMath{
     //velocity limiting
     if(xTgt > xVelMax){
      xTgt = xVelMax;
-     yTgt = xTgt/ratio;
+     if(ratio == 0)
+       yTgt = 0;
+     else
+    	 yTgt = xTgt/ratio;
     }
     if(xTgt< -1*xVelMax){
      xTgt = -1*xVelMax;
      yTgt = xTgt/ratio;
+     if(ratio == 0)
+       yTgt = 0;
     }
     if(yTgt > yVelMax){
       yTgt = yVelMax;
@@ -227,15 +227,9 @@ class DriveMath{
         yTgt = yVelMax-turningFactor;
       else if(yTgt+turningFactor < -1*yVelMax)
         yTgt = -1*yVelMax+turningFactor;
-      xTgt = yTgt*ratio;
-      //System.out.println(turningFactor);
-    }
-    
-    double aNet = Math.sqrt(Math.pow(accelCalc(xTgt-xLast),2)+Math.pow(accelCalc(xTgt-xLast),2));
-    
-    if(aNet>aNetMax){
-      xTgt = xTgt*aNetMax/aNet;
-      yTgt = yTgt*aNetMax/aNet;
+      if(ratio != 0)
+        xTgt = yTgt*ratio;
+      //System.out.println(turningFactor+"    "+xTgt);
     }
     
     //resetting
@@ -248,13 +242,13 @@ class DriveMath{
     
   }
   
-  public void setNetAccel(double in){
-    aNetMax = in;
-  }
-  
   private  double accelCalc(double dN){
     double accel = (int)(dN*1000000/loopT)/1000000.0;
     return accel;
+  }
+  
+  public  void setNetAccel(double in){
+    aNetMax = in;
   }
   
   private  void ftToEnc(){

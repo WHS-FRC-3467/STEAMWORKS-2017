@@ -53,7 +53,7 @@ public class DriveBase extends Subsystem {
     
 	// Scaling
 	//form: Max x Accel, Max y Accel, Max z Accel, Max x Vel, Max y Vel, Max z Vel, Loop Period, Robot width
-	private DriveMath hScale = new DriveMath(3, 4, 8, 16, 16, 3, .05, robotWidth);
+	private DriveMath hScale = new DriveMath(8, 16, 16, 3, .05, robotWidth);
 	
 	// drive() method turning sensitivity
 	double m_sensitivity = 0.5;
@@ -76,7 +76,7 @@ public class DriveBase extends Subsystem {
 	// Default drive mode to Robot-centric
 	private int current_driveInterfaceMode = driveMode_RobotCentric;
 	
-	private DriveMath driveMath;
+	//private DriveMath driveMath;
 	
 	// Static subsystem reference
 	private static DriveBase dBInstance = new DriveBase();
@@ -255,10 +255,10 @@ public class DriveBase extends Subsystem {
 		   hScale.setScaleFactor(.6);
 		   hScale.setRotationFactor(.1);
 		   
-		   hScale.setNetAccel(4);
+		   hScale.setNetAccel(1);
 		   
 		   hScale.setStepScaleRange(.3);
-		   hScale.setStepScaleFactor(.75);
+		  // hScale.setStepScaleFactor(.75);
 		  // hScale.enableStepScale();
 		   hScale.disableStepScale();
 		  }
@@ -280,6 +280,9 @@ public class DriveBase extends Subsystem {
 	     x = hScale.getXVal();
 	     y = hScale.getYVal();
 	     z = hScale.getZVal();
+	     
+	     //x = x*6000;
+	     //y = y*6000;
 	     
 	     z = z*-1;
 	     double left = (y + (robotWidth*hScale.yEncFt/2) * z);
