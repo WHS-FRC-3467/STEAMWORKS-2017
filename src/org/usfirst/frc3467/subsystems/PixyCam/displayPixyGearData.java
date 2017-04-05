@@ -5,11 +5,11 @@ import org.usfirst.frc3467.robot.CommandBase;
 /**
  *
  */
-public class displayPixyData extends CommandBase {
+public class displayPixyGearData extends CommandBase {
 
-    public displayPixyData() {
+    public displayPixyGearData() {
         // Use requires() here to declare subsystem dependencies
-        requires(pixyCamShooter);
+        requires(pixyCamGear);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +19,7 @@ public class displayPixyData extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 
-    	pixyCamShooter.detectTarget();
+    	pixyCamGear.detectTarget();
     }
 
     // Make this return true when this Command no longer needs to run execute()
