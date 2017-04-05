@@ -20,9 +20,9 @@ public class PixyCmu5 implements PIDSource
 {
 	
 	/**
-     * The frame data that is returned by the Pixy camera over the I2C interface
+     * The Object Block data that is returned by the Pixy camera over the I2C interface
      */
-    public class PixyFrame
+    public class PixyBlock
     {
         int sync = 0;
         int checksum = 0;
@@ -77,7 +77,7 @@ public class PixyCmu5 implements PIDSource
     /**********************************************************
 	 *  Local Variables
 	 **********************************************************/
-    private List<PixyFrame> m_currentframes;
+    private List<PixyBlock> m_currentblocks;
     private double m_lastupdate = 0.0;
     private byte m_zeroBuffer[];
     private double m_maxDataAge = 1.5; // second
@@ -124,7 +124,7 @@ public class PixyCmu5 implements PIDSource
         }
         @Override
         public void run() {
-        	m_pixy.getFrames();
+        	m_pixy.getBlocks();
         }
       }
     
@@ -149,7 +149,7 @@ public class PixyCmu5 implements PIDSource
     	this.setI2CAddress(i2c_address_in);
     	this.setPeriod(period);
     	m_i2cbus = new I2C(i2c_port, getI2CAddress());
-    	m_currentframes = new LinkedList<PixyFrame>();
+    	m_currentblocks = new LinkedList<PixyBlock>();
     	m_zeroBuffer = new byte [DATA_SIZE];
     	Arrays.fill(m_zeroBuffer, (byte)0);
     	
@@ -204,12 +204,12 @@ public class PixyCmu5 implements PIDSource
     /**
      * Performs an I2C read at the specified address and decodes any data received.
      * $
-     * @return void; m_currentframes will contain linked list of PixyFrame objects for any detected objects
+     * @return void; m_currentblocks will contain linked list of PixyBlock objects for any detected objects
      */
-    public void getFrames()
+    public void getBlocks()
     {
     	// Initialize the local linked list for the results
-    	List<PixyFrame> frames = new LinkedList<PixyFrame>();
+    	List<PixyBlock> blocks = new LinkedList<PixyBlock>();
     	
     	// Read lock code
     	if(this.getIsReading())
@@ -231,13 +231,13 @@ public class PixyCmu5 implements PIDSource
     			System.out.println("Pixy - Read Failed! All elements returned were 0!");
     		}
 
-    		// Add synchronization block to assign frame output to class
+    		// Add synchronization block to assign block output to class
         	synchronized (this)
         	{
-        		if(m_currentframes != null)
+        		if(m_currentblocks != null)
         		{	
         			m_lastupdate = Timer.getFPGATimestamp();
-    	    		m_currentframes.clear();
+    	    		m_currentblocks.clear();
         		}
         	}
         	this.setIsReading(false);
@@ -259,8 +259,8 @@ public class PixyCmu5 implements PIDSource
     	}
     	
     	/* 
-    	 * Move through the array and look for the pattern that indicates the start of a frame.
-    	 * Frame data is encoded as follows:
+    	 * Move through the array and look for the pattern that indicates the start of a block.
+    	 * Block data is encoded as follows:
     	 * 
          * Bytes    16-bit word    Description
 	     * ----------------------------------------------------------------
@@ -283,7 +283,7 @@ public class PixyCmu5 implements PIDSource
 	    	 *  need to be reversed before combining them into a 16 bit word.
     		 * */
     		
-    		// Two Pixy start words 0xAA55 indicate that 
+    		// Two Pixy start words 0xAA55 indicate the start of a frame 
     		if( !( (((readBuffer[idx+1] << 8) | readBuffer[idx] ) & 0xFFFF) == PIXY_START_WORD  ))
     		{
     			// If this word wasn't found, cancel executing the rest of the loop iteration and move to the next byte
@@ -307,51 +307,52 @@ public class PixyCmu5 implements PIDSource
     		frameFound = true;
     		
     		/* If we make it this far, we found two instances of 0xaa55 back-to-back which means that the next 14 bytes
-    		 * make up the data for the frame. Create a new instance of the Frame class (which acts as a structure) and start 
-    		 * pulling out byte pairs and switching them before packing them into integers. Since some of the data 
-    		 * on the i2c bus is encoded as unsigned 16 bit integers and Java doesn't have unsigned types, we need to manually
-    		 * re-encode the data into 32 bit integers which can correctly represent the value.
+    		 * make up the data for the first block in the frame. Create a new instance of the PixyBlock class
+    		 * (which acts as a structure) and start pulling out byte pairs and switching them before packing them
+    		 * into integers. Since some of the data on the i2c bus is encoded as unsigned 16 bit integers and Java
+    		 * doesn't have unsigned types, we need to manually re-encode the data into 32 bit integers which can
+    		 * correctly represent the value.
     		 * [https://en.wikipedia.org/wiki/Integer_(computer_science)]
     		 * 
     		 * To do this we treat the 16 bit unsigned value as a 32 bit signed value (how Java stores integers)
     		 * so the real-world value that we can work with represents the correct data.
     		 */
-        	PixyFrame tempFrame = new PixyFrame();
+        	PixyBlock tempBlock = new PixyBlock();
     		
-    		tempFrame.checksum = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
-    		tempFrame.signature = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
-    		tempFrame.xCenter = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
-    		tempFrame.yCenter = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
-    		tempFrame.width = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
-    		tempFrame.height = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
-    		tempFrame.area = tempFrame.height * tempFrame.width;
-    		tempFrame.timestamp = m_lastupdate;
+    		tempBlock.checksum = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
+    		tempBlock.signature = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
+    		tempBlock.xCenter = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
+    		tempBlock.yCenter = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
+    		tempBlock.width = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
+    		tempBlock.height = convertBytesToInt(readBuffer[startIdx+1], readBuffer[startIdx]); startIdx+=2;
+    		tempBlock.area = tempBlock.height * tempBlock.width;
+    		tempBlock.timestamp = m_lastupdate;
     		idx = startIdx -1; // Subtract one because for loop will increment idx next time around
     		
-    		// Concatenate the data in Frame into a string and print to the console
+    		// Concatenate the data in Block into a string and print to the console
     		if(flg_debug)
     		{
-	    		System.out.println("Checksum: "+ Integer.toString(tempFrame.checksum) + 
-	    				" Signature: "+ Integer.toString(tempFrame.signature) +
-	    				" xCenter: "+ Integer.toString(tempFrame.xCenter) + 
-	    				" yCenter: "+ Integer.toString(tempFrame.yCenter) +
-	    				" width: "+ Integer.toString(tempFrame.width) +
-	    				" height: "+ Integer.toString(tempFrame.height));
+	    		System.out.println("Checksum: "+ Integer.toString(tempBlock.checksum) + 
+	    				" Signature: "+ Integer.toString(tempBlock.signature) +
+	    				" xCenter: "+ Integer.toString(tempBlock.xCenter) + 
+	    				" yCenter: "+ Integer.toString(tempBlock.yCenter) +
+	    				" width: "+ Integer.toString(tempBlock.width) +
+	    				" height: "+ Integer.toString(tempBlock.height));
     		}
     		
-    		// Append the constructed frame to the Linked List which will be returned to the caller
-    		frames.add(tempFrame);
+    		// Append the constructed block to the Linked List which will be returned to the caller
+    		blocks.add(tempBlock);
     	}
     	
-    	// Add synchronization block to assign frame output to class
+    	// Add synchronization block to assign block output to class
     	synchronized (this)
     	{
     		if (frameFound == true) {
-        		if(m_currentframes != null)
+        		if(m_currentblocks != null)
         		{	
         			m_lastupdate = Timer.getFPGATimestamp();
-    	    		m_currentframes.clear();
-    	    		m_currentframes = frames;
+    	    		m_currentblocks.clear();
+    	    		m_currentblocks = blocks;
         		}
     		}
     	}
@@ -376,7 +377,7 @@ public class PixyCmu5 implements PIDSource
     public boolean isObjectDetected()
     {
     	// If the data is fresh and objects have been detected
-    	if(getDataAge() < m_maxDataAge && !getCurrentframes().isEmpty())
+    	if(getDataAge() < m_maxDataAge && !getCurrentBlocks().isEmpty())
     	{
     		return true;
     	}
@@ -409,10 +410,10 @@ public class PixyCmu5 implements PIDSource
      * @param X - X location in pixels
      * @return true if centered
      */
-    public boolean isInXCenter(PixyFrame frame)
+    public boolean isInXCenter(PixyBlock block)
     {
     	// See if the X center is in the middle of the frame
-    	if(Math.abs(frame.xCenter - PIXY_X_CENTER) < m_centerDelta)
+    	if(Math.abs(block.xCenter - PIXY_X_CENTER) < m_centerDelta)
     	{
     		return true;
     	}
@@ -445,10 +446,10 @@ public class PixyCmu5 implements PIDSource
      * @param X - X location in pixels
      * @return true if centered
      */
-    public boolean isInYCenter(PixyFrame frame)
+    public boolean isInYCenter(PixyBlock block)
     {
     	// See if the Y center is in the middle of the frame
-    	if(Math.abs(frame.yCenter - PIXY_Y_CENTER) < m_centerDelta)
+    	if(Math.abs(block.yCenter - PIXY_Y_CENTER) < m_centerDelta)
     	{
     		return true;
     	}
@@ -475,9 +476,9 @@ public class PixyCmu5 implements PIDSource
     public boolean isDetectedAndCentered()
     {
     	// If the data is fresh and objects have been detected
-    	if(getDataAge() < m_maxDataAge && !getCurrentframes().isEmpty())
+    	if(getDataAge() < m_maxDataAge && !getCurrentBlocks().isEmpty())
     	{
-    		for(PixyFrame idx : getCurrentframes())
+    		for(PixyBlock idx : getCurrentBlocks())
     		{
     			if(isInXCenter(idx.xCenter))
     			{
@@ -560,34 +561,34 @@ public class PixyCmu5 implements PIDSource
     /**
      * Returns the offset from the X center, negative indicates center is to the left, positive indicates it is to the right.
      * $
-     * @param frame PixyFrame representing the detected object
+     * @param block PixyBlock representing the detected object
      * @return number of pixels from center
      */
-    public static double xCenterDelta(PixyFrame frame)
+    public static double xCenterDelta(PixyBlock block)
     {
-    	return frame.xCenter - PixyCmu5.PIXY_X_CENTER;
+    	return block.xCenter - PixyCmu5.PIXY_X_CENTER;
     }
     
-    public static double yCenterDelta(PixyFrame frame)
+    public static double yCenterDelta(PixyBlock block)
     {
-    	return frame.yCenter - PixyCmu5.PIXY_Y_CENTER;
+    	return block.yCenter - PixyCmu5.PIXY_Y_CENTER;
     }
     
     
     /**
      * Returns the number of degrees along the horizontal axis the detected object is away from the center
      * $
-     * @param frame PixyFrame representing the detected object
+     * @param block PixyBlock representing the detected object
      * @return degrees along x axis from center of field of view
      */
-    public static double degreesXFromCenter(PixyFrame frame)
+    public static double degreesXFromCenter(PixyBlock block)
     {
-    	return xCenterDelta(frame)*PIXY_X_DEG_PER_PIXEL;
+    	return xCenterDelta(block)*PIXY_X_DEG_PER_PIXEL;
     }
     
-    public static double degreesYFromCenter(PixyFrame frame)
+    public static double degreesYFromCenter(PixyBlock block)
     {
-    	return yCenterDelta(frame)*PIXY_Y_DEG_PER_PIXEL;
+    	return yCenterDelta(block)*PIXY_Y_DEG_PER_PIXEL;
     }
     
     
@@ -598,10 +599,10 @@ public class PixyCmu5 implements PIDSource
      **************************************************************/
     
     /**
-     * @return currentFrames - Returns the thread synchronized list of current frames
+     * @return currentBlocks - Returns the thread synchronized list of current blocks
      */
-    public synchronized List<PixyFrame> getCurrentframes() {
-		return m_currentframes;
+    public synchronized List<PixyBlock> getCurrentBlocks() {
+		return m_currentblocks;
 	}
     
     /**
@@ -748,18 +749,18 @@ public class PixyCmu5 implements PIDSource
 	 */
 	@Override
 	public double pidGet() {
-		List<PixyFrame> pixyFrames;
+		List<PixyBlock> pixyBlocks;
 		
-		// Synchronize with the thread and latch the current frames
-		pixyFrames = this.getCurrentframes();
+		// Synchronize with the thread and latch the current Blocks
+		pixyBlocks = this.getCurrentBlocks();
 		
-		// If there are no frames processed or the data is too old
-		if(pixyFrames.isEmpty() || !isDataFresh())
+		// If there are no Blocks processed or the data is too old
+		if(pixyBlocks.isEmpty() || !isDataFresh())
 		{
 			return 0;
 		}
 		
-		return PixyCmu5.degreesXFromCenter(pixyFrames.get(0));
+		return PixyCmu5.degreesXFromCenter(pixyBlocks.get(0));
 	}
 
 	

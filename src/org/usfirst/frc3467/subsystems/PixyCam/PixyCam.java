@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
 
 import org.usfirst.frc3467.subsystems.PixyCam.PixyCmu5;
-import org.usfirst.frc3467.subsystems.PixyCam.PixyCmu5.PixyFrame;
 
 /**
  *
@@ -20,7 +19,7 @@ public class PixyCam extends Subsystem {
     public static final int PIXY_I2C_SHOOTER_ADDR = 0xa9;
 	
 	PixyCmu5 pixyCamera;
-	List<PixyCmu5.PixyFrame> pixyFrame;
+	List<PixyCmu5.PixyBlock> pixyBlocks;
 	boolean cameraPresent = false;
 	int m_i2c_address;
 	String m_targetName = "";
@@ -36,7 +35,7 @@ public class PixyCam extends Subsystem {
     		 * at a 1 second period. This data will be accessible by calling pixyCamera.getCurrentframes()
     		 */
     		m_i2c_address = i2c_address;
-    		pixyFrame = new LinkedList<PixyCmu5.PixyFrame>();
+    		pixyBlocks = new LinkedList<PixyCmu5.PixyBlock>();
     	    pixyCamera = new PixyCmu5(i2c_address, I2C.Port.kMXP, 0.25);
     	    cameraPresent = true;
 	        SmartDashboard.putString("Pixy Cam", "Running normally");
@@ -72,17 +71,17 @@ public class PixyCam extends Subsystem {
     	double degFromCenterY2 = 0;
 
     	// If an object is detected in the frame
-		if(cameraPresent && !pixyCamera.getCurrentframes().isEmpty())
+		if(cameraPresent && !pixyCamera.getCurrentBlocks().isEmpty())
 		{
 			SmartDashboard.putBoolean(m_targetName + " Target Detected", true);
 			
 			try
 			{
 				// Calculate the number of degrees from the center the current frame 
-				degFromCenterX = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(0));
-				degFromCenterY = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(0));
-				degFromCenterX2 = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(1));
-				degFromCenterY2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(1));
+				degFromCenterX = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentBlocks().get(0));
+				degFromCenterY = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentBlocks().get(0));
+				degFromCenterX2 = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentBlocks().get(1));
+				degFromCenterY2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentBlocks().get(1));
 				SmartDashboard.putString(m_targetName + " AimX", Double.toString(degFromCenterX) + " degrees from target");
 				SmartDashboard.putString(m_targetName + " AimY", Double.toString(degFromCenterY) + " degrees from target");
 				SmartDashboard.putString(m_targetName + " AimX2", Double.toString(degFromCenterX2) + " degrees from target");
@@ -124,14 +123,14 @@ public class PixyCam extends Subsystem {
     	double tapePosy = 0;
 
     	// If an object is detected in the frame
-		if(cameraPresent && !pixyCamera.getCurrentframes().isEmpty())
+		if(cameraPresent && !pixyCamera.getCurrentBlocks().isEmpty())
 		{
 			SmartDashboard.putBoolean("Target Detected", true);
 			
 			try
 			{
-	    		tapePosy = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(0));
-	    		tapePosx = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(0));
+	    		tapePosy = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentBlocks().get(0));
+	    		tapePosx = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentBlocks().get(0));
 			} catch (RuntimeException ex ) { }
 
 		} else {
@@ -171,8 +170,7 @@ public class PixyCam extends Subsystem {
     protected void calculateGearStuff() throws NoTargetException {
     	double tapePosx = 0;
     	double tapePosx2 = 0;
-    	PixyFrame tape1 = pixyFrame.get(0);
-    	PixyFrame tape2 = pixyFrame.get(1);
+    	
     	double height1 = 0;
     	double height2 = 0;
     	double width1 = 0;
@@ -181,18 +179,18 @@ public class PixyCam extends Subsystem {
     	double area2 = 0;
     	
     	// If an object is detected in the frame
-		if(cameraPresent && !pixyCamera.getCurrentframes().isEmpty())
+		if(cameraPresent && !pixyCamera.getCurrentBlocks().isEmpty())
 		{
 			SmartDashboard.putBoolean("Target Detected", true);
 			
 			try
 			{
-	    		tapePosx = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentframes().get(0));
-	    		tapePosx2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentframes().get(1));
-	    		height1 = tape1.height;
-	        	height2 = tape2.height;
-	        	width1 = tape1.width;
-	        	width2 = tape2.width;
+	    		tapePosx = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentBlocks().get(0));
+	    		tapePosx2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentBlocks().get(1));
+	    		height1 = pixyCamera.getCurrentBlocks().get(0).height;
+	        	height2 = pixyCamera.getCurrentBlocks().get(1).height;
+	        	width1 = pixyCamera.getCurrentBlocks().get(0).width;
+	        	width2 = pixyCamera.getCurrentBlocks().get(1).width;
 	        	area1 = height1*width1;
 	        	area2 = height2*width2;
 	    		
