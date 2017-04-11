@@ -104,7 +104,7 @@ public class AutoAim extends CommandBase {
     	
     	if(yOut > 0.0 ) {
     		yOut = Math.pow(yOut*yOut, 1.0/3);
-    	}
+    	}	
     	else if (yOut < 0.0) {
     		yOut = -Math.pow(yOut*yOut, 1.0/3);
     	}

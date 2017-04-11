@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoShootRight extends CommandGroup {
 
     public AutoShootRight() {
-    	addSequential(new OperateShooter());
-    	addSequential(new DriveSideways(3.0, -0.5));
+    	addSequential(new OperateShooter(true));
+    	addSequential(new DriveSideways(1.375, -0.5));
   }
 }

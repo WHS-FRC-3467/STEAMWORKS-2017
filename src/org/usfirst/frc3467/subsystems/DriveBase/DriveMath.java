@@ -10,7 +10,7 @@ class DriveMath{
   private  double zVelMax;
   private  double robotWidth;
   public  double yEncFt = 12417;
-  private  double xEncFt = yEncFt*11160/12417;
+  private  double xEncFt = 2*yEncFt*1859.96/3911.40;//11160/12417;
   
   private  double loopT;
   

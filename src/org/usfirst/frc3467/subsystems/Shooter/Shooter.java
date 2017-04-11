@@ -17,9 +17,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Shooter extends Subsystem {
     
-	public final static double SPINNER_SPEED_DEFAULT = 0.3;
+	public final static double SPINNER_SPEED_DEFAULT = 0.2;
 	public final static double BELT_SPEED_DEFAULT = -0.4;
-	public final static double SHOOTER_SPEED_DEFAULT = 3.5;
+	public final static double SHOOTER_SPEED_DEFAULT = 3.55;
 
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	

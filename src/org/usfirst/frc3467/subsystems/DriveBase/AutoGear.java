@@ -75,10 +75,16 @@ public class AutoGear extends CommandBase{
 		}
 */		
 /*
+ 		distanceNeo1 = 6.0*228.0/height*4.0*Math.tan(.82/2.0);
+ 		distanceNeo2 = 6.0*228.0/height*4.0*Math.tan(.82/2.0);
+ 		centerNeo = Math.pow(distance1Neo, 2.0)/2.0 + Math.pow(distance2Neo, 2.0)/2.0;
+ 		aNeo = Math.pow(centerNeo, 2.0) + Math.pow(distance1Neo, 2.00) + Math.pow(distance2Neo, 2.0)/2.0*distance1Neo*distance2Neo;
+ 		angleNeo = Math.atan(29.0*Math.tan(.82/2.0)/228.0) + Math.asin(center*Math.sin(aNeo)/centerNeo);
+ 		
  		distance1 = 6.0*199.0/height1*4.0*Math.tan(.82/2.0);
-		distance2 = 6*199.0/height2*4*Math.tan(.82/2.0);
+		distance2 = 6.0*199.0/height2*4.0*Math.tan(.82/2.0);
 		center = Math.pow(distance1, 2.0)/2.0 + Math.pow(distance2,  2.0)/2.0;
-		a = Math.pow(center, 2) + Math.pow(distance1, 2) + Math.pow(distance2, 2)/2*distance1*distance2;
+		a = Math.pow(center, 2.0) + Math.pow(distance1, 2.0) + Math.pow(distance2, 2.0)/2.0*distance1*distance2;
 		angle = Math.atan(29.0*Math.tan(.82/2.0)/199.0) + Math.asin(center*Math.sin(a)/center);
 */		
 		angle = (tapePosx + tapePosx2) / 2.0;
@@ -89,6 +95,7 @@ public class AutoGear extends CommandBase{
 			if (xOut < -0.2) xOut = -0.2;
 		}else{
 			xOut = 0.0;
+			//yOut = 0.0;
 		}
 		
 /*

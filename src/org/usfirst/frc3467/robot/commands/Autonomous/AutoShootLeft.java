@@ -13,6 +13,6 @@ public class AutoShootLeft extends CommandGroup {
 
     public AutoShootLeft() {
     	addSequential(new OperateShooter(true));
-    	addSequential(new DriveSideways(3.0, 0.5));
+    	addSequential(new DriveSideways(2.75, 0.5));
     }
 }
