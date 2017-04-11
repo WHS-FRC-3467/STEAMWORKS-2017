@@ -12,9 +12,9 @@ public class DriveBot extends CommandBase {
 	int _driveMode = DriveBase.driveMode_FieldCentric;
 
 	// Scale factor for reducing inputs during Precision Mode
-	static final double precision_scaleFactor = 0.15;
-	static final double precision_scaleFactor2 = 0.2;
-	static final double precision_turningFactor = .6;
+	static final double precision_scaleFactor = 0.3;
+	static final double precision_scaleFactor2 = 0.3;
+	static final double precision_turningFactor = .5;
 	
 	// Don't adjust the sticks
 	static final boolean NO_STICK_ADJUSTMENT = true;

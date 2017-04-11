@@ -252,15 +252,16 @@ public class DriveBase extends Subsystem {
 	
 	private void setScaleConstants(){
 		   hScale.enableLinearScale();
-		   hScale.setScaleFactor(.6);
+		   hScale.setScaleFactor(.45);
 		   hScale.setRotationFactor(.1);
 		   
-		   hScale.setNetAccel(1);
+		   hScale.setNetAccel(.8);
 		   
 		   hScale.setStepScaleRange(.3);
 		  // hScale.setStepScaleFactor(.75);
 		  // hScale.enableStepScale();
 		   hScale.disableStepScale();
+		   
 		  }
 	
     /*
@@ -457,6 +458,8 @@ public class DriveBase extends Subsystem {
 		rTalon1.setPosition(0);
 		cTalon1.setPosition(0);
 	}
+	
+	
 	
 	public CANTalon getMiddleTalon(){
 		return cTalon1;

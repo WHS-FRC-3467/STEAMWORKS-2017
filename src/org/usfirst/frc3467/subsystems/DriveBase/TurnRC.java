@@ -1,15 +1,17 @@
-package org.usfirst.frc3467.robot.commands;
+package org.usfirst.frc3467.subsystems.DriveBase;
+
+import org.usfirst.frc3467.robot.CommandBase;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class NeoAutoGear extends Command {
+public class TurnRC extends CommandBase {
 
-    public NeoAutoGear() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	
+    public TurnRC() {
+        requires(driveBase);
     }
 
     // Called just before this Command runs the first time
@@ -18,6 +20,7 @@ public class NeoAutoGear extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//driveBase.driveRobotCentric(0, 0, );
     }
 
     // Make this return true when this Command no longer needs to run execute()

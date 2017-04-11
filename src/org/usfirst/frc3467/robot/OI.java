@@ -19,6 +19,7 @@ import org.usfirst.frc3467.subsystems.DriveBase.ResetEncoders;
 import org.usfirst.frc3467.subsystems.DriveBase.UpdatePIDFConstants;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearIntake;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearDeliver;
+import org.usfirst.frc3467.subsystems.GearCatcher.IntakeWithoutTransistor;
 import org.usfirst.frc3467.subsystems.GearCatcher.TestGearIntake;
 import org.usfirst.frc3467.subsystems.GearCatcher.ToggleGearCatcherPosition;
 import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
@@ -98,7 +99,8 @@ public class OI {
 		new JoystickButton(driverPad, Gamepad.bButton).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new DriveBot(DriveBase.driveMode_Precision));
 		//new JoystickButton(driverPad, Gamepad.xButton).whenActive(new AutoAim());
-		//new JoystickButton(driverPad, Gamepad.startButton).whenActive(new AutoGear());
+		new JoystickButton(driverPad, Gamepad.startButton).whenActive(new AutoGear());
+		new JoystickButton(driverPad, Gamepad.backButton).whileActive(new IntakeWithoutTransistor());
 
 		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
 		//new DPadLeft(driverPad).whenActive(new AutoAim()));
