@@ -19,7 +19,8 @@ public class Shooter extends Subsystem {
     
 	public final static double SPINNER_SPEED_DEFAULT = 0.2;
 	public final static double BELT_SPEED_DEFAULT = -0.4;
-	public final static double SHOOTER_SPEED_DEFAULT = 3.55;
+	//public final static double SHOOTER_SPEED_DEFAULT = 3.55;
+	public final static double SHOOTER_SPEED_DEFAULT = .65;
 
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
@@ -27,7 +28,8 @@ public class Shooter extends Subsystem {
     private Victor spinnerMotor;
 
     private static final double BELT_SPEED_FACTOR = 5000.0;
-	private static final double SHOOTER_SPEED_FACTOR = 10000.0;
+	//private static final double SHOOTER_SPEED_FACTOR = 10000.0;
+	private static final double SHOOTER_SPEED_FACTOR = 1.0;
 	
 	private double shooterF, shooterP, shooterI, shooterD;
 	private double beltF, beltP, beltI, beltD;
@@ -62,8 +64,8 @@ public class Shooter extends Subsystem {
     	shooterTalon1.setI(shooterI);
     	shooterTalon1.setD(shooterD); 
 		shooterTalon1.setIZone(0);
-		shooterTalon1.changeControlMode(TalonControlMode.Speed);
-		//shooterTalon1.changeControlMode(TalonControlMode.PercentVbus);
+		//shooterTalon1.changeControlMode(TalonControlMode.Speed);
+		shooterTalon1.changeControlMode(TalonControlMode.PercentVbus);
 		
 		//Shooter Talon 2
 		shooterTalon2.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -79,8 +81,8 @@ public class Shooter extends Subsystem {
     	shooterTalon1.setI(shooterI);
     	shooterTalon1.setD(shooterD); 
 		shooterTalon2.setIZone(0);
-		shooterTalon2.changeControlMode(TalonControlMode.Speed);
-		//shooterTalon2.changeControlMode(TalonControlMode.PercentVbus);
+		//shooterTalon2.changeControlMode(TalonControlMode.Speed);
+		shooterTalon2.changeControlMode(TalonControlMode.PercentVbus);
 
     	beltF = 0.4;
     	beltP = 0.01;
