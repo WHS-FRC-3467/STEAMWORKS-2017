@@ -1,5 +1,6 @@
 package org.usfirst.frc3467.robot.commands.Autonomous;
 
+import org.usfirst.frc3467.subsystems.DriveBase.AutoAim;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveStraight;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearDeliver;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearHold;
@@ -12,8 +13,10 @@ public class GearAutoForward extends CommandGroup {
     public GearAutoForward() {
     	addParallel(new ToggleIntakeRamp());
     	addParallel(new GearHold());
+    	//addParallel(new TurnTurret());
     	addSequential(new DriveStraight(101400));
     	addSequential(new GearDeliver());
     	addSequential(new DriveStraight(-50000));
+    	addSequential(new AutoAim());
     }
 }
