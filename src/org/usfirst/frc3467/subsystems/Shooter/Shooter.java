@@ -19,7 +19,8 @@ public class Shooter extends Subsystem {
     
 	public final static double SPINNER_SPEED_DEFAULT = 0.2;
 	public final static double BELT_SPEED_DEFAULT = -0.4;
-	public final static double SHOOTER_SPEED_DEFAULT = 3.55;
+	public final static double SHOOTER_SPEED_DEFAULT = 4.5;
+	//public final static double SHOOTER_SPEED_DEFAULT = .62;
 
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
@@ -28,6 +29,7 @@ public class Shooter extends Subsystem {
 
     private static final double BELT_SPEED_FACTOR = 5000.0;
 	private static final double SHOOTER_SPEED_FACTOR = 10000.0;
+	//private static final double SHOOTER_SPEED_FACTOR = 1.0;
 	
 	private double shooterF, shooterP, shooterI, shooterD;
 	private double beltF, beltP, beltI, beltD;
