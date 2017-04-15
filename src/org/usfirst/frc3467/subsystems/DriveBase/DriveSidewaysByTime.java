@@ -1,45 +1,38 @@
 package org.usfirst.frc3467.subsystems.DriveBase;
 
 import org.usfirst.frc3467.robot.CommandBase;
-import org.usfirst.frc3467.subsystems.DriveBase.DriveStraight;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.command.Command;
+/**
+ *
+ */
+public class DriveSidewaysByTime extends CommandBase {
 
-public class Turn extends CommandBase {
-
-	double LEFTSPEED;
-	double RIGHTSPEED;
+	double m_speed = 0.0;
 	
-    public Turn(double leftspeed, double rightspeed) {
-    	requires(driveBase);
-    	LEFTSPEED = leftspeed;
-    	RIGHTSPEED = rightspeed;
-    	setTimeout(3);
+    public DriveSidewaysByTime(double time, double speed) {
+        requires(driveBase);
+        m_speed = speed;
+        setTimeout(time);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	driveBase.setVoltageMode();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	driveBase.driveTank(-.3, .3);
+    	driveBase.driveSideways(m_speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return isTimedOut();
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	driveBase.driveTank(0,0);
-    	driveBase.setSpeedMode();
+    	driveBase.driveSideways(0.0);
     }
 
     // Called when another command which requires one or more of the same

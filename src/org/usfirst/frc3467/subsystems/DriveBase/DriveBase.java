@@ -310,6 +310,15 @@ public class DriveBase extends Subsystem {
     }
    
     /*
+     *	Simply Drive Sideways 
+     */
+    public void driveSideways(double moveValue) {
+
+    	cTalon1.set(moveValue * m_centerMaxOutput);
+    	refreshPIDF();
+    }
+
+    /*
      *	Drive arcade style (one or two sticks - forward/back and rotate specified separately) 
      */
     public void driveArcade(double moveValue, double rotateValue) {
@@ -447,6 +456,13 @@ public class DriveBase extends Subsystem {
 		return ((lTalon1.getPosition()) + ((-1.0)*rTalon1.getPosition()))/2;
 	}
 
+	/* 
+	 * Get the distance driven sideways
+	 */
+	public double getDistanceSideways() {
+		return (cTalon1.getPosition());
+	}
+	
 	public void reportEncoders() {
 		SmartDashboard.putNumber("Left Encoder", lTalon1.getPosition());
 		SmartDashboard.putNumber("Right Encoder", rTalon1.getPosition());			
