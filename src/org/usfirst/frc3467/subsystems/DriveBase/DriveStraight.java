@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
  */
 public class DriveStraight extends CommandBase {
 
-	private static final double TOLERANCE = 5000;
+	private static final double TOLERANCE = 2000;
 	
 	private PIDController m_pid;
 	private double m_maxSpeed = 0.3;
