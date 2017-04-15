@@ -62,26 +62,6 @@ public class DriveStraight extends CommandBase {
 		buildController();
 	}
 	
-	public DriveStraight(boolean curve, double curveValue) {
-		requires(driveBase);
-		
-		m_manualCurve = curve;
-		m_curveValue = curveValue;
-		
-		buildController2();
-	}
-	
-	public DriveStraight(boolean killme){
-		if(killme == true){
-			driveBase.getRightTalon().set(-0.5);
-			driveBase.getLeftTalon().set(0.5);
-		}else if(killme == false){
-			driveBase.getRightTalon().set(0.5);
-			driveBase.getLeftTalon().set(-0.5);
-		}// alfredo vegas
-	}
-	
-	
 	public DriveStraight(double distance, double maxSpeed, double timeOut) {
 		requires(driveBase);
 		m_distance = distance;
@@ -122,39 +102,6 @@ public class DriveStraight extends CommandBase {
         m_pid.setOutputRange((m_maxSpeed * -1.0), m_maxSpeed);
         m_pid.setSetpoint(m_distance);
     }
-	
-private void buildController2() {
-		
-		m_pid = new PIDController(KP, KI, KD,
-                new PIDSource() {
-                    PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
-
-                    public double pidGet() {
-                        return gyro.getAngle();
-                    }
-
-                    public void setPIDSourceType(PIDSourceType pidSource) {
-                      m_sourceType = pidSource;
-                    }
-
-                    public PIDSourceType getPIDSourceType() {
-                        return m_sourceType;
-                    }
-                },
-                new PIDOutput() {
-                	
-                	public void pidWrite(double d) {
-                		// Drive with the magnitude returned by the PID calculation, 
-                		// and curve the opposite way from the current yaw reading
-                		// (Divide yaw by 180 so as to normalize to -1.0 / + 1.0)
-                		//driveBase.drive(-d, -(ahrs.getGyroYaw()/240.));
-                		setCurve(d);
-                }});
-		
-        m_pid.setAbsoluteTolerance(TOLERANCE);
-        m_pid.setOutputRange((m_maxSpeed * -1.0), m_maxSpeed);
-        m_pid.setSetpoint(m_distance);
-    }
 
 	//If the robot has hit a wall, SAY SOMETHING!
 	public boolean hasStalled() {
@@ -169,11 +116,10 @@ private void buildController2() {
 	public void setCurve(double d) {
 		if (m_manualCurve) {
 			driveBase.drive(d, m_curveValue);
+		} else {
+			driveBase.drive(d, -(gyro.getAngle()/240.));
 		}
-			else  {
-				driveBase.drive(d, -(gyro.getAngle()/240.));
-				}
-		}
+	}
 	
 	
     // Called just before this Command runs the first time
