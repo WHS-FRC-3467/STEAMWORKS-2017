@@ -21,10 +21,8 @@ public class DriveSideways extends CommandBase {
 	private PIDController m_pid;
 	private double m_maxSpeed = 0.3;
 	private double m_distance = 0.0;
-	private double m_pastDistance = 0.0;
-	private int m_count = 0;
 	
-	private double KP = 1.0;
+	private double KP = 1.5;
 	private double KI = 0.0;
 	private double KD = 2.0;
 	
@@ -88,17 +86,6 @@ public class DriveSideways extends CommandBase {
         m_pid.setSetpoint(m_distance);
     }
 
-	//If the robot has hit a wall, SAY SOMETHING!
-	public boolean hasStalled() {
-		if (driveBase.getDistanceSideways() - m_pastDistance <= 1) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	
     // Called just before this Command runs the first time
     protected void initialize() {
     	// Get everything in a safe starting state.
@@ -106,30 +93,18 @@ public class DriveSideways extends CommandBase {
     	driveBase.resetEncoders();
     	m_pid.reset();
         m_pid.enable();
-        m_count = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	driveBase.reportEncoders();
-    	
-    	if (hasStalled()) {
-    		m_count++;
-    	}
-    	
-    	m_pastDistance = driveBase.getDistanceSideways();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	double error = m_pid.getError();
     	
-    	if (m_count >= 100) {
-    		return true;
-    	}
-    	else {
-    		return (error >= 0 && error <= TOLERANCE);
-    	}
+   		return (error >= 0 && error <= TOLERANCE);
     }
 
     // Called once after isFinished returns true

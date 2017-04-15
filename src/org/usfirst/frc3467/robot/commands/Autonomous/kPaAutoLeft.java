@@ -18,17 +18,18 @@ public class kPaAutoLeft extends CommandGroup {
     	
     	// Drive sideways out to align with hopper trigger plate
     	// DriveSideways( distance, maxSpeed)
-    	addSequential(new DriveSideways(10000, 0.5));
+    	addSequential(new DriveSideways(62000, 0.8));
     	
     	// Drive forward to trigger hopper
     	// DriveStraight(distance, maxSpeed)
-    	addSequential(new DriveStraight(5000, 0.7));
+    	addSequential(new DriveStraight(52000, 0.4));
+    	addSequential(new DriveStraight(-400, 0.4));
     	
     	// Drive sideways to better align with hopper exit
     	// DriveSideways( distance, maxSpeed)
-    	addSequential(new DriveSideways(-2000, 0.5));
+    	addSequential(new DriveSideways(-10100, 0.6));
     	
     	// Begin to shoot using auto tracking
     	addSequential(new OperateShooter(true));
-    }
+   }
 }

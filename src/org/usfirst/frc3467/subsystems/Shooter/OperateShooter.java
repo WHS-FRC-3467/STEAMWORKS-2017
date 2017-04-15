@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class OperateShooter extends CommandBase {
 
 	// Time to continue running shooter wheels after no more user input  
-	double m_seconds_timeout = 10.0;
+	double m_seconds_timeout = 15.0;
 	
 	// Autonomous mode?
 	boolean m_autoMode = false;
