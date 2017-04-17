@@ -24,7 +24,7 @@ public class Shooter extends Subsystem {
 
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
-    private CANTalon beltTalon, shooterTalon1, shooterTalon2;
+    private CANTalon beltTalon, shooterTalon1, shooterTalon2, turretMotor;
     private Victor spinnerMotor;
 
     private static final double BELT_SPEED_FACTOR = 5000.0;
@@ -36,9 +36,17 @@ public class Shooter extends Subsystem {
 	
     public Shooter() {
     	
-    	beltTalon = new CANTalon(RobotMap.shooterConv_Talon3);
     	shooterTalon1 = new CANTalon(RobotMap.shooterWheel_Talon1);
-    	shooterTalon2 = new CANTalon(RobotMap.shooterWheel_Talon2);
+		shooterTalon1.changeControlMode(TalonControlMode.Speed);
+		//shooterTalon1.changeControlMode(TalonControlMode.PercentVbus);
+
+    	//shooterTalon2 = new CANTalon(RobotMap.shooterWheel_Talon2);
+		//shooterTalon2.changeControlMode(TalonControlMode.Follower);
+		//shooterTalon2.set(RobotMap.shooterWheel_Talon1);
+
+		turretMotor = new CANTalon(RobotMap.turret_Talon);
+    	
+		beltTalon = new CANTalon(RobotMap.shooterFeedTower_Talon);
     	spinnerMotor = new Victor(RobotMap.shooterSpin_Victor);
     	
     	shooterF = 0.012;
@@ -50,7 +58,11 @@ public class Shooter extends Subsystem {
     	SmartDashboard.putNumber("Shooter I", shooterI);
     	SmartDashboard.putNumber("Shooter D", shooterD);
 
-    	//Shooter Talon 1
+    	// Turret Rotation Motor
+    	//turretMotor.changeControlMode(TalonControlMode.Position);
+    	turretMotor.changeControlMode(TalonControlMode.PercentVbus);
+    	
+    	// Shooter Talons - Settings for 1 will be passed to 2
     	shooterTalon1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooterTalon1.reverseSensor(true);
 		
@@ -64,27 +76,9 @@ public class Shooter extends Subsystem {
     	shooterTalon1.setI(shooterI);
     	shooterTalon1.setD(shooterD); 
 		shooterTalon1.setIZone(0);
-		shooterTalon1.changeControlMode(TalonControlMode.Speed);
-		//shooterTalon1.changeControlMode(TalonControlMode.PercentVbus);
 		
-		//Shooter Talon 2
-		shooterTalon2.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooterTalon2.reverseSensor(true);
-	
-		shooterTalon2.configNominalOutputVoltage(+0.0f, -0.0f);
-		shooterTalon2.configPeakOutputVoltage(+12.0f, 0.0f);
-		shooterTalon2.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
-		shooterTalon2.SetVelocityMeasurementWindow(2);
-		shooterTalon2.setProfile(0);
-    	shooterTalon1.setF(shooterF);
-    	shooterTalon1.setP(shooterP);
-    	shooterTalon1.setI(shooterI);
-    	shooterTalon1.setD(shooterD); 
-		shooterTalon2.setIZone(0);
-		shooterTalon2.changeControlMode(TalonControlMode.Speed);
-		//shooterTalon2.changeControlMode(TalonControlMode.PercentVbus);
-
-    	beltF = 0.4;
+    	// Tower Belt
+		beltF = 0.4;
     	beltP = 0.01;
     	beltI = 0.0;
     	beltD = 0.0;
@@ -109,7 +103,7 @@ public class Shooter extends Subsystem {
 		beltTalon.changeControlMode(TalonControlMode.Speed);
 
 		shooterTalon1.enableBrakeMode(false);
-		shooterTalon2.enableBrakeMode(false);
+//		shooterTalon2.enableBrakeMode(false);
 		beltTalon.enableBrakeMode(false);
 
     }
@@ -119,6 +113,10 @@ public class Shooter extends Subsystem {
     
     public void SpinnerRun(double speed) {
     	spinnerMotor.set(speed);
+    }
+    
+    public void TurretRun(double speed) {
+    	turretMotor.set(speed);
     }
     
     public void BeltRun(double speed) {
@@ -150,24 +148,18 @@ public class Shooter extends Subsystem {
        		shooterTalon1.setP( shooterP = SmartDashboard.getNumber("Shooter P", shooterP));
        		shooterTalon1.setI( shooterI = SmartDashboard.getNumber("Shooter I", shooterI));
        		shooterTalon1.setD( shooterD = SmartDashboard.getNumber("Shooter D", shooterD));
-        	shooterTalon2.setF(shooterF);
-        	shooterTalon2.setP(shooterP);
-        	shooterTalon2.setI(shooterI);
-        	shooterTalon2.setD(shooterD); 
        	}
 
        	SmartDashboard.putNumber("ShooterWheel Target:", shooterTarget);
     	SmartDashboard.putNumber("ShooterWheel1 Actual:", shooterTalon1.get());
-       	SmartDashboard.putNumber("ShooterWheel2 Actual:", shooterTalon2.get());
+//       	SmartDashboard.putNumber("ShooterWheel2 Actual:", shooterTalon2.get());
        		
        	shooterTalon1.set(shooterTarget);
-    	shooterTalon2.set(shooterTarget);
  	
     }
     
     public void ShooterStop() {
       	shooterTalon1.set(0.0);
-      	shooterTalon2.set(0.0);
     }
  }
 
