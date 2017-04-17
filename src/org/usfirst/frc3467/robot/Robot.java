@@ -17,6 +17,8 @@ import org.usfirst.frc3467.robot.commands.Autonomous.DoNothing;
 import org.usfirst.frc3467.robot.commands.Autonomous.JustDrive;
 import org.usfirst.frc3467.robot.commands.Autonomous.GearAutoForward;
 import org.usfirst.frc3467.robot.commands.Autonomous.GearAutoRight;
+import org.usfirst.frc3467.robot.commands.Autonomous.kPaAutoLeft;
+import org.usfirst.frc3467.robot.commands.Autonomous.kPaAutoRight;
 
 	
 /**
@@ -51,6 +53,9 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Shoot Left (BLUE)", new AutoShootLeft());
 		autoChooser.addObject("Shoot Right (RED)", new AutoShootRight());
 		autoChooser.addObject("Auto Gear Right", new GearAutoRight());
+		autoChooser.addObject("Hopper shoot Right (RED)", new kPaAutoRight());
+		autoChooser.addObject("Hopper shoot Left (BLUE)", new kPaAutoLeft());
+		
 			SmartDashboard.putData("Autonomous Command Chooser", autoChooser);
 
     }
