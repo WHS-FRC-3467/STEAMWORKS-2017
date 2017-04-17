@@ -60,7 +60,7 @@ public class OperateShooter extends CommandBase {
     		// Can't get distance; keep ShooterVelocity at default value
     	}
      	
-    	shooter.BeltRun(Shooter.BELT_SPEED_DEFAULT);
+//    	shooter.BeltRun(Shooter.BELT_SPEED_DEFAULT);
     	shooter.ShooterRun(shooterVelocity);    	
 
        if (!m_autoMode) {
@@ -74,7 +74,8 @@ public class OperateShooter extends CommandBase {
 	
 	       		// Run spinner at speed determined by Left Trigger movement (0.0 -> 1.0)
 	           	shooter.SpinnerRun(leftTrigger * Shooter.SPINNER_SPEED_DEFAULT);
-	
+	        	shooter.BeltRun(leftTrigger * Shooter.BELT_SPEED_DEFAULT);
+	        	
 	           	// Tell the timer that we are still working
 	           	m_timeOutTimer.reset();
 	
@@ -89,6 +90,7 @@ public class OperateShooter extends CommandBase {
            {
         	   // ... then run spinner at max speed
         	   shooter.SpinnerRun(Shooter.SPINNER_SPEED_DEFAULT);
+        	   shooter.BeltRun(Shooter.BELT_SPEED_DEFAULT);
            }
        }
     }

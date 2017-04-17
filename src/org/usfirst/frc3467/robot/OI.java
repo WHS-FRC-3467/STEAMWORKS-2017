@@ -31,6 +31,7 @@ import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunBelt;
 import org.usfirst.frc3467.subsystems.Shooter.RunShooter;
 import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
+import org.usfirst.frc3467.subsystems.Shooter.RunTurret;
 import org.usfirst.frc3467.subsystems.Shooter.Shooter;
 import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
 import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
@@ -121,8 +122,9 @@ public class OI {
 
 		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunSpinner(Shooter.SPINNER_SPEED_DEFAULT));
 		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunSpinner(-1 * Shooter.SPINNER_SPEED_DEFAULT));
-		new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunBelt(Shooter.BELT_SPEED_DEFAULT));
-		new JoystickButton(operatorPad, Gamepad.aButton).whileActive(new RunBelt(-1 * Shooter.BELT_SPEED_DEFAULT));
+		//new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunBelt(Shooter.BELT_SPEED_DEFAULT));
+		//new JoystickButton(operatorPad, Gamepad.aButton).whileActive(new RunBelt(-1 * Shooter.BELT_SPEED_DEFAULT));
+		new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunTurret());
 
 		new DPadUp(operatorPad).whenActive(new LiftTractionPlates());
 		new DPadDown(operatorPad).whenActive(new DropTractionPlates());

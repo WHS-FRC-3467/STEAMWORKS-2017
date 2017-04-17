@@ -36,9 +36,22 @@ public class RobotMap {
 	// Climber - Same as Center Drivebase Talon
 	
 	// Shooter - Contact Wheels
-	public static final int shooterWheel_Talon1 = 9; //top wheel
-	public static final int shooterWheel_Talon2 = 10; //bottom wheel
-	public static final int shooterConv_Talon3 = 11; // tower conveyor belt
+	public static final int shooterWheel_Talon1 = 10; // ("Shooter 3 on bot")
+//	public static final int shooterWheel_Talon2 = 9; // ("Shooter 2 on bot")
+	public static final int shooterWheel_Talon2 = 12;
+
+	// Shooter - Turret
+	//	public static final int turret_Talon = 12; //tower rotation
+	public static final int turret_Talon = 9; // tower rotation
+
+	// Shooter - Feed
+	public static final int shooterFeedTower_Talon = 11; // tower conveyer belt ("Shooter 1 on bot")
+
+	
+	// 9 - sHOOTER 2 - POWERING TURRET, NO ENCODER WIRE
+	// 10 - sHOOTER 3 - POWERING MOTOR W/ ENCODER
+	// 11 - shOOTER 1 - POWERING tOWER W/ ENCODER
+	
 	
 	//
 	// VICTORS - PWM Control
