@@ -9,7 +9,7 @@ class DriveMath{
   private  double yVelMax;
   private  double zVelMax;
   private  double robotWidth;
-  public  double yEncFt = 12417;
+  public  double yEncFt = 3812/10;
   private  double xEncFt = 2*yEncFt*1859.96/3911.40;//11160/12417;
   
   private  double loopT;
@@ -198,7 +198,6 @@ class DriveMath{
     //rotation limiting, Linear Acceleration
     double turningFactor = Math.abs(zTgt*robotWidth/2);
     
-    
     //velocity limiting
     if(xTgt > xVelMax){
      xTgt = xVelMax;
@@ -224,12 +223,12 @@ class DriveMath{
     
     if(turningFactor != 0){
       if(yTgt+turningFactor>yVelMax)
-        yTgt = yVelMax-turningFactor;
-      else if(yTgt+turningFactor < -1*yVelMax)
-        yTgt = -1*yVelMax+turningFactor;
+        yTgt = yVelMax-turningFactor-2;
+      else if(yTgt-turningFactor < -1*yVelMax)
+        yTgt = -1*yVelMax+turningFactor+2;
       if(ratio != 0)
         xTgt = yTgt*ratio;
-      //System.out.println(turningFactor+"    "+xTgt);
+      System.out.println(turningFactor+"    "+yTgt);
     }
     
     //resetting
