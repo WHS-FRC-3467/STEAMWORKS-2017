@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class OperateShooter extends CommandBase {
 
 	// Time to continue running shooter wheels after no more user input  
-	double m_seconds_timeout = 15.0;
+	double m_seconds_timeout = 10.0;
 	
 	// Autonomous mode?
 	boolean m_autoMode = false;
@@ -29,11 +29,11 @@ public class OperateShooter extends CommandBase {
         this.setInterruptible(false);
     }
     
-    public OperateShooter(boolean inAuto) {
+    public OperateShooter(boolean inAuto, double seconds_timeout) {
         requires(shooter);
         m_timeOutTimer = new Timer();
         m_autoMode = inAuto;
-        m_seconds_timeout = 6.0;
+        m_seconds_timeout = seconds_timeout;
         this.setInterruptible(false);
 	}
 
@@ -60,7 +60,7 @@ public class OperateShooter extends CommandBase {
     		// Can't get distance; keep ShooterVelocity at default value
     	}
      	
-//    	shooter.BeltRun(Shooter.BELT_SPEED_DEFAULT);
+    	shooter.BeltRun(Shooter.BELT_SPEED_DEFAULT);
     	shooter.ShooterRun(shooterVelocity);    	
 
        if (!m_autoMode) {

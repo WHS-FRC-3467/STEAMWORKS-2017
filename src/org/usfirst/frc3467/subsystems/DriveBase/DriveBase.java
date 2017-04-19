@@ -124,19 +124,25 @@ public class DriveBase extends Subsystem {
 		 */
 		lTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
 		lTalon1.configPeakOutputVoltage(+12.0f, -12.0f);
+		lTalon1.setNominalClosedLoopVoltage(12.0);
 		lTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		lTalon1.SetVelocityMeasurementWindow(10);
 		lTalon1.setProfile(0);
 		leftTalon.setPID(OUTERPID_P, OUTERPID_I, OUTERPID_D, OUTERPID_F);
 		
 		rTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
 		rTalon1.configPeakOutputVoltage(+12.0f, -12.0f);
+		rTalon1.setNominalClosedLoopVoltage(12.0);
 		rTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		rTalon1.SetVelocityMeasurementWindow(10);
 		rTalon1.setProfile(0);
 		rightTalon.setPID(OUTERPID_P, OUTERPID_I, OUTERPID_D, OUTERPID_F);
 		
 		cTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
 		cTalon1.configPeakOutputVoltage(+12.0f, -12.0f);
+		cTalon1.setNominalClosedLoopVoltage(12.0);
 		cTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_1Ms);
+		cTalon1.SetVelocityMeasurementWindow(10);
 		cTalon1.setProfile(0);
 		centerTalon.setPID(CENTERPID_P, CENTERPID_I, CENTERPID_D, CENTERPID_F);
 
@@ -226,7 +232,7 @@ public class DriveBase extends Subsystem {
         /*
          *  Set maximum velocity of our wheels (in counts per 0.1 second)
 	     *	
-		 *  Encoders: 2048 ticks per revolution
+		 *  Encoders: (2048 * 4) ticks per revolution
 	     *	
 	     *	Outer Wheel Circumference. = 4 in * 3.14159	
 	     *	Center Wheel Circumference = 3.5 in * 3.14159
@@ -234,16 +240,16 @@ public class DriveBase extends Subsystem {
 	     *	Outer Wheel: 1 wheel rotation per 2 encoder rotations
 	     *  Center Wheel: 44 wheel rotation per 33 encoder rotations
 	     *
-	     *	16fps -> 6,258 counts/0.1 seconds (Left & Right)
-		 *			 2,763 counts/0.1 seconds (Center)
+	     *	16fps -> 25,033 counts/0.1 seconds (Left & Right)
+		 *			 11,053 counts/0.1 seconds (Center)
 		 *
 		 *	Values computed by the RobotDrive code from the OI input (usually -1 -> +1)
 		 *	will be multiplied by this value before being sent to the controllers' set() methods.
 		 *
 		 *	If drive stick(s) max out too early, lower this value.
 	     */
-		m_outerMaxOutput = 4500. ; //6258.0;  // encoder counts per 0.1 seconds (native units)
-		m_centerMaxOutput = 1500. ;//2763.0;
+		m_outerMaxOutput = 4500. ; //25033.;  // encoder counts per 0.1 seconds (native units)
+		m_centerMaxOutput = 1500. ;//11053.;
 	}
 	
 	public TalonControlMode getControlMode() {

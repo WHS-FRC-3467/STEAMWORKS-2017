@@ -30,6 +30,6 @@ public class kPaAutoLeft extends CommandGroup {
     	addSequential(new DriveSideways(-10100, 0.6));
     	
     	// Begin to shoot using auto tracking
-    	addSequential(new OperateShooter(true));
+    	addSequential(new OperateShooter(true, 12.0));
    }
 }
