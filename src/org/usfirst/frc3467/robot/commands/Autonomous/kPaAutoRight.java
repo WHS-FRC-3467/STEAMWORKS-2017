@@ -35,8 +35,7 @@ public class kPaAutoRight extends CommandGroup {
     	addSequential(new DriveStraight(300, 0.2));
     	
       	// Begin to shoot using auto tracking
-    	addSequential(new OperateShooter(true));
-       	addSequential(new OperateShooter(true));
+    	addSequential(new OperateShooter(true, 12.0));
         
     }
 }
