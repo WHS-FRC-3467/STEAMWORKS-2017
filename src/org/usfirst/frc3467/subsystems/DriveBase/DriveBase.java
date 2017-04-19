@@ -252,10 +252,10 @@ public class DriveBase extends Subsystem {
 	
 	private void setScaleConstants(){
 		   hScale.enableLinearScale();
-		   hScale.setScaleFactor(.45);
-		   hScale.setRotationFactor(.1);
+		   hScale.setScaleFactor(1);
+		   hScale.setRotationFactor(4.5);
 		   
-		   hScale.setNetAccel(.8);
+		   hScale.setNetAccel(11);
 		   
 		   hScale.setStepScaleRange(.3);
 		  // hScale.setStepScaleFactor(.75);
@@ -269,7 +269,7 @@ public class DriveBase extends Subsystem {
      */
 	public void driveRobotCentric(double x, double y, double z) {
 	     
-	     hScale.set(x, y, z);
+	     hScale.set(x*16, y*16, z);
 	     
 	     if (tractionFeetState == true && 
 	      (x > 0.05 || y > 0.05 || z > 0.05 ||
