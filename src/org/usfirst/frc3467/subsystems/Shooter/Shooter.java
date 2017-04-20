@@ -19,16 +19,16 @@ public class Shooter extends Subsystem {
     
 	public final static double SPINNER_SPEED_DEFAULT = 0.4;
 	public final static double BELT_SPEED_DEFAULT = -0.45;
-	public final static double SHOOTER_SPEED_DEFAULT = 3.9;
+	public final static double SHOOTER_SPEED_DEFAULT = 4.7;
 	//public final static double SHOOTER_SPEED_DEFAULT = .62;
 
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
-    private CANTalon beltTalon, shooterTalon1, shooterTalon2, turretMotor;
+    private CANTalon beltTalon, shooterTalon1, shooterTalon2;
     private Victor spinnerMotor;
 
     private static final double BELT_SPEED_FACTOR = 5000.0;
-	private static final double SHOOTER_SPEED_FACTOR = 10000.0;
+	private static final double SHOOTER_SPEED_FACTOR = 10000.0/8.0;
 	//private static final double SHOOTER_SPEED_FACTOR = 1.0;
 	
 	private double shooterF, shooterP, shooterI, shooterD;
@@ -44,24 +44,18 @@ public class Shooter extends Subsystem {
 		//shooterTalon2.changeControlMode(TalonControlMode.Follower);
 		//shooterTalon2.set(RobotMap.shooterWheel_Talon1);
 
-		turretMotor = new CANTalon(RobotMap.turret_Talon);
-    	
 		beltTalon = new CANTalon(RobotMap.shooterFeedTower_Talon);
     	spinnerMotor = new Victor(RobotMap.shooterSpin_Victor);
     	
-    	shooterF = 0.012;
-    	shooterP = 0.4;
+    	shooterF = 0.015;
+    	shooterP = 0.55;
     	shooterI = 0.0;
-    	shooterD = 0.0;
+    	shooterD = 0.4;
     	SmartDashboard.putNumber("Shooter F", shooterF);
 	   	SmartDashboard.putNumber("Shooter P", shooterP);
     	SmartDashboard.putNumber("Shooter I", shooterI);
     	SmartDashboard.putNumber("Shooter D", shooterD);
 
-    	// Turret Rotation Motor
-    	//turretMotor.changeControlMode(TalonControlMode.Position);
-    	turretMotor.changeControlMode(TalonControlMode.PercentVbus);
-    	
     	// Shooter Talons - Settings for 1 will be passed to 2
     	shooterTalon1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooterTalon1.reverseSensor(true);
@@ -79,7 +73,8 @@ public class Shooter extends Subsystem {
 		shooterTalon1.setIZone(0);
 		
     	// Tower Belt
-		beltF = 0.4;
+/*
+  		beltF = 0.4;
     	beltP = 0.01;
     	beltI = 0.0;
     	beltD = 0.0;
@@ -90,10 +85,10 @@ public class Shooter extends Subsystem {
 
 		beltTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		//beltTalon.reverseSensor(true);
-		
+*/		
 		beltTalon.configNominalOutputVoltage(+0.0f, -0.0f);
 		beltTalon.configPeakOutputVoltage(+12.0f, -12.0f);
-		beltTalon.setNominalClosedLoopVoltage(12.0);
+/*		beltTalon.setNominalClosedLoopVoltage(12.0);
 		beltTalon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_5Ms);
 		beltTalon.SetVelocityMeasurementWindow(10);
 		beltTalon.setProfile(0);
@@ -103,7 +98,9 @@ public class Shooter extends Subsystem {
 		beltTalon.setD(beltD);
 		beltTalon.setIZone(0);
 		beltTalon.changeControlMode(TalonControlMode.Speed);
-
+*/
+		beltTalon.changeControlMode(TalonControlMode.PercentVbus);
+		
 		shooterTalon1.enableBrakeMode(false);
 //		shooterTalon2.enableBrakeMode(false);
 		beltTalon.enableBrakeMode(false);
@@ -117,12 +114,9 @@ public class Shooter extends Subsystem {
     	spinnerMotor.set(speed);
     }
     
-    public void TurretRun(double speed) {
-    	turretMotor.set(speed);
-    }
-    
     public void BeltRun(double speed) {
     	
+/*
        	if (flg_tuning) {
        		beltTalon.setF( beltF = SmartDashboard.getNumber("Belt F", beltF));
 			beltTalon.setP( beltP = SmartDashboard.getNumber("Belt P", beltP));
@@ -132,9 +126,11 @@ public class Shooter extends Subsystem {
 
        	double beltTarget = speed * Shooter.BELT_SPEED_FACTOR;
     	beltTalon.set(beltTarget);
-       	
-    	SmartDashboard.putNumber("ShooterBelt Target:", beltTarget);
-       	SmartDashboard.putNumber("ShooterBelt Speed:", beltTalon.get());
+ */
+       	beltTalon.set(speed);
+           	
+//    	SmartDashboard.putNumber("ShooterBelt Target:", beltTarget);
+//       	SmartDashboard.putNumber("ShooterBelt Speed:", beltTalon.get());
     	
     }
     

@@ -6,9 +6,9 @@ import org.usfirst.frc3467.robot.OI;
 /**
  *
  */
-public class RunTurret extends CommandBase {
+public class CalibrateTurret extends CommandBase {
 
-    public RunTurret() {
+	public CalibrateTurret() {
        requires(shooterTurret);
     }
 
@@ -18,13 +18,11 @@ public class RunTurret extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-     	double velocity = OI.operatorPad.getRightStickX();
-     	shooterTurret.runTurret(velocity * 0.3);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return shooterTurret.calibrateTurret();
     }
 
     // Called once after isFinished returns true

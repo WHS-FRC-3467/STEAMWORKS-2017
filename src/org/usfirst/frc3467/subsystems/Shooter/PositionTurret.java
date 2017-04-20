@@ -6,10 +6,13 @@ import org.usfirst.frc3467.robot.OI;
 /**
  *
  */
-public class RunTurret extends CommandBase {
+public class PositionTurret extends CommandBase {
 
-    public RunTurret() {
+	double m_angle = 0.0;
+	
+	public PositionTurret(double angle) {
        requires(shooterTurret);
+       m_angle = angle;
     }
 
     // Called just before this Command runs the first time
@@ -18,18 +21,16 @@ public class RunTurret extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-     	double velocity = OI.operatorPad.getRightStickX();
-     	shooterTurret.runTurret(velocity * 0.3);
+    	shooterTurret.setDesiredAngle(m_angle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooterTurret.runTurret(0.0);
     }
 
     // Called when another command which requires one or more of the same

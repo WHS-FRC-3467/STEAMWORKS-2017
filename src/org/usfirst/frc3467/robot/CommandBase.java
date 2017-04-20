@@ -1,8 +1,10 @@
 package org.usfirst.frc3467.robot;
 
 import java.util.Vector;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
 import org.usfirst.frc3467.robot.OI;
 import org.usfirst.frc3467.subsystems.Brownout.Brownout;
 import org.usfirst.frc3467.subsystems.Climber.Climber;
@@ -12,6 +14,7 @@ import org.usfirst.frc3467.subsystems.Gyro.Gyro;
 import org.usfirst.frc3467.subsystems.PixyCam.PixyCam;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
 import org.usfirst.frc3467.subsystems.Shooter.Shooter;
+import org.usfirst.frc3467.subsystems.Shooter.ShooterTurret;
 
 public abstract class CommandBase extends Command {
 	
@@ -26,6 +29,7 @@ public abstract class CommandBase extends Command {
 	public static PixyCam pixyCamGear;
 	public static Pneumatics pneumatics;
 	public static Shooter shooter;
+	public static ShooterTurret shooterTurret;
 	
 	// Create vector with subsystems as elements for global subsystem commands
 	public static Vector <Subsystem> subsystemList;
@@ -54,6 +58,8 @@ public abstract class CommandBase extends Command {
 		subsystemList.addElement(gyro);
 		shooter = new Shooter();
 		subsystemList.addElement(shooter);
+		shooterTurret = new ShooterTurret();
+		subsystemList.addElement(shooterTurret);		
 		pixyCamShooter = new PixyCam(PixyCam.PIXY_I2C_SHOOTER_ADDR);
 		subsystemList.addElement(pixyCamShooter);
 		pixyCamGear = new PixyCam(PixyCam.PIXY_I2C_GEAR_ADDR);

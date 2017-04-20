@@ -14,7 +14,7 @@ public class RobotMap {
 
 	// Digital Ports
 	public static final int gearTransistor = 1; 	// Input for gear sensing transistor in gear pickup
-
+	public static final int turretMaximum = 2; // Limit switch at turret maximum position
 	
 	//
 	// CANTalons - CAN Control
