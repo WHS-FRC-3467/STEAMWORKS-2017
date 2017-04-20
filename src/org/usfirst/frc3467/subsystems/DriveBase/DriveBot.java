@@ -117,7 +117,7 @@ public class DriveBot extends CommandBase {
 			return 0.0;
 		}
 
-		if (NO_STICK_ADJUSTMENT == true) {
+		if (NO_STICK_ADJUSTMENT) {
 			return input;
 		}
         /*

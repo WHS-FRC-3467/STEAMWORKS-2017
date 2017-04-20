@@ -9,7 +9,6 @@ import org.usfirst.frc3467.robot.control.triggers.GamepadLeftTrigger;
 import org.usfirst.frc3467.robot.control.triggers.GamepadRightTrigger;
 import org.usfirst.frc3467.subsystems.Climber.ClimberDrive;
 import org.usfirst.frc3467.subsystems.Climber.ToggleLatchPosition;
-import org.usfirst.frc3467.subsystems.DriveBase.AutoAim;
 import org.usfirst.frc3467.subsystems.DriveBase.AutoGear;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
@@ -26,16 +25,15 @@ import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
 import org.usfirst.frc3467.subsystems.Pneumatics.ToggleIntakeRamp;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionDeploy;
 import org.usfirst.frc3467.subsystems.Pneumatics.testCommands.tractionRetract;
+import org.usfirst.frc3467.subsystems.Shooter.AutoAim;
+import org.usfirst.frc3467.subsystems.Shooter.CalibrateTurret;
 import org.usfirst.frc3467.subsystems.Shooter.HaltShooter;
 import org.usfirst.frc3467.subsystems.Shooter.OperateShooter;
-import org.usfirst.frc3467.subsystems.Shooter.RunBelt;
-import org.usfirst.frc3467.subsystems.Shooter.RunShooter;
-import org.usfirst.frc3467.subsystems.Shooter.RunSpinner;
+import org.usfirst.frc3467.subsystems.Shooter.PositionTurret;
+import org.usfirst.frc3467.subsystems.Shooter.RunFeed;
 import org.usfirst.frc3467.subsystems.Shooter.RunTurret;
-import org.usfirst.frc3467.subsystems.Shooter.Shooter;
-import org.usfirst.frc3467.subsystems.Shooter.TestBelt;
 import org.usfirst.frc3467.subsystems.Shooter.TestShooter;
-import org.usfirst.frc3467.subsystems.Shooter.TestSpinner;
+import org.usfirst.frc3467.subsystems.Shooter.TestFeed;
 
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -90,7 +88,7 @@ public class OI {
 		 * 
 		 */
 		
-		new GamepadLeftTrigger(driverPad).whenActive(new OperateShooter());
+		new GamepadLeftTrigger(driverPad).whenActive(new OperateShooter(true));
 		new GamepadRightTrigger(driverPad).whenActive(new ToggleGearCatcherPosition());
 		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new GearIntake());
 		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new GearDeliver());
@@ -120,8 +118,8 @@ public class OI {
 		new JoystickButton(operatorPad, Gamepad.leftBumper).whenActive(new GearIntake());
 		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new GearDeliver());
 
-		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunSpinner(Shooter.SPINNER_SPEED_DEFAULT));
-		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunSpinner(-1 * Shooter.SPINNER_SPEED_DEFAULT));
+		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunFeed(1.0));
+		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunFeed(-1.0));
 		//new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunBelt(Shooter.BELT_SPEED_DEFAULT));
 		//new JoystickButton(operatorPad, Gamepad.aButton).whileActive(new RunBelt(-1 * Shooter.BELT_SPEED_DEFAULT));
 		new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunTurret());
@@ -138,12 +136,12 @@ public class OI {
 		SmartDashboard.putData("tractionFeetRetract", new tractionRetract());
 		SmartDashboard.putData("tractionFeetDeploy", new tractionDeploy());
 
-		SmartDashboard.putData("Run Shooter", new RunShooter(0.1));
-		SmartDashboard.putData("Test Shooter Belt", new TestBelt());
-		SmartDashboard.putData("Test Shooter Spinner", new TestSpinner());
+		SmartDashboard.putData("Test Shooter Feed", new TestFeed());
 		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
 		SmartDashboard.putData("Zero Encoders", new ResetEncoders());
 		SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());
+		SmartDashboard.putData("Calibrate Turret", new CalibrateTurret());
+		SmartDashboard.putData("Set Turret Position", new PositionTurret());
 		
 	}
 }

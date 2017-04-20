@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class TestSpinner extends CommandBase {
+public class TestFeed extends CommandBase {
 	
 	double speed;
 
-    public TestSpinner() {
-  //      requires(shooter);
-    	SmartDashboard.putNumber("Set Spinner Speed", .4);
+    public TestFeed() {
+        requires(shooterFeed);
+    	SmartDashboard.putNumber("Set Shooter Feed Speed", 1.0);
     }
 
     // Called just before this Command runs the first time
@@ -21,8 +21,8 @@ public class TestSpinner extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-    	speed = SmartDashboard.getNumber("Set Spinner Speed", .1);
-    	shooter.SpinnerRun(speed);
+    	speed = SmartDashboard.getNumber("Set Shooter Feeder Speed", 1.0);
+    	shooterFeed.runFeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,7 +32,7 @@ public class TestSpinner extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.SpinnerRun(0.0);
+    	shooterFeed.runFeed(0.0);
     	
     }
 

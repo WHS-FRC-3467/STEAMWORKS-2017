@@ -13,9 +13,8 @@ public class TestShooter extends CommandBase {
     double speed;
     		
 	public TestShooter() {
-        requires(shooter);
-    	SmartDashboard.putNumber("Set Shooter Speed", Shooter.SHOOTER_SPEED_DEFAULT);
-    	SmartDashboard.putNumber("Set Belt Speed", Shooter.BELT_SPEED_DEFAULT);
+        requires(shooterFlywheel);
+    	SmartDashboard.putNumber("Set Shooter Speed", ShooterFlywheel.SHOOTER_SPEED_DEFAULT);
     }
 
     // Called just before this Command runs the first time
@@ -24,10 +23,8 @@ public class TestShooter extends CommandBase {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	speed = SmartDashboard.getNumber("Set Shooter Speed", Shooter.SHOOTER_SPEED_DEFAULT);
-    	shooter.ShooterRun(speed);
-    	speed = SmartDashboard.getNumber("Set Belt Speed", Shooter.BELT_SPEED_DEFAULT);
-    	shooter.BeltRun(speed);
+    	speed = SmartDashboard.getNumber("Set Shooter Speed", ShooterFlywheel.SHOOTER_SPEED_DEFAULT);
+    	shooterFlywheel.runShooter(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,8 +34,7 @@ public class TestShooter extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.ShooterStop();
-    	shooter.BeltRun(0.0);
+    	shooterFlywheel.stopShooter();
     }
 
     // Called when another command which requires one or more of the same

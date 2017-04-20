@@ -13,7 +13,8 @@ import org.usfirst.frc3467.subsystems.GearCatcher.GearCatcher;
 import org.usfirst.frc3467.subsystems.Gyro.Gyro;
 import org.usfirst.frc3467.subsystems.PixyCam.PixyCam;
 import org.usfirst.frc3467.subsystems.Pneumatics.Pneumatics;
-import org.usfirst.frc3467.subsystems.Shooter.Shooter;
+import org.usfirst.frc3467.subsystems.Shooter.ShooterFeed;
+import org.usfirst.frc3467.subsystems.Shooter.ShooterFlywheel;
 import org.usfirst.frc3467.subsystems.Shooter.ShooterTurret;
 
 public abstract class CommandBase extends Command {
@@ -28,8 +29,10 @@ public abstract class CommandBase extends Command {
 	public static PixyCam pixyCamShooter;
 	public static PixyCam pixyCamGear;
 	public static Pneumatics pneumatics;
-	public static Shooter shooter;
+	//public static Shooter shooter;
 	public static ShooterTurret shooterTurret;
+	public static ShooterFlywheel shooterFlywheel;
+	public static ShooterFeed shooterFeed;
 	
 	// Create vector with subsystems as elements for global subsystem commands
 	public static Vector <Subsystem> subsystemList;
@@ -56,10 +59,14 @@ public abstract class CommandBase extends Command {
 		subsystemList.addElement(gearcatch);
 		gyro = new Gyro();
 		subsystemList.addElement(gyro);
-		shooter = new Shooter();
-		subsystemList.addElement(shooter);
+		//shooter = new Shooter();
+		//subsystemList.addElement(shooter);
+		shooterFlywheel = new ShooterFlywheel();
+		subsystemList.addElement(shooterFlywheel);		
 		shooterTurret = new ShooterTurret();
 		subsystemList.addElement(shooterTurret);		
+		shooterFeed = new ShooterFeed();
+		subsystemList.addElement(shooterFeed);		
 		pixyCamShooter = new PixyCam(PixyCam.PIXY_I2C_SHOOTER_ADDR);
 		subsystemList.addElement(pixyCamShooter);
 		pixyCamGear = new PixyCam(PixyCam.PIXY_I2C_GEAR_ADDR);
