@@ -7,6 +7,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,11 +18,14 @@ public class ShooterTurret extends Subsystem {
     
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
+	// Limit Switch @ maximum position
+	DigitalInput atMaxPos;
+	
     // Turret constants
-    private static double HARD_MAX_TURRET_ANGLE = 109.5;
-    private static double HARD_MIN_TURRET_ANGLE = -116.5;
-    private static double SOFT_MAX_TURRET_ANGLE = 108.0;
-    private static double SOFT_MIN_TURRET_ANGLE = -115.0;
+    private static double HARD_MAX_TURRET_ANGLE = 90;
+    private static double HARD_MIN_TURRET_ANGLE = -90;
+    private static double SOFT_MAX_TURRET_ANGLE = 80.0;
+    private static double SOFT_MIN_TURRET_ANGLE = -80.0;
     private static double TURRET_ONTARGET_TOLERANCE = 1.0;
     private static double TICKS_PER_TURRET_ROTATION = (2048 * 4 * 6);// (2048 * 4) ticks / rotationDriver * 6 rotationDriver / rotationTurret
    
@@ -31,6 +35,8 @@ public class ShooterTurret extends Subsystem {
 	
     public ShooterTurret() {
     	
+		atMaxPos = new DigitalInput(RobotMap.turretMaximum);
+
     	// Turret Rotation Motor
 		turretMotor = new CANTalon(RobotMap.turret_Talon);
     	
@@ -82,6 +88,26 @@ public class ShooterTurret extends Subsystem {
     public void runTurret(double speed) {
     	turretMotor.changeControlMode(TalonControlMode.PercentVbus);
     	turretMotor.set(speed);
+    	SmartDashboard.putNumber("Turret Position", turretMotor.getPosition());
+    	SmartDashboard.putBoolean("Turret @Max?", atMaxPos.get());    	
+    }
+    
+    public boolean calibrateTurret() {
+    	
+    	boolean retVal = false;
+
+    	turretMotor.changeControlMode(TalonControlMode.PercentVbus);
+    	
+    	if (atMaxPos.get() == true) {
+    		resetTurretAtMax();
+        	turretMotor.set(0.0);
+        	retVal = true; 
+    	} else {
+    		turretMotor.set(0.25);
+    	}
+    	SmartDashboard.putNumber("Turret Position", turretMotor.getPosition());
+    	SmartDashboard.putBoolean("Turret @Max?", atMaxPos.get());
+    	return retVal;
     }
     
     protected double convertDegrees2Ticks(double degrees) {
