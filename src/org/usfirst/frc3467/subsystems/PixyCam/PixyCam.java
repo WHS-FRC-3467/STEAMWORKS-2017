@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
 
 import org.usfirst.frc3467.subsystems.PixyCam.PixyCmu5;
+import org.usfirst.frc3467.subsystems.PixyCam.PixyCmu5.PixyBlock;
 
 /**
  *
@@ -66,30 +67,27 @@ public class PixyCam extends Subsystem {
     public void detectTarget() {
 
     	double degFromCenterX = 0;
-    	double degFromCenterX2 = 0;
     	double degFromCenterY = 0;
-    	double degFromCenterY2 = 0;
 
     	// If an object is detected in the frame
 		if(cameraPresent && !pixyCamera.getCurrentBlocks().isEmpty())
 		{
 			SmartDashboard.putBoolean(m_targetName + " Target Detected", true);
 			
-			try
-			{
-				// Calculate the number of degrees from the center the current frame 
-				degFromCenterX = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentBlocks().get(0));
-				degFromCenterY = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentBlocks().get(0));
-				degFromCenterX2 = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentBlocks().get(1));
-				degFromCenterY2 = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentBlocks().get(1));
-				SmartDashboard.putString(m_targetName + " AimX", Double.toString(degFromCenterX) + " degrees from target");
-				SmartDashboard.putString(m_targetName + " AimY", Double.toString(degFromCenterY) + " degrees from target");
-				SmartDashboard.putString(m_targetName + " AimX2", Double.toString(degFromCenterX2) + " degrees from target");
-				SmartDashboard.putString(m_targetName + " AimY2", Double.toString(degFromCenterY2) + " degrees from target");
-			
-			} catch  (RuntimeException ex ){
-
+			for (int i = 0; i < 2; i++) {
+				try
+				{
+					// Calculate the number of degrees from the center the current frame 
+					degFromCenterX = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentBlocks().get(i));
+					degFromCenterY = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentBlocks().get(i));
+					SmartDashboard.putString(m_targetName + " AimX[" + Integer.toString(i) + "]", Double.toString(degFromCenterX) + " degrees from target");
+					SmartDashboard.putString(m_targetName + " AimY[" + Integer.toString(i) + "]", Double.toString(degFromCenterY) + " degrees from target");
+				
+				} catch  (RuntimeException ex ){
+	
+				}
 			}
+
 		} else {
 			SmartDashboard.putBoolean(m_targetName + " Target Detected", false);
 			SmartDashboard.putString(m_targetName + " AimX", "No visible target");
@@ -131,6 +129,8 @@ public class PixyCam extends Subsystem {
 			{
 	    		tapePosy = PixyCmu5.degreesYFromCenter(pixyCamera.getCurrentBlocks().get(0));
 	    		tapePosx = PixyCmu5.degreesXFromCenter(pixyCamera.getCurrentBlocks().get(0));
+				SmartDashboard.putString(m_targetName + " AimX[0]", Double.toString(tapePosx) + " degrees from target");
+				SmartDashboard.putString(m_targetName + " AimY[0]", Double.toString(tapePosy) + " degrees from target");
 			} catch (RuntimeException ex ) { }
 
 		} else {

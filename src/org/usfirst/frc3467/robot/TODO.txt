@@ -59,6 +59,8 @@ TODO TODO TODO
 Test DriveStraight command with Gyro enabled
 Test DriveTurn command with Gyro
 
+??Automatically Switch drivebase from Speed mode to Voltage mode if an encoder is lost
+
 Turret implementation
 
 Implement two-gyro code
