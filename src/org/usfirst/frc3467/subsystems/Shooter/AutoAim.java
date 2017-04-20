@@ -1,4 +1,4 @@
-package org.usfirst.frc3467.subsystems.DriveBase;
+package org.usfirst.frc3467.subsystems.Shooter;
 
 import org.usfirst.frc3467.robot.CommandBase;
 import org.usfirst.frc3467.subsystems.PixyCam.NoTargetException;
@@ -24,13 +24,12 @@ public class AutoAim extends CommandBase {
 	}
 	
 	public AutoAim(double targDist) {
-		requires(driveBase);
 		requires(pixyCamShooter);
 
 		targetDistance = targDist;
 		
 		this.setInterruptible(true);
-		SmartDashboard.putString("DriveMode", "Auto Aim");
+		SmartDashboard.putString("Shooter", "Auto Aim");
 	}
 	
 	public void initialize() {
@@ -82,18 +81,6 @@ public class AutoAim extends CommandBase {
 			return;
 		}
 
-		/*if(xOut > 0){
-    	xOut = Math.sqrt(xOut);
-    	}else{
-    		xOut = -1*Math.sqrt(xOut*-1);
-    	}
-    	
-    	if(yOut > 0){
-        	yOut = Math.sqrt(yOut);
-        }else{
-        	yOut = -1*Math.sqrt(yOut*-1);
-        }*/
-    	
     	// Modulate the X & Y terms
     	if(xOut > 0.0) {
     		xOut = Math.pow(xOut*xOut, 1.0/3);

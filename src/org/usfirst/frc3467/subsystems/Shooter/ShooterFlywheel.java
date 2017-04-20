@@ -16,16 +16,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShooterFlywheel extends Subsystem {
     
-	public final static double SHOOTER_SPEED_DEFAULT = 3.9;
-	//public final static double SHOOTER_SPEED_DEFAULT = .62;
+	public final static double SHOOTER_SPEED_DEFAULT = 5875;
 
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
-    private CANTalon shooterTalon1, shooterTalon2;
+    private CANTalon shooterTalon1; //, shooterTalon2;
 
-	private static final double SHOOTER_SPEED_FACTOR = 10000.0;
-	//private static final double SHOOTER_SPEED_FACTOR = 1.0;
-	
 	private double shooterF, shooterP, shooterI, shooterD;
 	
     public ShooterFlywheel() {
@@ -38,10 +34,10 @@ public class ShooterFlywheel extends Subsystem {
 		//shooterTalon2.changeControlMode(TalonControlMode.Follower);
 		//shooterTalon2.set(RobotMap.shooterWheel_Talon1);
 
-    	shooterF = 0.012;
-    	shooterP = 0.4;
+    	shooterF = 0.015;
+    	shooterP = 0.55;
     	shooterI = 0.0;
-    	shooterD = 0.0;
+    	shooterD = 0.4;
     	SmartDashboard.putNumber("Shooter F", shooterF);
 	   	SmartDashboard.putNumber("Shooter P", shooterP);
     	SmartDashboard.putNumber("Shooter I", shooterI);
@@ -53,8 +49,9 @@ public class ShooterFlywheel extends Subsystem {
 		
 		shooterTalon1.configNominalOutputVoltage(+0.0f, -0.0f);
 		shooterTalon1.configPeakOutputVoltage(+12.0f, 0.0f);
+		shooterTalon1.setNominalClosedLoopVoltage(12.0);
 		shooterTalon1.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_5Ms);
-		shooterTalon1.SetVelocityMeasurementWindow(2);
+		shooterTalon1.SetVelocityMeasurementWindow(10);
 		shooterTalon1.setProfile(0);
     	shooterTalon1.setF(shooterF);
     	shooterTalon1.setP(shooterP);
@@ -70,9 +67,9 @@ public class ShooterFlywheel extends Subsystem {
     public void initDefaultCommand() {
     }
     
-    public void ShooterRun(double speed) {
+    public void runShooter(double speed) {
     	
-    	double shooterTarget = speed * ShooterFlywheel.SHOOTER_SPEED_FACTOR;
+    	double shooterTarget = speed;
     
     	// Only run Shooter one way!
     	if (shooterTarget < 0.0) shooterTarget = 0.0;
@@ -84,15 +81,16 @@ public class ShooterFlywheel extends Subsystem {
        		shooterTalon1.setD( shooterD = SmartDashboard.getNumber("Shooter D", shooterD));
        	}
 
+       	shooterTalon1.set(shooterTarget);
+
        	SmartDashboard.putNumber("ShooterWheel Target:", shooterTarget);
     	SmartDashboard.putNumber("ShooterWheel1 Actual:", shooterTalon1.get());
 //       	SmartDashboard.putNumber("ShooterWheel2 Actual:", shooterTalon2.get());
        		
-       	shooterTalon1.set(shooterTarget);
  	
     }
     
-    public void ShooterStop() {
+    public void stopShooter() {
       	shooterTalon1.set(0.0);
     }
  }

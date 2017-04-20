@@ -49,14 +49,6 @@ public class DriveSideways extends CommandBase {
     	buildController();
 	}
 	
-	public DriveSideways(double distance, double maxSpeed, double timeOut) {
-		requires(driveBase);
-		m_distance = distance;
-		m_maxSpeed = maxSpeed;
-		
-		setTimeout(timeOut);
-	}
-	
 	private void buildController() {
 		
 		m_pid = new PIDController(KP, KI, KD,

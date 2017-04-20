@@ -18,11 +18,16 @@ public class OperateShooter extends CommandBase {
 	// Autonomous mode?
 	boolean m_autoMode = false;
 
+	// Control on Driver pad?
+	boolean m_drvrCtrl = false;
+	
     Timer m_timeOutTimer;
 	
-    public OperateShooter( ) {
-        requires(shooter);
+    public OperateShooter(boolean drvrControl ) {
+        requires(shooterFlywheel);
+        requires(shooterFeed);
         m_timeOutTimer = new Timer();
+        m_drvrCtrl = drvrControl;
         
         // Don't allow interruptions; command will have to timeout on its own
         // This will prevent extra Trigger activations from starting a new instance of this command
@@ -30,11 +35,12 @@ public class OperateShooter extends CommandBase {
     }
     
     public OperateShooter(boolean inAuto, double seconds_timeout) {
-        requires(shooter);
+        requires(shooterFlywheel);
+        requires(shooterFeed);
         m_timeOutTimer = new Timer();
         m_autoMode = inAuto;
         m_seconds_timeout = seconds_timeout;
-        this.setInterruptible(false);
+        this.setInterruptible(true);
 	}
 
     // Called just before this Command runs the first time
@@ -47,7 +53,7 @@ public class OperateShooter extends CommandBase {
     protected void execute() {
 
         // Run shooter wheels under Velocity Control
-    	double shooterVelocity = Shooter.SHOOTER_SPEED_DEFAULT;
+    	double shooterVelocity = ShooterFlywheel.SHOOTER_SPEED_DEFAULT;
     	
     	try {
 			// Get distance to target
@@ -60,27 +66,30 @@ public class OperateShooter extends CommandBase {
     		// Can't get distance; keep ShooterVelocity at default value
     	}
      	
-    	shooter.BeltRun(Shooter.BELT_SPEED_DEFAULT);
-    	shooter.ShooterRun(shooterVelocity);    	
+    	shooterFlywheel.runShooter(shooterVelocity);    	
 
-       if (!m_autoMode) {
+    	if (!m_autoMode) {
 
     	   // Look for Left Trigger activation
-	       	double leftTrigger = OI.driverPad.getRawAxis(Gamepad.leftTrigger_Axis);
+	       	double leftTrigger = 0.0;
+	       	if (m_drvrCtrl == true) {
+	       		leftTrigger = OI.driverPad.getRawAxis(Gamepad.leftTrigger_Axis);
+	       	} else {
+	       		leftTrigger = OI.operatorPad.getRawAxis(Gamepad.leftTrigger_Axis);
+	       	}
 	       	if ( leftTrigger > 0.05) {
 	       		
 	       		// Drop traction plates
 	       		//driveBase.tractionExtend();
 	
-	       		// Run spinner at speed determined by Left Trigger movement (0.0 -> 1.0)
-	           	shooter.SpinnerRun(leftTrigger * Shooter.SPINNER_SPEED_DEFAULT);
-	        	shooter.BeltRun(leftTrigger * Shooter.BELT_SPEED_DEFAULT);
+	       		// Run shooter feed at speed determined by Left Trigger movement (0.0 -> 1.0)
+	           	shooterFeed.runFeed(leftTrigger);
 	        	
 	           	// Tell the timer that we are still working
 	           	m_timeOutTimer.reset();
 	
 	       	} else {
-	       		shooter.SpinnerRun(0.0);
+	       		shooterFeed.runFeed(0.0);
 	       		driveBase.tractionRetract();
 	       	}
        } else {
@@ -88,9 +97,8 @@ public class OperateShooter extends CommandBase {
            // Wait a second for shooter to spin up...
     	   if (super.timeSinceInitialized() >= 1.0)
            {
-        	   // ... then run spinner at max speed
-        	   shooter.SpinnerRun(Shooter.SPINNER_SPEED_DEFAULT);
-        	   shooter.BeltRun(Shooter.BELT_SPEED_DEFAULT);
+        	   // ... then run feed at max speed
+        	   shooterFeed.runFeed(1.0);
            }
        }
     }
@@ -102,9 +110,8 @@ public class OperateShooter extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.SpinnerRun(0.0);
-    	shooter.BeltRun(0.0);
-    	shooter.ShooterStop();
+    	shooterFeed.runFeed(0.0);
+    	shooterFlywheel.stopShooter();
     	m_timeOutTimer.stop();
     }
 

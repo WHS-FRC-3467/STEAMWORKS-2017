@@ -2,11 +2,14 @@
 package org.usfirst.frc3467.subsystems.Shooter;
 
 import org.usfirst.frc3467.robot.RobotMap;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
+import org.usfirst.frc3467.subsystems.Shooter.RunTurret;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,6 +23,7 @@ public class ShooterTurret extends Subsystem {
 	
 	// Limit Switch @ maximum position
 	DigitalInput atMaxPos;
+	Counter cntMaxPos;
 	
     // Turret constants
     private static double HARD_MAX_TURRET_ANGLE = 90;
@@ -35,7 +39,9 @@ public class ShooterTurret extends Subsystem {
 	
     public ShooterTurret() {
     	
-		atMaxPos = new DigitalInput(RobotMap.turretMaximum);
+		// Use a counter on the limit switch to make sure we catch all switch closings
+    	atMaxPos = new DigitalInput(RobotMap.turretMaximum);
+	    cntMaxPos = new Counter(atMaxPos);
 
     	// Turret Rotation Motor
 		turretMotor = new CANTalon(RobotMap.turret_Talon);
@@ -74,14 +80,19 @@ public class ShooterTurret extends Subsystem {
 		turretMotor.setMotionMagicAcceleration(turretAccel);
 
         // Use soft limits to make sure the turret doesn't try to spin too far
-		turretMotor.enableForwardSoftLimit(true);
-		turretMotor.enableReverseSoftLimit(true);
 		turretMotor.setForwardSoftLimit(convertDegrees2Ticks(SOFT_MAX_TURRET_ANGLE));
 		turretMotor.setReverseSoftLimit(convertDegrees2Ticks(SOFT_MIN_TURRET_ANGLE));
-
+		enableSoftLimits(true);
     }
 
+    public void enableSoftLimits(boolean set) {
+		turretMotor.enableForwardSoftLimit(set);
+		turretMotor.enableReverseSoftLimit(set);
+    }
+    
     public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        setDefaultCommand(new RunTurret());
     }
     
     // Run turret manually
@@ -92,24 +103,16 @@ public class ShooterTurret extends Subsystem {
     	SmartDashboard.putBoolean("Turret @Max?", atMaxPos.get());    	
     }
     
-    public boolean calibrateTurret() {
-    	
-    	boolean retVal = false;
-
-    	turretMotor.changeControlMode(TalonControlMode.PercentVbus);
-    	
-    	if (atMaxPos.get() == true) {
-    		resetTurretAtMax();
-        	turretMotor.set(0.0);
-        	retVal = true; 
-    	} else {
-    		turretMotor.set(0.25);
-    	}
-    	SmartDashboard.putNumber("Turret Position", turretMotor.getPosition());
-    	SmartDashboard.putBoolean("Turret @Max?", atMaxPos.get());
-    	return retVal;
+    // Has the max position limit switch been hit?
+    public boolean isMaxPosSwitchSet() {
+        return cntMaxPos.get() > 0;
     }
-    
+
+    // Initialize the max position limit switch
+    public void initializeMaxPosSwitch() {
+        cntMaxPos.reset();
+    }
+
     protected double convertDegrees2Ticks(double degrees) {
         return (degrees / 360.) * TICKS_PER_TURRET_ROTATION;
     }
@@ -133,14 +136,6 @@ public class ShooterTurret extends Subsystem {
     		turretMotor.setMotionMagicAcceleration(turretAccel = SmartDashboard.getNumber("Turret Accel", turretAccel));
        	}
         turretMotor.set(target);
-
-        SmartDashboard.putNumber("Turret Target:", angle);
-    	SmartDashboard.putNumber("Turret Actual:", convertTicks2Degrees(turretMotor.get()));  		
-    }
-    
-    // Set the desired angle relative to current angle
-    synchronized void setRelativeAngle(double diffAngle) {
-    	setDesiredAngle(getAngle() + diffAngle); 
     }
     
     // Tell the Turret it is at a given position.
@@ -150,14 +145,6 @@ public class ShooterTurret extends Subsystem {
 
     public synchronized double getAngle() {
         return convertTicks2Degrees(turretMotor.getPosition());
-    }
-
-    public synchronized boolean getForwardLimitSwitch() {
-        return turretMotor.isFwdLimitSwitchClosed();
-    }
-
-    public synchronized boolean getReverseLimitSwitch() {
-        return turretMotor.isRevLimitSwitchClosed();
     }
 
     public synchronized double getSetpoint() {
@@ -170,7 +157,7 @@ public class ShooterTurret extends Subsystem {
 
     // We are "OnTarget" if we are in position mode and close to the setpoint.
     public synchronized boolean isOnTarget() {
-        return (turretMotor.getControlMode() == TalonControlMode.Position
+        return (turretMotor.getControlMode() == TalonControlMode.MotionMagic
                 && Math.abs(getError()) < TURRET_ONTARGET_TOLERANCE);
     }
 
@@ -179,12 +166,10 @@ public class ShooterTurret extends Subsystem {
     }
 
     public void outputToSmartDashboard() {
-        SmartDashboard.putNumber("turret_error", getError());
-        SmartDashboard.putNumber("turret_angle", getAngle());
-        SmartDashboard.putNumber("turret_setpoint", getSetpoint());
-        SmartDashboard.putBoolean("turret_fwd_limit", getForwardLimitSwitch());
-        SmartDashboard.putBoolean("turret_rev_limit", getReverseLimitSwitch());
-        SmartDashboard.putBoolean("turret_on_target", isOnTarget());
+        SmartDashboard.putNumber("Turret SetPoint", getSetpoint());
+    	SmartDashboard.putNumber("Turret Actual", getAngle());  		
+        SmartDashboard.putNumber("Turret Error", getError());
+        SmartDashboard.putBoolean("Turret on Target?", isOnTarget());
     }
 
     public synchronized void zeroTurret() {
