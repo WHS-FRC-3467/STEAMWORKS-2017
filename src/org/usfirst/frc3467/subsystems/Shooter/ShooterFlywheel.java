@@ -20,7 +20,7 @@ public class ShooterFlywheel extends Subsystem {
 
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
-    private CANTalon shooterTalon1; //, shooterTalon2;
+    private CANTalon shooterTalon1, shooterTalon2;
 
 	private double shooterF, shooterP, shooterI, shooterD;
 	
@@ -30,9 +30,9 @@ public class ShooterFlywheel extends Subsystem {
 		shooterTalon1.changeControlMode(TalonControlMode.Speed);
 		//shooterTalon1.changeControlMode(TalonControlMode.PercentVbus);
 
-    	//shooterTalon2 = new CANTalon(RobotMap.shooterWheel_Talon2);
-		//shooterTalon2.changeControlMode(TalonControlMode.Follower);
-		//shooterTalon2.set(RobotMap.shooterWheel_Talon1);
+    	shooterTalon2 = new CANTalon(RobotMap.shooterWheel_Talon2);
+		shooterTalon2.changeControlMode(TalonControlMode.Follower);
+		shooterTalon2.set(RobotMap.shooterWheel_Talon1);
 
     	shooterF = 0.015;
     	shooterP = 0.55;
@@ -60,7 +60,7 @@ public class ShooterFlywheel extends Subsystem {
 		shooterTalon1.setIZone(0);
 		
 		shooterTalon1.enableBrakeMode(false);
-//		shooterTalon2.enableBrakeMode(false);
+		shooterTalon2.enableBrakeMode(false);
 
     }
 
@@ -85,7 +85,7 @@ public class ShooterFlywheel extends Subsystem {
 
        	SmartDashboard.putNumber("ShooterWheel Target:", shooterTarget);
     	SmartDashboard.putNumber("ShooterWheel1 Actual:", shooterTalon1.get());
-//       	SmartDashboard.putNumber("ShooterWheel2 Actual:", shooterTalon2.get());
+       	SmartDashboard.putNumber("ShooterWheel2 Actual:", shooterTalon2.get());
        		
  	
     }
