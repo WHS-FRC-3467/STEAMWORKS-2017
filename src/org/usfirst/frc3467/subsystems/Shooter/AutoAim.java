@@ -8,26 +8,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoAim extends CommandBase {
 
 	// Configurable parameters
-	public static final double DEFAULT_TARGET_DISTANCE = .8;   // Default desired distance from goal
-	public static final double ANGLE_PRECISION = 0.1;
-	public static final double DISTANCE_TOLERANCE = 0.05;
-	public static final double Z_SCALE = 1.7;
+	public static final double ANGLE_PRECISION = 2.0;
 	
-	double targetDistance = 0.0;
-	double xOut = 0;
-	double yOut = 0;
-	double zOut = 0;
 	boolean targetFound = false;
-
-	public AutoAim() {
-		this(DEFAULT_TARGET_DISTANCE);
-	}
+	int targetSearchCount = 1;
+	int targetSearchDirection = 1;
+	int targetSearchIncrement = 3;
 	
-	public AutoAim(double targDist) {
+	public AutoAim() {
 		requires(pixyCamShooter);
+		requires(shooterTurret);
 
-		targetDistance = targDist;
-		
 		this.setInterruptible(true);
 		SmartDashboard.putString("Shooter", "Auto Aim");
 	}
@@ -43,7 +34,7 @@ public class AutoAim extends CommandBase {
     		pixyData = pixyCamShooter.getBoilerLocationData();
     	} catch (NoTargetException ex) {
     		// No target found
-    		// Need to do something to try to find target
+    		searchForTarget();
     		return;
     	}
     	
@@ -52,60 +43,24 @@ public class AutoAim extends CommandBase {
     	double angleX = pixyData[1];
     	double angleY = pixyData[2];
 
-    	// Scale the distance based on the error (but clip it if it's too large)
-    	double distanceScale = 0;
-    	distanceScale = .5*Math.pow(Math.pow(Math.abs(distance-targetDistance), 3), 1.0/4);
-    	if(distanceScale > .8){
-    		distanceScale = .8;
-    	}
-   	
-    	// Determine and scale the Z term
-    	if(Math.abs(angleX) > ANGLE_PRECISION)
-    		zOut = angleX * Z_SCALE;
-    	else
-    		zOut = 0.0;
-    	
-    	// Determine and scale the X & Y terms
-    	if(Math.abs(distance-targetDistance) > DISTANCE_TOLERANCE) {
-    		xOut = (distance-targetDistance)*Math.sin(angleX)*distanceScale;
-    		yOut = (distance-targetDistance)*Math.cos(angleX)*distanceScale;
-    	}
-    	else {
-    		xOut = 0;
-    		yOut = 0;
-    	}
-    	
-		// Command is completed if we are on target (i.e. all three terms are 0.0)
-		if (xOut == 0.0 && yOut == 0.0 && zOut == 0.0) {
+		// Command is completed if we are on target in the X direction
+		if (Math.abs(angleX) <= ANGLE_PRECISION) {
 			targetFound = true;
 			return;
 		}
 
-    	// Modulate the X & Y terms
-    	if(xOut > 0.0) {
-    		xOut = Math.pow(xOut*xOut, 1.0/3);
-    	}
-    	else if (xOut < 0.0) {
-    		xOut = -Math.pow(xOut*xOut, 1.0/3);
-    	}
-    	
-    	if(yOut > 0.0 ) {
-    		yOut = Math.pow(yOut*yOut, 1.0/3);
-    	}	
-    	else if (yOut < 0.0) {
-    		yOut = -Math.pow(yOut*yOut, 1.0/3);
-    	}
-    	
-    	SmartDashboard.putString("Vision Tracking", angleY+"     " +distance+ "     "+targetDistance+"     "+zOut +"     "+angleX+"     "+(angleX*Z_SCALE));
-    	SmartDashboard.putString("Vision Distance Scale", "dScale " + distanceScale);
+	   	SmartDashboard.putString("Turret AutoAim:  distance = ", distance +"   angleX = " + angleX + "   angleY = "+ angleY);
+		 		
+    	//SmartDashboard.putString("Vision Tracking", angleY+"     " +distance+ "     "+targetDistance+"     "+zOut +"     "+angleX+"     "+(angleX*Z_SCALE));
+    	//SmartDashboard.putString("Vision Distance Scale", "dScale " + distanceScale);
 
-    	// Send command to the drivebase
-    	driveBase.driveRobotCentric(xOut, -yOut, zOut);
 	}
 	
 	private void searchForTarget() {
 		// Turn in place until target is found
-    	driveBase.driveRobotCentric(0.0, 0.0, 0.4);
+		int movement = targetSearchCount * targetSearchIncrement * targetSearchDirection ;
+	//	turretShooter.getAngle() 
+
 	}
 	
 	protected boolean isFinished() {

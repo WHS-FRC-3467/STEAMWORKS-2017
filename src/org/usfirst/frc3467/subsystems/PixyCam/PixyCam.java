@@ -105,6 +105,8 @@ public class PixyCam extends Subsystem {
 	
     // Angle of Pixy Cam mounting
     static final double PIXY_ANGLE = 0.174;
+    static final double PIXY_ANGLE_DEGREES = 20.;
+    
     
     // Array of data calculated from values returned from Pixy
     double[] distanceAndAngles = {0.0, 0.0, 0.0};  // distance, AngleX, AngleY
@@ -138,9 +140,14 @@ public class PixyCam extends Subsystem {
 			throw new NoTargetException("No Boiler Target Found");
 		}
 
-		distanceAndAngles[1] = tapePosx * (2 * 3.14159/360);
+/*
+ 		distanceAndAngles[1] = tapePosx * (2 * 3.14159/360);
     	distanceAndAngles[2] = -tapePosy * (2 * 3.14159/360) + PIXY_ANGLE;
     	distanceAndAngles[0] = GOAL_HEIGHT/Math.tan(distanceAndAngles[2]);
+ */
+		distanceAndAngles[1] = tapePosx;
+    	distanceAndAngles[2] = -tapePosy + PIXY_ANGLE_DEGREES;
+    	distanceAndAngles[0] = GOAL_HEIGHT/Math.tan(distanceAndAngles[2] * (2 * 3.14159/360));
     	
     }
     
