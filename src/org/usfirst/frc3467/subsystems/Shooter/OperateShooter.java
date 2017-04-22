@@ -6,6 +6,7 @@ import org.usfirst.frc3467.robot.control.Gamepad;
 import org.usfirst.frc3467.subsystems.PixyCam.NoTargetException;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -57,10 +58,12 @@ public class OperateShooter extends CommandBase {
     	
     	try {
 			// Get distance to target
-    		//double distance = pixyCamShooter.getBoilerDistance();
+    		double distance = pixyCamShooter.getBoilerDistance();
     		
         	// Convert distance to velocity
-        	// shooterVelocity = fn(distance);
+        	//shooterVelocity = fn(distance);
+    	   	SmartDashboard.putString("OperateShooter", "distance = " + distance);
+
 
     	} catch (NoTargetException ex) {
     		// Can't get distance; keep ShooterVelocity at default value

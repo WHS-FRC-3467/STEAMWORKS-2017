@@ -26,12 +26,13 @@ public class ShooterTurret extends Subsystem {
 	Counter cntMaxPos;
 	
     // Turret constants
-    private static double HARD_MAX_TURRET_ANGLE = 90;    //  10,240
-    private static double HARD_MIN_TURRET_ANGLE = -90;   //   -10,240
-    private static double SOFT_MAX_TURRET_ANGLE = 80.0;  //  9102
-    private static double SOFT_MIN_TURRET_ANGLE = -80.0; //  -9102
-    private static double TURRET_ONTARGET_TOLERANCE = 3.0;
-    private static double TICKS_PER_TURRET_ROTATION = (2048 * 4 * 5);// (2048 * 4) ticks / rotationDriver * 5 rotationDriver / rotationTurret
+    public static double SOFT_MAX_TURRET_ANGLE = 85.0;  //  8704
+    public static double SOFT_MIN_TURRET_ANGLE = -85.0; //  -8704
+
+    private static double HARD_MAX_TURRET_ANGLE = 90;    //  9216
+    private static double HARD_MIN_TURRET_ANGLE = -90;   //  -9216
+    private static double TURRET_ONTARGET_TOLERANCE = 1.0;
+    private static double TICKS_PER_TURRET_ROTATION = (2048 * 4 * 4.5);// (2048 * 4) ticks / rotationDriver * 4.5 rotationDriver / rotationTurret
    
 	private CANTalon turretMotor;
 
@@ -50,10 +51,10 @@ public class ShooterTurret extends Subsystem {
 		turretMotor.changeControlMode(TalonControlMode.MotionMagic);
     	
 		// TODO: Change these
-    	turretF = 0.0;
-    	turretP = 0.0;
+    	turretF = 0.277;
+    	turretP = 0.4;
     	turretI = 0.0;
-    	turretD = 0.0;
+    	turretD = 0.4;
     	SmartDashboard.putNumber("Turret F", turretF);
 	   	SmartDashboard.putNumber("Turret P", turretP);
     	SmartDashboard.putNumber("Turret I", turretI);
@@ -72,8 +73,8 @@ public class ShooterTurret extends Subsystem {
 		turretMotor.setIZone(0);
 
 		// TODO: Change these
-		turretVel = 0.0;
-		turretAccel = 0.0;
+		turretVel = 45.0;
+		turretAccel = 45.0;
     	SmartDashboard.putNumber("Turret Velocity", turretVel);
 	   	SmartDashboard.putNumber("Turret Accel", turretAccel);
 		turretMotor.setMotionMagicCruiseVelocity(turretVel);

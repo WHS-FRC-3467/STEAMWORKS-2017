@@ -36,20 +36,21 @@ public class PixyCam extends Subsystem {
     		 * at a 1 second period. This data will be accessible by calling pixyCamera.getCurrentframes()
     		 */
     		m_i2c_address = i2c_address;
-    		pixyBlocks = new LinkedList<PixyCmu5.PixyBlock>();
-    	    pixyCamera = new PixyCmu5(i2c_address, I2C.Port.kMXP, 0.25);
-    	    cameraPresent = true;
-	        SmartDashboard.putString("Pixy Cam", "Running normally");
-    		
-	    	if (m_i2c_address == PIXY_I2C_GEAR_ADDR) {
+    	    if (m_i2c_address == PIXY_I2C_GEAR_ADDR) {
 	    		m_targetName = "Gear";
 	    	} else if (m_i2c_address == PIXY_I2C_SHOOTER_ADDR) {
 	    		m_targetName = "Shooter";
 	    	}
-    	
+            
+    		pixyBlocks = new LinkedList<PixyCmu5.PixyBlock>();
+    	    pixyCamera = new PixyCmu5(i2c_address, I2C.Port.kMXP, 0.25);
+    	    cameraPresent = true;
+	
+    	    SmartDashboard.putString(m_targetName + " PixyCam", "Running normally");
+        	
     	} catch (RuntimeException ex ) {
-	        DriverStation.reportError("Error instantiating Pixy:  " + ex.getMessage(), true);
-	        SmartDashboard.putString("Pixy Cam", "NOT DETECTED");
+	        DriverStation.reportError("Error instantiating " + m_targetName + "Pixy:  " + ex.getMessage(), true);
+	        SmartDashboard.putString(m_targetName + " PixyCam", "NOT DETECTED");
 	    }
     	
 	}
@@ -90,8 +91,10 @@ public class PixyCam extends Subsystem {
 
 		} else {
 			SmartDashboard.putBoolean(m_targetName + " Target Detected", false);
-			SmartDashboard.putString(m_targetName + " AimX", "No visible target");
-			SmartDashboard.putString(m_targetName + " AimY", "No visible target");
+			SmartDashboard.putString(m_targetName + " AimX[0]", "No visible target");
+			SmartDashboard.putString(m_targetName + " AimY[0]", "No visible target");
+			SmartDashboard.putString(m_targetName + " AimX[1]", "No visible target");
+			SmartDashboard.putString(m_targetName + " AimY[1]", "No visible target");
 		}
 
     }
