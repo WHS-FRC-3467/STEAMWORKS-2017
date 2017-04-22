@@ -2,6 +2,8 @@ package org.usfirst.frc3467.subsystems.Shooter;
 
 import org.usfirst.frc3467.robot.CommandBase;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  */
@@ -16,6 +18,7 @@ public class RunFeed extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+		SmartDashboard.putString("ShooterFeed", "RunFeed");
     }
 
     // Called repeatedly when this Command is scheduled to run

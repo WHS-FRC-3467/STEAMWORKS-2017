@@ -18,7 +18,7 @@ public class ShooterFlywheel extends Subsystem {
     
 	public final static double SHOOTER_SPEED_DEFAULT = 5875;
 
-	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
+	private boolean flg_tuning = false;   // Set to true to tune PID constants vis SmartDashboard
 	
     private CANTalon shooterTalon1, shooterTalon2;
 
