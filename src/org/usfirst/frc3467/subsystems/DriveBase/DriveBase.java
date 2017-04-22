@@ -115,9 +115,9 @@ public class DriveBase extends Subsystem {
 		cTalon1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		
 		// Create PIDF_CANTalon wrappers for adjusting PIDF constants on SmartDash
-		leftTalon = new PIDF_CANTalon("Left Talon", lTalon1, 0.0, true, true);
-		rightTalon = new PIDF_CANTalon("Right Talon", rTalon1, 0.0, true, true);
-		centerTalon = new PIDF_CANTalon("Center Talon", cTalon1, 0.0, true, true);
+		leftTalon = new PIDF_CANTalon("Left Talon", lTalon1, 0.0, true, false);
+		rightTalon = new PIDF_CANTalon("Right Talon", rTalon1, 0.0, true, false);
+		centerTalon = new PIDF_CANTalon("Center Talon", cTalon1, 0.0, true, false);
 
 		/*
 		 * Configure Talons for Speed control

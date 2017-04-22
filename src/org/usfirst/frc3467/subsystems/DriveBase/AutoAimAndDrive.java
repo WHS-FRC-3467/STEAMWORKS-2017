@@ -30,7 +30,7 @@ public class AutoAimAndDrive extends CommandBase {
 		targetDistance = targDist;
 		
 		this.setInterruptible(true);
-		SmartDashboard.putString("DriveMode", "Auto Aim");
+		SmartDashboard.putString("Drive Mode", "Auto Aim");
 	}
 	
 	public void initialize() {

@@ -28,7 +28,7 @@ public class AutoGear extends CommandBase{
 		requires(driveBase);
 		
 		this.setInterruptible(true);
-		SmartDashboard.putString("Drive Base", "Auto Gear");
+		SmartDashboard.putString("DriveBase", "Auto Gear");
 		
 	}
 
