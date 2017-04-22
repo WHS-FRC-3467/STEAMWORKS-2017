@@ -26,12 +26,12 @@ public class ShooterTurret extends Subsystem {
 	Counter cntMaxPos;
 	
     // Turret constants
-    private static double HARD_MAX_TURRET_ANGLE = 90;
-    private static double HARD_MIN_TURRET_ANGLE = -90;
-    private static double SOFT_MAX_TURRET_ANGLE = 80.0;
-    private static double SOFT_MIN_TURRET_ANGLE = -80.0;
-    private static double TURRET_ONTARGET_TOLERANCE = 1.0;
-    private static double TICKS_PER_TURRET_ROTATION = (2048 * 4 * 6);// (2048 * 4) ticks / rotationDriver * 6 rotationDriver / rotationTurret
+    private static double HARD_MAX_TURRET_ANGLE = 90;    //  10,240
+    private static double HARD_MIN_TURRET_ANGLE = -90;   //   -10,240
+    private static double SOFT_MAX_TURRET_ANGLE = 80.0;  //  9102
+    private static double SOFT_MIN_TURRET_ANGLE = -80.0; //  -9102
+    private static double TURRET_ONTARGET_TOLERANCE = 3.0;
+    private static double TICKS_PER_TURRET_ROTATION = (2048 * 4 * 5);// (2048 * 4) ticks / rotationDriver * 5 rotationDriver / rotationTurret
    
 	private CANTalon turretMotor;
 
@@ -79,10 +79,13 @@ public class ShooterTurret extends Subsystem {
 		turretMotor.setMotionMagicCruiseVelocity(turretVel);
 		turretMotor.setMotionMagicAcceleration(turretAccel);
 
-        // Use soft limits to make sure the turret doesn't try to spin too far
+		// For now, we are starting the Turret in a known position - HARD_MAX_TURRET_ANGLE
+		resetTurretAtMax();
+		
+		// Use soft limits to make sure the turret doesn't try to spin too far
 		turretMotor.setForwardSoftLimit(convertDegrees2Ticks(SOFT_MAX_TURRET_ANGLE));
 		turretMotor.setReverseSoftLimit(convertDegrees2Ticks(SOFT_MIN_TURRET_ANGLE));
-		enableSoftLimits(true);
+		enableSoftLimits(false);
     }
 
     public void enableSoftLimits(boolean set) {

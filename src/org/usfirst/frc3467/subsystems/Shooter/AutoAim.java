@@ -20,7 +20,7 @@ public class AutoAim extends CommandBase {
 		requires(shooterTurret);
 
 		this.setInterruptible(true);
-		SmartDashboard.putString("Shooter", "Auto Aim");
+		SmartDashboard.putString("Shooter Turret", "Auto Aim");
 	}
 	
 	public void initialize() {
