@@ -97,7 +97,7 @@ public class OI {
 		new JoystickButton(driverPad, Gamepad.yButton).whenActive(new ClimberDrive());
 		new JoystickButton(driverPad, Gamepad.bButton).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new DriveBot(DriveBase.driveMode_Precision));
-		//new JoystickButton(driverPad, Gamepad.xButton).whenActive(new AutoAim());
+		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new AutoAim());
 		new JoystickButton(driverPad, Gamepad.startButton).whenActive(new AutoGear());
 		new JoystickButton(driverPad, Gamepad.backButton).whileActive(new IntakeWithoutTransistor());
 
@@ -139,9 +139,9 @@ public class OI {
 		SmartDashboard.putData("Test Shooter Feed", new TestFeed());
 		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
 		SmartDashboard.putData("Zero Encoders", new ResetEncoders());
-		//SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());
+		SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());
 		SmartDashboard.putData("Calibrate Turret", new CalibrateTurret());
-		SmartDashboard.putData("Position Turret", new PositionTurret());
+		SmartDashboard.putData("Set Turret Position", new PositionTurret());
 		
 	}
 }

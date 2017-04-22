@@ -49,18 +49,28 @@ public class AutoAim extends CommandBase {
 			return;
 		}
 
-	   	SmartDashboard.putString("Turret AutoAim:  distance = ", distance +"   angleX = " + angleX + "   angleY = "+ angleY);
+		// Move turret to center of object
+    	shooterTurret.setDesiredAngle(shooterTurret.getAngle() + angleX);
+		
+	   	SmartDashboard.putString("Turret AutoAim","distance = " + distance +"   angleX = " + angleX + "   angleY = "+ angleY);
 		 		
-    	//SmartDashboard.putString("Vision Tracking", angleY+"     " +distance+ "     "+targetDistance+"     "+zOut +"     "+angleX+"     "+(angleX*Z_SCALE));
-    	//SmartDashboard.putString("Vision Distance Scale", "dScale " + distanceScale);
-
 	}
 	
 	private void searchForTarget() {
-		// Turn in place until target is found
+		// Turn back and forth in ever increasing angles  until target is found
 		int movement = targetSearchCount * targetSearchIncrement * targetSearchDirection ;
-	//	turretShooter.getAngle() 
-
+		double target = shooterTurret.getAngle() + movement;
+		if (target > ShooterTurret.SOFT_MAX_TURRET_ANGLE || target < ShooterTurret.SOFT_MIN_TURRET_ANGLE) {
+			target = 0.0;
+			targetSearchCount = 1;
+		}
+		
+		// Move turret 
+    	shooterTurret.setDesiredAngle(target);
+		
+    	// Go the other way next time
+    	targetSearchDirection *= -1.0;
+    	targetSearchCount++;
 	}
 	
 	protected boolean isFinished() {
