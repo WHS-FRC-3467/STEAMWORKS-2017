@@ -139,9 +139,9 @@ public class OI {
 		SmartDashboard.putData("Test Shooter Feed", new TestFeed());
 		SmartDashboard.putData("Test Shooter Wheels", new TestShooter());
 		SmartDashboard.putData("Zero Encoders", new ResetEncoders());
-		SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());
+		//SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());
 		SmartDashboard.putData("Calibrate Turret", new CalibrateTurret());
-		SmartDashboard.putData("Set Turret Position", new PositionTurret());
+		SmartDashboard.putData("Position Turret", new PositionTurret());
 		
 	}
 }
