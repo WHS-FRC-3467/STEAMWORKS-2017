@@ -56,23 +56,28 @@ Climber:
 ======================================================
 TODO TODO TODO
 
-Test DriveStraight command with Gyro enabled
-Test DriveTurn command with Gyro
+1) Test DriveStraight command with Gyro enabled
 
-??Automatically Switch drivebase from Speed mode to Voltage mode if an encoder is lost
+2) Test DriveTurn command with Gyro
 
-Turret implementation
+3) Turret implementation
+	Check encoder counts while turning <done>
 
-Implement two-gyro code
-Test single gyro
-Test robot with two gyros
-
-Vision tracking:
+4) Vision tracking:
 <done>Implement two Pixy setup
 Fix frame-processing algorithm
 Implement Gear Vision tracking
 Test Shooter Vision
 Test Gear Vision
+
+5) Shooter ramp rate adjustment
+
+??Automatically Switch drivebase from Speed mode to Voltage mode if an encoder is lost
+
+
+Implement two-gyro code
+Test robot with two gyros
+
 
 Make autonomous Shooter commands:
  
