@@ -8,23 +8,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoAim extends CommandBase {
 
 	// Configurable parameters
-	public static final double ANGLE_PRECISION = 2.0;
+	public static final double ANGLE_PRECISION = 1.0;
 	
 	boolean targetFound = false;
 	int targetSearchCount = 1;
 	int targetSearchDirection = 1;
-	int targetSearchIncrement = 3;
+	int targetSearchIncrement = 10;
 	
 	public AutoAim() {
 		requires(pixyCamShooter);
 		requires(shooterTurret);
 
 		this.setInterruptible(true);
-		SmartDashboard.putString("Shooter Turret", "Auto Aim");
 	}
 	
 	public void initialize() {
 		targetFound = false;
+		SmartDashboard.putString("ShooterTurret", "Auto Aim");
 	}
 	
 	public void execute() {
@@ -78,6 +78,7 @@ public class AutoAim extends CommandBase {
 	}
 	
 	public void end() {
+		shooterTurret.runTurret(0.0);
 		
 	}
 	

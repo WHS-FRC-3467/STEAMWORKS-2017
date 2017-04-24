@@ -58,15 +58,18 @@ public class OperateShooter extends CommandBase {
     	
     	try {
 			// Get distance to target
-    		double distance = pixyCamShooter.getBoilerDistance();
+    		double bdist = pixyCamShooter.getBoilerDistance();
+    		double distance = 75.28*bdist + 1.0;
     		
         	// Convert distance to velocity
-        	//shooterVelocity = fn(distance);
-    	   	SmartDashboard.putString("OperateShooter", "distance = " + distance);
-
+        	//shooterVelocity = 16.4 * (distance) + 4246;
+    		shooterVelocity = 125.27 * (distance) + 28213;
+    		
+        	SmartDashboard.putString("OperateShooter", "distance = " + distance + "; speed = " + shooterVelocity);
 
     	} catch (NoTargetException ex) {
     		// Can't get distance; keep ShooterVelocity at default value
+        	SmartDashboard.putString("OperateShooter", "distance = xxx; speed = " + shooterVelocity);
     	}
      	
     	shooterFlywheel.runShooter(shooterVelocity);    	

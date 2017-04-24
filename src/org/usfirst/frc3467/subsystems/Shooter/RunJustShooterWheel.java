@@ -19,6 +19,7 @@ public class RunJustShooterWheel extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+		SmartDashboard.putString("ShooterFlywheel", "RunJustShooterWheel");
     }
     
     // Called repeatedly when this Command is scheduled to run

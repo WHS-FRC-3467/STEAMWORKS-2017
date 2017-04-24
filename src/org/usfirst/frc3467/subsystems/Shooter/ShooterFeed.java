@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ShooterFeed extends Subsystem {
     
-	public final static double SPINNER_SPEED_DEFAULT = 0.4;
+	public final static double SPINNER_SPEED_DEFAULT = 1.0;
 	public final static double BELT_SPEED_DEFAULT = -0.45;
 
     private CANTalon beltTalon;

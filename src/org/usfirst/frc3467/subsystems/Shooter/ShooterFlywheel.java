@@ -16,9 +16,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShooterFlywheel extends Subsystem {
     
-	public final static double SHOOTER_SPEED_DEFAULT = 5875;
+	// Grayhil Encoder @ 256 cnts/rev
+	//public final static double SHOOTER_SPEED_DEFAULT = 5875;
 
-	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
+	// CUI Encoder @ 2048 cnts/rev
+	public final static double SHOOTER_SPEED_DEFAULT = 39000;
+	
+	private boolean flg_tuning = false;   // Set to true to tune PID constants vis SmartDashboard
 	
     private CANTalon shooterTalon1, shooterTalon2;
 
