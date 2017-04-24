@@ -12,6 +12,7 @@ import org.usfirst.frc3467.subsystems.Climber.ToggleLatchPosition;
 import org.usfirst.frc3467.subsystems.DriveBase.AutoGear;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBase;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveBot;
+import org.usfirst.frc3467.subsystems.DriveBase.DriveTurn;
 import org.usfirst.frc3467.subsystems.DriveBase.DropTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.LiftTractionPlates;
 import org.usfirst.frc3467.subsystems.DriveBase.ResetEncoders;
@@ -142,6 +143,9 @@ public class OI {
 		//SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());
 		SmartDashboard.putData("Calibrate Turret", new CalibrateTurret());
 		SmartDashboard.putData("Position Turret", new PositionTurret());
+		SmartDashboard.putData("Drive Turn", new DriveTurn(0.15, 45.0));
+		SmartDashboard.putData("Zero Gyro", new ZeroGyro());
+		
 		
 	}
 }

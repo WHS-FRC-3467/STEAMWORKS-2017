@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveTurn extends CommandBase {
 
-	private static final double TOLERANCE = 2;
+	private static final double TOLERANCE = 7;
 	
 	private PIDController m_pid;
 	private double m_maxSpeed = 0.3;
@@ -67,6 +67,7 @@ public class DriveTurn extends CommandBase {
     protected void initialize() {
 
     	m_pid.setSetpoint(gyro.getAngle() + m_turnAngle);
+    	m_pid.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -79,7 +80,7 @@ public class DriveTurn extends CommandBase {
     protected boolean isFinished() {
 
     	double error = m_pid.getError();
-   		return (error >= 0 && error <= TOLERANCE);
+   		return ((error >= 0 && error <= TOLERANCE) || (error < 0 && error >= (1.0)*TOLERANCE));
     }
 
     // Called once after isFinished returns true
