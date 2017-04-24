@@ -62,8 +62,9 @@ public class OperateShooter extends CommandBase {
     		double distance = 75.28*bdist + 1.0;
     		
         	// Convert distance to velocity
-        	shooterVelocity = 16.4 * (distance) + 4246;
-    	   	
+        	//shooterVelocity = 16.4 * (distance) + 4246;
+    		shooterVelocity = 125.27 * (distance) + 28213;
+    		
         	SmartDashboard.putString("OperateShooter", "distance = " + distance + "; speed = " + shooterVelocity);
 
     	} catch (NoTargetException ex) {
