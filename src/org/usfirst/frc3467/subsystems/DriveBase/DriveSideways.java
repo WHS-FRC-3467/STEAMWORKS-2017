@@ -21,7 +21,6 @@ public class DriveSideways extends CommandBase {
 	private PIDController m_pid;
 	private double m_maxSpeed = 0.3;
 	private double m_distance = 0.0;
-	private int m_gyroDirection;
 	
 	private double KP = 1.5;
 	private double KI = 0.0;
@@ -71,7 +70,13 @@ public class DriveSideways extends CommandBase {
                 new PIDOutput() {
                 	
                 	public void pidWrite(double d) {
-                		driveBase.driveRobotCentric(d, 0, m_gyroDirection*(gyro.getAngle()/200.));
+                		
+                		// No twist (z) term; must scale d because it is not scaled in driveSideways
+                		// driveBase.driveSideways(d * 4.0);
+                		
+                		// driveRoboticCentric takes a z-term, which we get from gyro offset
+                		// (driveRobotcCentric changes the sign of the z-term)
+                		driveBase.driveRobotCentric(d, 0, (gyro.getHeading()/200.));
                 }});
 		
         m_pid.setAbsoluteTolerance(TOLERANCE);
@@ -84,10 +89,6 @@ public class DriveSideways extends CommandBase {
     	// Get everything in a safe starting state.
         driveBase.liftFeetBeforeDriving();
     	driveBase.resetEncoders();
-        if (m_distance >= 0.0)
-        	m_gyroDirection = -1;
-        else
-        	m_gyroDirection = 1;
         m_pid.reset();
         m_pid.enable();
     }
@@ -100,7 +101,7 @@ public class DriveSideways extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	double error = m_pid.getError();
-   		return ((error >= 0 && error <= TOLERANCE) || (error < 0 && error >= (1.0)*TOLERANCE));
+   		return ((error >= 0 && error <= TOLERANCE) || (error < 0 && error >= (-1.0)*TOLERANCE));
     }
 
     // Called once after isFinished returns true

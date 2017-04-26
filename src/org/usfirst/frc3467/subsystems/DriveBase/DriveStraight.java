@@ -117,7 +117,7 @@ public class DriveStraight extends CommandBase {
 		if (m_manualCurve) {
 			driveBase.drive(d, m_curveValue);
 		} else {
-			driveBase.drive(d, -(gyro.getAngle()/240.));
+			driveBase.drive(d, -(gyro.getHeading()/240.));
 		}
 	}
 	
@@ -152,7 +152,7 @@ public class DriveStraight extends CommandBase {
     		return true;
     	}
     	else {
-    		return (error >= 0 && error <= TOLERANCE);
+       		return ((error >= 0 && error <= TOLERANCE) || (error < 0 && error >= (-1.0)*TOLERANCE));
     	}
     }
 
