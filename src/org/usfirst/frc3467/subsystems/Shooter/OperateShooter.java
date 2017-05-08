@@ -63,8 +63,9 @@ public class OperateShooter extends CommandBase {
     		
         	// Convert distance to velocity
         	//shooterVelocity = 16.4 * (distance) + 4246;  // Grayhill encoder
-    		shooterVelocity = 125.27 * (distance) + 28213; // CUI encoder
-    		
+    		//shooterVelocity = 125.27 * (distance) + 28000; // CUI encoder
+       		shooterVelocity = 125.27 * (distance) + 28213; // CUI encoder
+       	    		
         	SmartDashboard.putString("OperateShooter", "distance = " + distance + "; speed = " + shooterVelocity);
 
     	} catch (NoTargetException ex) {
@@ -79,7 +80,7 @@ public class OperateShooter extends CommandBase {
     	   // Look for Left Trigger activation
 	       	double leftTrigger = 0.0;
 	       	if (m_drvrCtrl == true) {
-	       		leftTrigger = OI.driverPad.getRawAxis(Gamepad.leftTrigger_Axis);
+	       		leftTrigger = OI.operatorPad.getRawAxis(Gamepad.leftTrigger_Axis);
 	       	} else {
 	       		leftTrigger = OI.operatorPad.getRawAxis(Gamepad.leftTrigger_Axis);
 	       	}

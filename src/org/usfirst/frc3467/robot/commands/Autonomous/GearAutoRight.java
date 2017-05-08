@@ -7,6 +7,7 @@ import org.usfirst.frc3467.subsystems.DriveBase.DriveStraight;
 import org.usfirst.frc3467.subsystems.DriveBase.DriveTurn;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearDeliver;
 import org.usfirst.frc3467.subsystems.GearCatcher.GearHold;
+import org.usfirst.frc3467.subsystems.Gyro.ZeroGyro;
 import org.usfirst.frc3467.subsystems.Pneumatics.ToggleIntakeRamp;
 import org.usfirst.frc3467.subsystems.DriveBase.DiagonalDrive;
 
@@ -17,6 +18,7 @@ public class GearAutoRight extends CommandGroup {
     public GearAutoRight() {
     	addParallel(new ToggleIntakeRamp());
     	addParallel(new GearHold());
+    	addSequential(new ZeroGyro());
     	addSequential(new DriveStraight(101400));  
     	//addSequential(new DriveStraight(true));
     	/*addSequential(new AutoGear());
