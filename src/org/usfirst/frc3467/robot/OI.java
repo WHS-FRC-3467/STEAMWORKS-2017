@@ -89,7 +89,6 @@ public class OI {
 		 * 
 		 */
 		
-		new GamepadLeftTrigger(driverPad).whenActive(new OperateShooter(true));
 		new GamepadRightTrigger(driverPad).whenActive(new ToggleGearCatcherPosition());
 		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new GearIntake());
 		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new GearDeliver());
@@ -98,8 +97,6 @@ public class OI {
 		new JoystickButton(driverPad, Gamepad.yButton).whenActive(new ClimberDrive());
 		new JoystickButton(driverPad, Gamepad.bButton).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new DriveBot(DriveBase.driveMode_Precision));
-		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new AutoAim());
-		new JoystickButton(driverPad, Gamepad.startButton).whenActive(new AutoGear());
 		new JoystickButton(driverPad, Gamepad.backButton).whileActive(new IntakeWithoutTransistor());
 
 		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
@@ -114,15 +111,16 @@ public class OI {
 		 * 
 		 */
 
-		new GamepadLeftTrigger(operatorPad).whileActive(new TestGearIntake(true));
-		new GamepadRightTrigger(operatorPad).whileActive(new TestGearIntake(false));
-		new JoystickButton(operatorPad, Gamepad.leftBumper).whenActive(new GearIntake());
-		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new GearDeliver());
+		//new GamepadLeftTrigger(operatorPad).whileActive(new AutoAim());
+		new GamepadLeftTrigger(operatorPad).whenActive(new OperateShooter(true));
+		new JoystickButton(operatorPad, Gamepad.leftBumper).whenActive(new TestGearIntake(true));
+		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new TestGearIntake(false));
 
 		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunFeed(1.0));
 		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunFeed(-1.0));
 		//new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunBelt(Shooter.BELT_SPEED_DEFAULT));
 		//new JoystickButton(operatorPad, Gamepad.aButton).whileActive(new RunBelt(-1 * Shooter.BELT_SPEED_DEFAULT));
+		new JoystickButton(operatorPad, Gamepad.aButton).whenActive(new AutoAim());
 		new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunTurret());
 
 		new DPadUp(operatorPad).whenActive(new LiftTractionPlates());

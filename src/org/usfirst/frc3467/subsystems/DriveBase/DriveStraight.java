@@ -127,7 +127,7 @@ public class DriveStraight extends CommandBase {
     	// Get everything in a safe starting state.
         driveBase.liftFeetBeforeDriving();
     	driveBase.resetEncoders();
-        //gyro.zeroGyro();
+        //gyro.zeroGyro(); // Zeroing should be done separately before this command is run
     	m_pid.reset();
         m_pid.enable();
         m_count = 0;
