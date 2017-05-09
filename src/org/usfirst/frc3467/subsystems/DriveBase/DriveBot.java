@@ -14,7 +14,7 @@ public class DriveBot extends CommandBase {
 	// Scale factor for reducing inputs during Precision Mode
 	static final double precision_scaleFactor = 0.3;
 	static final double precision_scaleFactor2 = 0.3;
-	static final double precision_turningFactor = .5;
+	static final double precision_turningFactor = .4;
 	
 	// Don't adjust the sticks
 	static final boolean NO_STICK_ADJUSTMENT = true;

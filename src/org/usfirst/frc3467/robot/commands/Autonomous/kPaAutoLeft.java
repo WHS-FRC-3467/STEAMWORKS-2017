@@ -26,7 +26,7 @@ public class kPaAutoLeft extends CommandGroup {
 
     	// Drive sideways out to align with hopper trigger plate
     	// DriveSideways( distance, maxSpeed)
-    	addSequential(new DriveSideways(62000, 0.2));
+    	addSequential(new DriveSideways(62000));
     	
     	// Drive forward to trigger hopper
     	// DriveStraight(distance, maxSpeed)
