@@ -40,7 +40,7 @@ public class DriveTurn extends CommandBase {
                     PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
 
                     public double pidGet() {
-                        return gyro.getAngle();
+                        return gyro.getHeading();
                     }
 
                     public void setPIDSourceType(PIDSourceType pidSource) {
@@ -66,7 +66,7 @@ public class DriveTurn extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
 
-    	m_pid.setSetpoint(gyro.getAngle() + m_turnAngle);
+    	m_pid.setSetpoint(gyro.getHeading() + m_turnAngle);
     	m_pid.enable();
     }
 

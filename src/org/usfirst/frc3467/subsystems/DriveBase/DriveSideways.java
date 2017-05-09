@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.PIDSourceType;
  * Uses a local PID controller to run a simple PID loop that is only
  * enabled while this command is running.
  * 
- * BECAUSE WE ARE DRIVING WITH ONLY ONE WHEEL, WE HAVE NO CONTROL OVER CURVATURE OF MOVEMENT
  */
 public class DriveSideways extends CommandBase {
 
@@ -21,6 +20,7 @@ public class DriveSideways extends CommandBase {
 	private PIDController m_pid;
 	private double m_maxSpeed = 0.3;
 	private double m_distance = 0.0;
+	private double m_initialHeading = 0.0;
 	
 	private double KP = 1.5;
 	private double KI = 0.0;
@@ -74,9 +74,10 @@ public class DriveSideways extends CommandBase {
                 		// No twist (z) term; must scale d because it is not scaled in driveSideways
                 		// driveBase.driveSideways(d * 4.0);
                 		
-                		// driveRoboticCentric takes a z-term, which we get from gyro offset
-                		// (driveRobotcCentric changes the sign of the z-term)
-                		driveBase.driveRobotCentric(d, 0, (gyro.getHeading()/200.));
+                		// driveRoboticCentric takes a z-term, which is rotation, but it changes the sign
+            			// Get the current heading reading differential and curve to oppose the change 
+            			// (Divide degree differential by a factor so as to normalize to numbers less than -1.0 / + 1.0)
+                		driveBase.driveRobotCentric(d, 0, -((m_initialHeading - gyro.getHeading())/240.));
                 }});
 		
         m_pid.setAbsoluteTolerance(TOLERANCE);
@@ -89,6 +90,8 @@ public class DriveSideways extends CommandBase {
     	// Get everything in a safe starting state.
         driveBase.liftFeetBeforeDriving();
     	driveBase.resetEncoders();
+    	// Save the initial gyro heading - we want to keep that heading throughout the command
+    	m_initialHeading = gyro.getHeading();
         m_pid.reset();
         m_pid.enable();
     }

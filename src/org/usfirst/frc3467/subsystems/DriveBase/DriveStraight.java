@@ -22,6 +22,7 @@ public class DriveStraight extends CommandBase {
 	private double m_distance = 0.0;
 	private boolean m_manualCurve = true;
 	private double m_curveValue = 0.0;
+	private double m_initialHeading = 0.0;
 	private double m_pastDistance = 0.0;
 	private int m_count = 0;
 	
@@ -91,11 +92,7 @@ public class DriveStraight extends CommandBase {
                 new PIDOutput() {
                 	
                 	public void pidWrite(double d) {
-                		// Drive with the magnitude returned by the PID calculation, 
-                		// and curve the opposite way from the current yaw reading
-                		// (Divide yaw by 180 so as to normalize to -1.0 / + 1.0)
-                		//driveBase.drive(-d, -(ahrs.getGyroYaw()/240.));
-                		setCurve(d);
+                		driveStraight(d);
                 }});
 		
         m_pid.setAbsoluteTolerance(TOLERANCE);
@@ -113,11 +110,15 @@ public class DriveStraight extends CommandBase {
 		}
 	}
 	
-	public void setCurve(double d) {
+	// Drive straight with the magnitude returned by the PID calculation, 
+	public void driveStraight(double d) {
 		if (m_manualCurve) {
+			// Curve using the preset value
 			driveBase.drive(d, m_curveValue);
 		} else {
-			driveBase.drive(d, -(gyro.getHeading()/240.));
+			// Get the current heading reading differential and curve to oppose the change 
+			// (Divide degree differential by a factor so as to normalize to numbers less than -1.0 / + 1.0)
+			driveBase.drive(d, ((m_initialHeading - gyro.getHeading())/240.));
 		}
 	}
 	
@@ -128,6 +129,8 @@ public class DriveStraight extends CommandBase {
         driveBase.liftFeetBeforeDriving();
     	driveBase.resetEncoders();
         //gyro.zeroGyro(); // Zeroing should be done separately before this command is run
+    	// Save the initial gyro heading - we want to keep that heading throughout the command
+    	m_initialHeading = gyro.getHeading();
     	m_pid.reset();
         m_pid.enable();
         m_count = 0;
