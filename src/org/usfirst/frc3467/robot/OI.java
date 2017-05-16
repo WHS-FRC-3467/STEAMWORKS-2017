@@ -116,7 +116,7 @@ public class OI {
 		new JoystickButton(operatorPad, Gamepad.leftBumper).whenActive(new TestGearIntake(true));
 		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new TestGearIntake(false));
 
-		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(newRunFeed(1.0));
+		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunFeed(1.0));
 		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunFeed(-1.0));
 		//new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunBelt(Shooter.BELT_SPEED_DEFAULT));
 		//new JoystickButton(operatorPad, Gamepad.aButton).whileActive(new RunBelt(-1 * Shooter.BELT_SPEED_DEFAULT));
