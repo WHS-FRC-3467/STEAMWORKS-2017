@@ -113,9 +113,9 @@ public class DriveBot extends CommandBase {
 		/*
 		 *  Deadband limit
 		 */
-		if (val > -0.03 && val < 0.03) {
-			return 0.0;
-		}
+		//if (val > -0.01 && val < 0.01) {
+			//return 0.0;
+		//}
 
 		if (NO_STICK_ADJUSTMENT) {
 			return input;
