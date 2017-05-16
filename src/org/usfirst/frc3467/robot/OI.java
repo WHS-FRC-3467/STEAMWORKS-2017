@@ -89,17 +89,17 @@ public class OI {
 		 * 
 		 */
 		
-		new GamepadRightTrigger(driverPad).whenActive(new ToggleGearCatcherPosition());
-		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new GearIntake());
+		new JoystickButton(driverPad, Gamepad.leftBumper).whenActive(new ToggleGearCatcherPosition());
+		new GamepadRightTrigger(driverPad).whenActive(new GearIntake());
 		new JoystickButton(driverPad, Gamepad.rightBumper).whenActive(new GearDeliver());
-
 		new JoystickButton(driverPad, Gamepad.startButton).whenActive(new ZeroGyro());
 		new JoystickButton(driverPad, Gamepad.yButton).whenActive(new ClimberDrive());
 		new JoystickButton(driverPad, Gamepad.bButton).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
 		new JoystickButton(driverPad, Gamepad.aButton).whenActive(new DriveBot(DriveBase.driveMode_Precision));
-		new JoystickButton(driverPad, Gamepad.backButton).whileActive(new IntakeWithoutTransistor());
+		new GamepadLeftTrigger(driverPad).whileActive(new IntakeWithoutTransistor());
+		//new JoystickButton(driverPad, Gamepad.leftStickPress).whenActive(new CenterRobot());
 
-		new DPadDown(driverPad).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
+		new JoystickButton(driverPad, Gamepad.xButton).whenActive(new DriveBot(DriveBase.driveMode_RobotCentric));
 		//new DPadLeft(driverPad).whenActive(new AutoAim()));
 		new DPadRight(driverPad).whenActive(new DriveBot(DriveBase.driveMode_Arcade));
 		//new DPadUp(driverPad).whenActive(new DriveBot(DriveBase.driveMode_FieldCentric));
@@ -116,7 +116,7 @@ public class OI {
 		new JoystickButton(operatorPad, Gamepad.leftBumper).whenActive(new TestGearIntake(true));
 		new JoystickButton(operatorPad, Gamepad.rightBumper).whenActive(new TestGearIntake(false));
 
-		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(new RunFeed(1.0));
+		new JoystickButton(operatorPad, Gamepad.xButton).whileActive(newRunFeed(1.0));
 		new JoystickButton(operatorPad, Gamepad.bButton).whileActive(new RunFeed(-1.0));
 		//new JoystickButton(operatorPad, Gamepad.yButton).whileActive(new RunBelt(Shooter.BELT_SPEED_DEFAULT));
 		//new JoystickButton(operatorPad, Gamepad.aButton).whileActive(new RunBelt(-1 * Shooter.BELT_SPEED_DEFAULT));
@@ -127,6 +127,7 @@ public class OI {
 		new DPadDown(operatorPad).whenActive(new DropTractionPlates());
 		new DPadLeft(operatorPad).whenActive(new HaltShooter());
 		new DPadRight(operatorPad).whenActive(new ToggleIntakeRamp());
+		
 
 		
 		//
