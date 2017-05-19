@@ -72,12 +72,12 @@ public class DriveSideways extends CommandBase {
                 	public void pidWrite(double d) {
                 		
                 		// No twist (z) term; must scale d because it is not scaled in driveSideways
-                		// driveBase.driveSideways(d * 4.0);
+                		 driveBase.driveSideways(d * 2.0);
                 		
                 		// driveRoboticCentric takes a z-term, which is rotation, but it changes the sign
             			// Get the current heading reading differential and curve to oppose the change 
             			// (Divide degree differential by a factor so as to normalize to numbers less than -1.0 / + 1.0)
-                		driveBase.driveRobotCentric(d, 0, -((m_initialHeading - gyro.getHeading())/240.));
+                		//driveBase.driveRobotCentric(d, 0, ((m_initialHeading - gyro.getHeading())/240.));
                 }});
 		
         m_pid.setAbsoluteTolerance(TOLERANCE);
