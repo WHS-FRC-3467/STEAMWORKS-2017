@@ -63,8 +63,8 @@ public class OperateShooter extends CommandBase {
     		
         	// Convert distance to velocity
         	//shooterVelocity = 16.4 * (distance) + 4246;  // Grayhill encoder
-    		//shooterVelocity = 125.27 * (distance) + 28000; // CUI encoder
-       		shooterVelocity = 125.27 * (distance) + 28213; // CUI encoder
+    		shooterVelocity = 125.27 * (distance) + 28000; // CUI encoder
+       		//shooterVelocity = 125.27 * (distance) + 28170; // CUI encoder
        	    		
         	SmartDashboard.putString("OperateShooter", "distance = " + distance + "; speed = " + shooterVelocity);
 

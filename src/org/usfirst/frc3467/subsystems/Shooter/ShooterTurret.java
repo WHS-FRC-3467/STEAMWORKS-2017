@@ -26,8 +26,8 @@ public class ShooterTurret extends Subsystem {
 	Counter cntMaxPos;
 	
     // Turret constants
-    public static double SOFT_MAX_TURRET_ANGLE = 90.0;  //  8704
-    public static double SOFT_MIN_TURRET_ANGLE = -90.0; //  -8704
+    public static double SOFT_MAX_TURRET_ANGLE = 91.0;  //  8704
+    public static double SOFT_MIN_TURRET_ANGLE = -91.0; //  -8704
 
     private static double HARD_MAX_TURRET_ANGLE = 90;    //  9216
     private static double HARD_MIN_TURRET_ANGLE = -90;   //  -9216
@@ -86,7 +86,7 @@ public class ShooterTurret extends Subsystem {
 		// Use soft limits to make sure the turret doesn't try to spin too far
 		turretMotor.setForwardSoftLimit(convertDegrees2Ticks(SOFT_MAX_TURRET_ANGLE));
 		turretMotor.setReverseSoftLimit(convertDegrees2Ticks(SOFT_MIN_TURRET_ANGLE));
-		enableSoftLimits(false);
+		enableSoftLimits(true);
     }
 
     public void enableSoftLimits(boolean set) {
