@@ -12,7 +12,7 @@ import org.usfirst.frc3467.subsystems.Shooter.RunJustShooterWheel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ *  Boiler on Right Side of Field (RED Alliance)
  */
 public class kPaAutoRight extends CommandGroup {
 
@@ -36,16 +36,20 @@ public class kPaAutoRight extends CommandGroup {
     	// DriveStraight(distance, maxSpeed)
     	addSequential(new DriveStraight(51000, 0.4));
     	//addSequential(new DriveStraight(-300, 0.2));
-    	
+
     	// Drive sideways to better align with hopper exit
     	// DriveSideways( distance, maxSpeed)
     	//addSequential(new DriveSideways(10500, 0.2));
     	//addSequential(new DriveStraight(300, 0.2));
-    	
+    	setTimeout(2);
+    	addSequential(new DriveStraight(-5000, 0.4));
+    	addSequential(new DriveTurn(0.15, 87.0));
+
       	// Begin to shoot using auto tracking
     	addSequential(new AutoAim());
     	addSequential(new AutoAim());
     	addSequential(new OperateShooter(true, 12.0));
+    	
         
     }
 }
