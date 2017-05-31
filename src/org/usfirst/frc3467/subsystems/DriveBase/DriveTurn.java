@@ -67,6 +67,7 @@ public class DriveTurn extends CommandBase {
     protected void initialize() {
 
     	m_pid.setSetpoint(gyro.getHeading() + m_turnAngle);
+      	m_pid.reset();
     	m_pid.enable();
     }
 
