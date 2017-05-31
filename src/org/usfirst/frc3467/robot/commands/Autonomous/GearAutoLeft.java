@@ -20,7 +20,7 @@ public class GearAutoLeft extends CommandGroup {
     	addParallel(new GearHold());
     	addSequential(new ZeroGyro());
     	addSequential(new DriveStraight(101400));  
-    	addSequential(new DriveTurn(.3, 45));
+    	addSequential(new DriveTurn(45.0, 0.3));
     	addSequential(new AutoGear());
     	addSequential(new DriveStraight(50000));
     	addSequential(new GearDeliver());

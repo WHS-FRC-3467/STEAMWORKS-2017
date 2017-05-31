@@ -142,7 +142,7 @@ public class OI {
 		//SmartDashboard.putData("Update PIDF Constants", new UpdatePIDFConstants());
 		SmartDashboard.putData("Calibrate Turret", new CalibrateTurret());
 		SmartDashboard.putData("Position Turret", new PositionTurret());
-		SmartDashboard.putData("Drive Turn", new DriveTurn(0.15, 45.0));
+		SmartDashboard.putData("Drive Turn", new DriveTurn(45.0, 0.15));
 		SmartDashboard.putData("Zero Gyro", new ZeroGyro());
 		
 		
