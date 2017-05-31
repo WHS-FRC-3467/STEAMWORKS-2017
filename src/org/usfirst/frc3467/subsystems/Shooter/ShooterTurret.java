@@ -22,10 +22,10 @@ public class ShooterTurret extends Subsystem {
 	private boolean flg_tuning = true;   // Set to true to tune PID constants vis SmartDashboard
 	
 	// Limit Switch @ maximum position
-	DigitalInput atMaxPos;
-	Counter cntMaxPos;
+	//DigitalInput atMaxPos;
+	//Counter cntMaxPos;
 	
-    // Turret constants
+    // Turret constants//
     public static double SOFT_MAX_TURRET_ANGLE = 91.0;  //  8704
     public static double SOFT_MIN_TURRET_ANGLE = -91.0; //  -8704
 
@@ -41,16 +41,17 @@ public class ShooterTurret extends Subsystem {
     public ShooterTurret() {
     	
 		// Use a counter on the limit switch to make sure we catch all switch closings
-    	atMaxPos = new DigitalInput(RobotMap.turretMaximum);
-	    cntMaxPos = new Counter(atMaxPos);
+    	//atMaxPos = new DigitalInput(RobotMap.turretMaximum);
+	    //cntMaxPos = new Counter(atMaxPos);
 
     	// Turret Rotation Motor
 		turretMotor = new CANTalon(RobotMap.turret_Talon);
     	
-    	//turretMotor.changeControlMode(TalonControlMode.Position);
-		turretMotor.changeControlMode(TalonControlMode.MotionMagic);
+    	// Don't set a control mode to start
+		//turretMotor.changeControlMode(TalonControlMode.Position);
+		//turretMotor.changeControlMode(TalonControlMode.MotionMagic);
     	
-		// TODO: Change these
+		// Set initial PIDF parameters
     	turretF = 5.0;
     	turretP = 3.0;
     	turretI = 0.01;
@@ -59,12 +60,6 @@ public class ShooterTurret extends Subsystem {
 	   	SmartDashboard.putNumber("Turret P", turretP);
     	SmartDashboard.putNumber("Turret I", turretI);
     	SmartDashboard.putNumber("Turret D", turretD);
-
-    	turretMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		turretMotor.reverseSensor(false);
-		
-		turretMotor.configNominalOutputVoltage(+0.0f, -0.0f);
-		turretMotor.configPeakOutputVoltage(+12.0f, -12.0f);
 		turretMotor.setProfile(0);
     	turretMotor.setF(turretF);
     	turretMotor.setP(turretP);
@@ -72,7 +67,13 @@ public class ShooterTurret extends Subsystem {
     	turretMotor.setD(turretD); 
 		turretMotor.setIZone(0);
 
-		// TODO: Change these
+    	turretMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		turretMotor.reverseSensor(false);
+		
+		turretMotor.configNominalOutputVoltage(+0.0f, -0.0f);
+		turretMotor.configPeakOutputVoltage(+12.0f, -12.0f);
+
+		// Motion magic parameters
 		turretVel = 1100.0;
 		turretAccel = 1000.0;
     	SmartDashboard.putNumber("Turret Velocity", turretVel);
@@ -81,7 +82,7 @@ public class ShooterTurret extends Subsystem {
 		turretMotor.setMotionMagicAcceleration(turretAccel);
 
 		// For now, we are starting the Turret in a known position - HARD_MAX_TURRET_ANGLE
-		resetTurretAtMax();
+        reset(convertDegrees2Ticks(HARD_MAX_TURRET_ANGLE));
 		
 		// Use soft limits to make sure the turret doesn't try to spin too far
 		turretMotor.setForwardSoftLimit(convertDegrees2Ticks(SOFT_MAX_TURRET_ANGLE));
@@ -104,17 +105,18 @@ public class ShooterTurret extends Subsystem {
     	turretMotor.changeControlMode(TalonControlMode.PercentVbus);
     	turretMotor.set(speed);
     	SmartDashboard.putNumber("Turret Position", turretMotor.getPosition());
-    	SmartDashboard.putBoolean("Turret @Max?", atMaxPos.get());    	
+    	//SmartDashboard.putBoolean("Turret @Max?", atMaxPos.get());    	
     }
     
     // Has the max position limit switch been hit?
     public boolean isMaxPosSwitchSet() {
-        return cntMaxPos.get() > 0;
+        //return cntMaxPos.get() > 0;
+    	return false;
     }
 
     // Initialize the max position limit switch
     public void initializeMaxPosSwitch() {
-        cntMaxPos.reset();
+        //cntMaxPos.reset();
     }
 
     protected double convertDegrees2Ticks(double degrees) {
@@ -130,7 +132,6 @@ public class ShooterTurret extends Subsystem {
     	
     	double target = convertDegrees2Ticks(angle);
     	
-    	turretMotor.changeControlMode(TalonControlMode.MotionMagic);
        	if (flg_tuning) {
        		turretMotor.setF( turretF = SmartDashboard.getNumber("Turret F", turretF));
        		turretMotor.setP( turretP = SmartDashboard.getNumber("Turret P", turretP));
@@ -139,6 +140,8 @@ public class ShooterTurret extends Subsystem {
     		turretMotor.setMotionMagicCruiseVelocity(turretVel = SmartDashboard.getNumber("Turret Velocity", turretVel));
     		turretMotor.setMotionMagicAcceleration(turretAccel = SmartDashboard.getNumber("Turret Accel", turretAccel));
        	}
+       	
+       	turretMotor.changeControlMode(TalonControlMode.MotionMagic);
         turretMotor.set(target);
     }
     
@@ -176,17 +179,6 @@ public class ShooterTurret extends Subsystem {
         SmartDashboard.putBoolean("Turret on Target?", isOnTarget());
     }
 
-    public synchronized void zeroTurret() {
-        reset(0);
-    }
-    
-    public synchronized void resetTurretAtMax() {
-        reset(convertDegrees2Ticks(HARD_MAX_TURRET_ANGLE));
-    }
-
-    public synchronized void resetTurretAtMin() {
-        reset(convertDegrees2Ticks(HARD_MIN_TURRET_ANGLE));
-    }
  }
 
 

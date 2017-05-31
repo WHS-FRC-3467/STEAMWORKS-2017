@@ -15,6 +15,10 @@ public class AutoAim extends CommandBase {
 	int targetSearchDirection = 1;
 	int targetSearchIncrement = 10;
 	
+	int aimState;
+	public static final int AIM_READCAMERA = 1;
+	public static final int AIM_MOVING = 2;
+	
 	public AutoAim() {
 		requires(pixyCamShooter);
 		requires(shooterTurret);
@@ -24,36 +28,62 @@ public class AutoAim extends CommandBase {
 	
 	public void initialize() {
 		targetFound = false;
+		aimState = AIM_READCAMERA;
 		SmartDashboard.putString("ShooterTurret", "Auto Aim");
 	}
 	
 	public void execute() {
 
-    	double [] pixyData = {0.0, 0.0, 0.0};
-		try {
-    		pixyData = pixyCamShooter.getBoilerLocationData();
-    	} catch (NoTargetException ex) {
-    		// No target found
-    		searchForTarget();
-    		return;
-    	}
+    	double angleX;
+
+    	switch (aimState) {
     	
-    	// Name the returned data
-		double distance = pixyData[0];
-    	double angleX = pixyData[1];
-    	double angleY = pixyData[2];
+    	case AIM_READCAMERA:
+    		try {
+    			// Read PixyCam
+    			angleX = readCamera();
+        	} catch (NoTargetException ex) {
+        		// No target found
+        		searchForTarget();
+        		aimState = AIM_MOVING;
+        		return;
+        	}
 
-		// Command is completed if we are on target in the X direction
-		if (Math.abs(angleX) <= ANGLE_PRECISION) {
-			targetFound = true;
-			return;
-		}
+    		// Command is completed if we are on target in the X direction
+    		if (Math.abs(angleX) <= ANGLE_PRECISION) {
+    			targetFound = true;
+    		}
+    		else
+    		{
+        		// Start moving turret to center of object
+            	shooterTurret.setDesiredAngle(shooterTurret.getAngle() + angleX);
+            	aimState = AIM_MOVING;
+    		}
+    		break;
 
-		// Move turret to center of object
-    	shooterTurret.setDesiredAngle(shooterTurret.getAngle() + angleX);
-		
-	   	SmartDashboard.putString("Turret AutoAim","distance = " + distance +"   angleX = " + angleX + "   angleY = "+ angleY);
-		 		
+    	case AIM_MOVING:
+    		if (shooterTurret.isOnTarget()) {
+    			// Finished movement - read camera again
+    			aimState = AIM_READCAMERA;
+    		}
+    		break;
+    	}
+
+	}
+	
+	// This will throw a NoTargetException error if the camera cannot find the target
+	private double readCamera() {
+
+		double [] pixyData = {0.0, 0.0, 0.0};
+
+		// Read PixyCam
+		pixyData = pixyCamShooter.getBoilerLocationData();
+
+		// Display the returned data
+	   	SmartDashboard.putString("Turret AutoAim","distance = " + pixyData[0] +"   angleX = " + pixyData[1] + "   angleY = "+ pixyData[2]);
+
+   		// Return X angle
+	   	return pixyData[1];
 	}
 	
 	private void searchForTarget() {

@@ -24,7 +24,7 @@ public class DriveTurn extends CommandBase {
 	private double KI = 0.0;
 	private double KD = 2.0;
 	
-    public DriveTurn(double maxspeed, double angle) {
+    public DriveTurn(double angle, double maxspeed) {
     	requires(driveBase);
 		
 		m_maxSpeed = maxspeed;

@@ -16,7 +16,7 @@ public class CalibrateTurret extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	shooterTurret.enableSoftLimits(false);
+    	//shooterTurret.enableSoftLimits(false);
 		SmartDashboard.putString("ShooterTurret", "CalibrateTurret");
     }
 
